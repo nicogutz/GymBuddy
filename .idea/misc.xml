@@ -10,6 +10,12 @@
         <entry key="app/src/main/res/layout-w936dp/activity_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.15450861195542046" />
+        <entry key="app/src/main/res/layout/activity_main_page.xml" value="0.2731936725096195" />
+        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.2731936725096195" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2731936725096195" />
+        <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.2731936725096195" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/top_nav_menu.xml" value="0.2731936725096195" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.252" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.252" />
       </map>

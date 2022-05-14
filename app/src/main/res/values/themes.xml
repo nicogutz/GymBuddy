@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="DefaultStyle" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="DefaultStyle" parent="Theme.Material3.Dark">
         <item name="android:textColorPrimary">@color/primaryTextColor</item>
         <item name="colorButtonNormal">@color/primaryColor</item>
         <item name="android:backgroundTint">@color/primaryColor</item>
@@ -18,9 +18,16 @@
         <item name="colorSecondary">@color/secondaryColor</item>
         <item name="colorSecondaryVariant">@color/secondaryLightColor</item>
         <item name="colorOnSecondary">@color/secondaryTextColor</item>
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="DefaultTheme.NoActionBar" parent="DefaultTheme">
+       <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 </resources>
