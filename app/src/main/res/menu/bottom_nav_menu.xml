@@ -2,22 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/button_home"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/title_home" />
 
     <item
-        android:id="@+id/navigation_calendar"
+        android:id="@+id/button_calendar"
         android:icon="@drawable/ic_baseline_calendar_today_24"
         android:title="@string/title_calendar" />
 
     <item
-        android:id="@+id/navigation_routines"
+        android:id="@+id/button_routines"
         android:icon="@drawable/ic_baseline_fitness_center_24"
         android:title="@string/title_routines" />
 
     <item
-        android:id="@+id/navigation_exercises"
+        android:id="@+id/button_exercises"
         android:icon="@drawable/ic_round_format_list_bulleted_24"
         android:title="@string/title_exercises" />
 

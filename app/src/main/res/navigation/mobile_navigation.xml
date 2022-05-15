@@ -10,9 +10,6 @@
         android:name="be.kuleuven.gymbuddy.ui.main.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_navigation_home_to_navigation_exercises"
-            app:destination="@id/navigation_exercises" />
     </fragment>
 
     <fragment
