@@ -7,19 +7,32 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="be.kuleuven.gymbuddy.ui.home.HomeFragment"
+        android:name="be.kuleuven.gymbuddy.ui.main.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="be.kuleuven.gymbuddy.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_calendar"
+        android:name="be.kuleuven.gymbuddy.ui.main.CalendarFragment"
+        android:label="@string/title_calendar"
+        tools:layout="@layout/fragment_calendar" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="be.kuleuven.gymbuddy.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_routines"
+        android:name="be.kuleuven.gymbuddy.ui.main.RoutinesFragment"
+        android:label="@string/title_routines"
+        tools:layout="@layout/fragment_calendar" />
+
+    <fragment
+        android:id="@+id/navigation_exercises"
+        android:name="be.kuleuven.gymbuddy.ui.main.ExercisesFragment"
+        android:label="@string/title_exercises"
+        tools:layout="@layout/fragment_calendar" />
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="be.kuleuven.gymbuddy.ui.main.menu.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings" />
+
 </navigation>
