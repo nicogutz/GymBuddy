@@ -7,7 +7,7 @@
         <item name="android:textColorHint">@color/secondaryTextColor</item>
     </style>
 
-    <style name="DefaultTheme" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="DefaultTheme" parent="Theme.Material3.Dark">
         <!-- Primary brand color. -->
 
         <item name="colorPrimary">@color/primaryColor</item>
