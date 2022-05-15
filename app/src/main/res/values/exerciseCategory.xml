@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="exerciseCatArrayList">
+        <item>Legs</item>
+        <item>Arms</item>
+        <item>Chest</item>
+        <item>Glutes</item>
+    </string-array>
+</resources>

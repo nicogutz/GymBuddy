@@ -3,19 +3,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:scrollIndicators="end|right"
+    android:scrollbars="vertical">
 
     <TextView
-        android:id="@+id/add_tabs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="add tabs: progress and personal data"
-        android:textSize="24sp"
+        android:id="@+id/genData_textView"
+        android:layout_width="78dp"
+        android:layout_height="16dp"
+        android:text="General Data"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.048"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.27" />
+        app:layout_constraintVertical_bias="0.075" />
 
+    <TextView
+        android:id="@+id/bodyMeasm_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Body Measuments"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.41" />
+
+    <TextView
+        android:id="@+id/progressTr_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Progress Tracker"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.717" />
 </androidx.constraintlayout.widget.ConstraintLayout>

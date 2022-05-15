@@ -2,12 +2,17 @@ package be.kuleuven.gymbuddy.ui.main;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import java.util.ArrayList;
 
 import be.kuleuven.gymbuddy.R;
 
@@ -50,7 +55,6 @@ public class ExercisesFragment extends Fragment {
     }
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,5 +70,31 @@ public class ExercisesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_exercises, container, false);
+
     }
+    /**
+    //for the listView
+    ListView listView;
+
+    //get data from database later
+    String[] exCatSample = {"Legs",  "Arms", "Glutes", "Chest"};
+
+    //adapter
+    ArrayAdapter adapter = new ArrayAdapter<String>(
+            this,
+            R.layout.fragment_exercises,
+            exCatSample
+    );
+
+    listView.setAdapter(adapter);
+
+
+    //connecting with the list in the layout
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        listView = getView().findViewById(R.id.listExerciseCategory);
+    }
+    **/
+
 }
