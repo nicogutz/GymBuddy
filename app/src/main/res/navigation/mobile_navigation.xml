@@ -33,10 +33,4 @@
         android:label="@string/title_exercises"
         tools:layout="@layout/fragment_calendar" />
 
-    <fragment
-        android:id="@+id/navigation_settings"
-        android:name="be.kuleuven.gymbuddy.ui.main.menu.SettingsFragment"
-        android:label="@string/title_settings"
-        tools:layout="@layout/fragment_settings" />
-
 </navigation>
