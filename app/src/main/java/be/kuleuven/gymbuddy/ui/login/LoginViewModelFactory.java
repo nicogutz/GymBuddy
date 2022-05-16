@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
 
-import be.kuleuven.gymbuddy.data.LoginDataSource;
-import be.kuleuven.gymbuddy.data.LoginRepository;
+import be.kuleuven.gymbuddy.data.login.LoginDataSource;
+import be.kuleuven.gymbuddy.data.login.LoginRepository;
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.

@@ -1,4 +1,4 @@
-package be.kuleuven.gymbuddy.data;
+package be.kuleuven.gymbuddy.data.requests;
 
 import com.android.volley.Request;
 import com.android.volley.Response;

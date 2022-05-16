@@ -1,4 +1,4 @@
-package be.kuleuven.gymbuddy.data;
+package be.kuleuven.gymbuddy.data.login;
 
 import be.kuleuven.gymbuddy.data.model.LoggedInUser;
 
