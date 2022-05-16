@@ -2,9 +2,13 @@ package be.kuleuven.gymbuddy.ui.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -53,7 +57,6 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -61,10 +64,33 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.top_app_bar, menu);
+    }
 
-        return inflater.inflate(R.layout.fragment_home, container, false);
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()) {
+//
+//            case R.id.activity_menu_item:
+//
+//                // Not implemented here
+//                return false;
+//            case R.id.fragment_menu_item:
+//
+//                // Do Fragment menu item stuff here
+//                return true;
+//
+//            default:
+//                break;
+//        }
+
+        return false;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
+    {
+        return inflater.inflate(R.layout.fragment_home, parent, false);
     }
 }
