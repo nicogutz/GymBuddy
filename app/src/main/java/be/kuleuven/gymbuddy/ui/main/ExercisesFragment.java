@@ -1,20 +1,24 @@
 package be.kuleuven.gymbuddy.ui.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
 import be.kuleuven.gymbuddy.R;
+import be.kuleuven.gymbuddy.ui.exercise_page.ExercisePage;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,6 +26,9 @@ import be.kuleuven.gymbuddy.R;
  * create an instance of this fragment.
  */
 public class ExercisesFragment extends Fragment {
+
+    //get listView widget reference
+    private ListView listView;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -58,6 +65,18 @@ public class ExercisesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        //opening exercise page onClick
+        listView = (ListView) getView().findViewById(R.id.listExerciseCategory);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(ExercisesFragment.this,  ExercisePage.class);
+                ExercisesFragment.this.startActivity(intent);
+            }
+        });
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -72,29 +91,5 @@ public class ExercisesFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_exercises, container, false);
 
     }
-    /**
-    //for the listView
-    ListView listView;
-
-    //get data from database later
-    String[] exCatSample = {"Legs",  "Arms", "Glutes", "Chest"};
-
-    //adapter
-    ArrayAdapter adapter = new ArrayAdapter<String>(
-            this,
-            R.layout.fragment_exercises,
-            exCatSample
-    );
-
-    listView.setAdapter(adapter);
-
-
-    //connecting with the list in the layout
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        listView = getView().findViewById(R.id.listExerciseCategory);
-    }
-    **/
 
 }
