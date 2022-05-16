@@ -4,23 +4,16 @@ import androidx.room.*;
 
 import java.util.List;
 
-import be.kuleuven.gymbuddy.data.database.entities.User;
+import be.kuleuven.gymbuddy.data.database.entities.Health;
 
 @Dao
 public interface HealthDAO {
-    @Query("SELECT * FROM user")
-    List<User> getAll();
-
-    @Query("SELECT * FROM user WHERE uid IN (:userIds)")
-    List<User> loadAllByIds(int[] userIds);
-
-    @Query("SELECT * FROM user WHERE first_name LIKE :first AND " +
-            "last_name LIKE :last LIMIT 1")
-    User findByName(String first, String last);
+    @Query("SELECT * FROM Health")
+    List<Health> getAll();
 
     @Insert
-    void insertAll(User... users);
+    void insertAll(Health... users);
 
     @Delete
-    void delete(User user);
+    void delete(Health user);
 }
