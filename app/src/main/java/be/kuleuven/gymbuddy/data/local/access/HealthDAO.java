@@ -1,10 +1,10 @@
-package be.kuleuven.gymbuddy.data.database.access;
+package be.kuleuven.gymbuddy.data.local.access;
 
 import androidx.room.*;
 
 import java.util.List;
 
-import be.kuleuven.gymbuddy.data.database.entities.Health;
+import be.kuleuven.gymbuddy.data.model.Health;
 
 @Dao
 public interface HealthDAO {

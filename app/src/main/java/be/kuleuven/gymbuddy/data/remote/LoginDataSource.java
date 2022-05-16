@@ -1,6 +1,7 @@
-package be.kuleuven.gymbuddy.data.login;
+package be.kuleuven.gymbuddy.data.remote;
 
 import be.kuleuven.gymbuddy.data.model.LoggedInUser;
+import be.kuleuven.gymbuddy.data.model.Result;
 
 import java.io.IOException;
 

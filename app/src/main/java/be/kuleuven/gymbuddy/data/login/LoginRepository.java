@@ -1,6 +1,8 @@
 package be.kuleuven.gymbuddy.data.login;
 
+import be.kuleuven.gymbuddy.data.remote.LoginDataSource;
 import be.kuleuven.gymbuddy.data.model.LoggedInUser;
+import be.kuleuven.gymbuddy.data.model.Result;
 
 /**
  * Class that requests authentication and user information from the remote data source and

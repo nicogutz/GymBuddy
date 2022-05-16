@@ -1,4 +1,4 @@
-package be.kuleuven.gymbuddy.data.database;
+package be.kuleuven.gymbuddy.data.local;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

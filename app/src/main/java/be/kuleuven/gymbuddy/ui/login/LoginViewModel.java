@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel;
 import android.util.Patterns;
 
 import be.kuleuven.gymbuddy.data.login.LoginRepository;
-import be.kuleuven.gymbuddy.data.login.Result;
+import be.kuleuven.gymbuddy.data.model.Result;
 import be.kuleuven.gymbuddy.data.model.LoggedInUser;
 import be.kuleuven.gymbuddy.R;
 

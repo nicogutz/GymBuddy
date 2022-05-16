@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
 
-import be.kuleuven.gymbuddy.data.login.LoginDataSource;
+import be.kuleuven.gymbuddy.data.remote.LoginDataSource;
 import be.kuleuven.gymbuddy.data.login.LoginRepository;
 
 /**

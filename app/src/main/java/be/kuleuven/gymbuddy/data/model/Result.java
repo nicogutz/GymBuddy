@@ -1,4 +1,4 @@
-package be.kuleuven.gymbuddy.data.login;
+package be.kuleuven.gymbuddy.data.model;
 
 /**
  * A generic class that holds a result success w/ data or an error exception.

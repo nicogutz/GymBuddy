@@ -1,4 +1,4 @@
-package be.kuleuven.gymbuddy.data.database.entities;
+package be.kuleuven.gymbuddy.data.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

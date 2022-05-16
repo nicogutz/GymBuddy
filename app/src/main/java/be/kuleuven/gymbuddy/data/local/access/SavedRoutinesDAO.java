@@ -1,4 +1,4 @@
-package be.kuleuven.gymbuddy.data.database.access;
+package be.kuleuven.gymbuddy.data.local.access;
 
 import androidx.room.*;
 
