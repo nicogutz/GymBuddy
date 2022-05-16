@@ -4,4 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.routine.SelectedRoutine"/>
+    tools:context=".ui.routine.SelectedRoutine">
+
+    <ListView
+        android:id="@+id/selectedListView"
+        android:layout_width="493dp"
+        android:layout_height="461dp"
+        android:entries="@array/exercises"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.239" />
+
+    <TextView
+        android:id="@+id/routName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Routine Name"
+        android:textSize="20"
+        app:layout_constraintBottom_toTopOf="@+id/selectedListView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.8" />
+
+    <Button
+        android:id="@+id/delEx_bttn"
+        android:layout_width="200"
+        android:layout_height="65"
+        android:text="Delete Exercise"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.365"
+        app:layout_constraintStart_toEndOf="@+id/addEx_bttn"
+        app:layout_constraintTop_toBottomOf="@+id/selectedListView" />
+
+    <Button
+        android:id="@+id/addEx_bttn"
+        android:layout_width="200"
+        android:layout_height="65"
+        android:layout_marginStart="48dp"
+        android:text="Add Exercise"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/selectedListView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
