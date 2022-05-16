@@ -7,4 +7,7 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class DoneExercise {
+    @PrimaryKey
+    public int id;
+
 }

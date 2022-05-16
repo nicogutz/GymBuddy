@@ -14,9 +14,6 @@ public class SavedRoutines {
     @ColumnInfo(name = "name")
     public String name;
 
-    @ColumnInfo(name = "date")
-    public Date date;
-
     @ColumnInfo(name = "favorite")
     public boolean favorite;
 
