@@ -1,124 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:scrollIndicators="end|right"
-    android:scrollbars="vertical">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/genData_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="16dp"
-        android:text="General Data"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.048"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.083" />
-
-    <TextView
-        android:id="@+id/bodyMeasm_textView"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_height="wrap_content"
-        android:text="Body Measuments"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.046"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.41" />
+        android:layout_width="match_parent"
+        android:padding="40dp"
+        tools:context=".HomeFragment">
 
-    <TextView
-        android:id="@+id/progressTr_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Progress Tracker"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.046"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.813" />
+        <TextView
+            android:id="@+id/generalData_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="General Data"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="81dp"
-        android:layout_height="74dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressTr_textView"
-        app:layout_constraintVertical_bias="0.71"
-        app:srcCompat="@android:drawable/ic_delete" />
+        <TextView
+            android:id="@+id/bodyM_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="212dp"
+            android:text="Body Measurements"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/generalData_textView" />
 
-    <TextView
-        android:id="@+id/height_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Height"
-        app:layout_constraintBottom_toTopOf="@+id/bodyMeasm_textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.096"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weight_textView" />
+        <TextView
+            android:id="@+id/progress_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="344dp"
+            android:text="Progress Tracker"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bodyM_textView" />
 
-    <TextView
-        android:id="@+id/age_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Age"
-        app:layout_constraintBottom_toTopOf="@+id/weight_textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.096"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/genData_textView" />
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="341dp"
+            android:layout_height="114dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progress_textView"
+            app:srcCompat="@drawable/ic_no_background" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/weight_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Weight"
-        app:layout_constraintBottom_toTopOf="@+id/height_textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.096"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/age_textView" />
+</ScrollView>
 
-    <TextView
-        android:id="@+id/arms_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Arms"
-        app:layout_constraintBottom_toTopOf="@+id/chest_textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.095"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bodyMeasm_textView" />
 
-    <TextView
-        android:id="@+id/waist_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Waist"
-        app:layout_constraintBottom_toTopOf="@+id/progressTr_textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.096"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chest_textView" />
 
-    <TextView
-        android:id="@+id/chest_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Chest"
-        app:layout_constraintBottom_toTopOf="@+id/waist_textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.09"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/arms_textView" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<!--<TextView-->
+<!--    android:id="@+id/genData_textView"-->
+<!--    android:layout_height="16dp"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:text="General Data"-->
+<!--    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--    app:layout_constraintEnd_toEndOf="parent"-->
+<!--    app:layout_constraintHorizontal_bias="0.048"-->
+<!--    app:layout_constraintStart_toStartOf="parent"-->
+<!--    app:layout_constraintTop_toTopOf="parent"-->
+<!--    app:layout_constraintVertical_bias="0.083" />-->
+
+<!--<TextView-->
+<!--    android:id="@+id/bodyMeasm_textView"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:text="Body Measuments"-->
+<!--    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--    app:layout_constraintEnd_toEndOf="parent"-->
+<!--    app:layout_constraintHorizontal_bias="0.046"-->
+<!--    app:layout_constraintStart_toStartOf="parent"-->
+<!--    app:layout_constraintTop_toTopOf="parent"-->
+<!--    app:layout_constraintVertical_bias="0.41" />-->
+
+<!--<TextView-->
+<!--    android:id="@+id/progressTr_textView"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:text="Progress Tracker"-->
+<!--    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--    app:layout_constraintEnd_toEndOf="parent"-->
+<!--    app:layout_constraintHorizontal_bias="0.046"-->
+<!--    app:layout_constraintStart_toStartOf="parent"-->
+<!--    app:layout_constraintTop_toTopOf="parent"-->
+<!--    app:layout_constraintVertical_bias="0.813" />-->
+
+<!--<ImageView-->
+<!--    android:id="@+id/imageView2"-->
+<!--    android:layout_height="74dp"-->
+<!--    android:layout_width="81dp"-->
+<!--    android:visibility="visible"-->
+<!--    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--    app:layout_constraintEnd_toEndOf="parent"-->
+<!--    app:layout_constraintStart_toStartOf="parent"-->
+<!--    app:layout_constraintTop_toBottomOf="@+id/progressTr_textView"-->
+<!--    app:layout_constraintVertical_bias="0.71"-->
+<!--    app:srcCompat="@android:drawable/ic_delete" />-->
+
+<!--<TextView-->
+<!--    android:id="@+id/height_textView"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:text="Height"-->
+<!--    app:layout_constraintBottom_toTopOf="@+id/bodyMeasm_textView"-->
+<!--    app:layout_constraintEnd_toEndOf="parent"-->
+<!--    app:layout_constraintHorizontal_bias="0.096"-->
+<!--    app:layout_constraintStart_toStartOf="parent"-->
+<!--    app:layout_constraintTop_toBottomOf="@+id/weight_textView" />-->
+
+<!--<TextView-->
+<!--    android:id="@+id/age_textView"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:text="Age"-->
+<!--    app:layout_constraintBottom_toTopOf="@+id/weight_textView"-->
+<!--    app:layout_constraintEnd_toEndOf="parent"-->
+<!--    app:layout_constraintHorizontal_bias="0.096"-->
+<!--    app:layout_constraintStart_toStartOf="parent"-->
+<!--    app:layout_constraintTop_toBottomOf="@+id/genData_textView" />-->
+
+<!--<TextView-->
+<!--    android:id="@+id/weight_textView"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:text="Weight"-->
+<!--    app:layout_constraintBottom_toTopOf="@+id/height_textView"-->
+<!--    app:layout_constraintEnd_toEndOf="parent"-->
+<!--    app:layout_constraintHorizontal_bias="0.096"-->
+<!--    app:layout_constraintStart_toStartOf="parent"-->
+<!--    app:layout_constraintTop_toBottomOf="@+id/age_textView" />-->
+
+<!--<TextView-->
+<!--    android:id="@+id/arms_textView"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:text="Arms"-->
+<!--    app:layout_constraintBottom_toTopOf="@+id/chest_textView"-->
+<!--    app:layout_constraintEnd_toEndOf="parent"-->
+<!--    app:layout_constraintHorizontal_bias="0.095"-->
+<!--    app:layout_constraintStart_toStartOf="parent"-->
+<!--    app:layout_constraintTop_toBottomOf="@+id/bodyMeasm_textView" />-->
+
+<!--<TextView-->
+<!--    android:id="@+id/waist_textView"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:text="Waist"-->
+<!--    app:layout_constraintBottom_toTopOf="@+id/progressTr_textView"-->
+<!--    app:layout_constraintEnd_toEndOf="parent"-->
+<!--    app:layout_constraintHorizontal_bias="0.096"-->
+<!--    app:layout_constraintStart_toStartOf="parent"-->
+<!--    app:layout_constraintTop_toBottomOf="@+id/chest_textView" />-->
+
+<!--<TextView-->
+<!--    android:id="@+id/chest_textView"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:text="Chest"-->
+<!--    app:layout_constraintBottom_toTopOf="@+id/waist_textView"-->
+<!--    app:layout_constraintEnd_toEndOf="parent"-->
+<!--    app:layout_constraintHorizontal_bias="0.09"-->
+<!--    app:layout_constraintStart_toStartOf="parent"-->
+<!--    app:layout_constraintTop_toBottomOf="@+id/arms_textView" />-->
+
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
