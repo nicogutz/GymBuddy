@@ -1,18 +1,20 @@
 package be.kuleuven.gymbuddy;
+
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import be.kuleuven.gymbuddy.databinding.ActivityMainPageBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import be.kuleuven.gymbuddy.databinding.ActivityMainPageBinding;
+import be.kuleuven.gymbuddy.ui.login.LoginFragment;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +27,19 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        BottomNavigationView bottomNavigationView = binding.navView;
+        bottomNavigationView.setVisibility(View.INVISIBLE);
+
+        FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.nav_host_fragment_activity_main, new LoginFragment());
+        fragmentTransaction.commit();
+
+    }
+
+    public void OnLogin(){
+        BottomNavigationView bottomNavigationView = binding.navView;
+        bottomNavigationView.setVisibility(View.VISIBLE);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment_activity_main);

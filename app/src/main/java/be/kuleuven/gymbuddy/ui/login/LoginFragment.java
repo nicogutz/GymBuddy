@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import be.kuleuven.gymbuddy.MainActivity;
 import be.kuleuven.gymbuddy.databinding.FragmentLoginBinding;
 
 import be.kuleuven.gymbuddy.R;
