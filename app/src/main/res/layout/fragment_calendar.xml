@@ -16,18 +16,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.257" />
 
-    <EditText
-        android:id="@+id/displayRoutine_text"
-        android:layout_width="206dp"
-        android:layout_height="75dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="get routine based on date"
+    <TextView
+        android:id="@+id/getRoutine_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="display routine here"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calendarView"
-        app:layout_constraintVertical_bias="0.049" />
+        app:layout_constraintVertical_bias="0.147" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
