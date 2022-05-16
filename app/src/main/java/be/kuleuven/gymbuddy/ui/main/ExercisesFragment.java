@@ -72,7 +72,7 @@ public class ExercisesFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(ExercisesFragment.this,  ExercisePage.class);
+                Intent intent = new Intent(ExercisesFragment.this.getActivity(),  ExercisePage.class);
                 ExercisesFragment.this.startActivity(intent);
             }
         });
