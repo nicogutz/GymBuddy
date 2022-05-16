@@ -14,6 +14,7 @@
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.15450861195542046" />
         <entry key="app/src/main/res/layout/activity_main_page.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_new_routine.xml" value="0.19038984587488667" />
         <entry key="app/src/main/res/layout/calendar_fragment.xml" value="0.2731936725096195" />
         <entry key="app/src/main/res/layout/fragment_calendar.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.2731936725096195" />
@@ -21,6 +22,7 @@
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2731936725096195" />
         <entry key="app/src/main/res/layout/fragment_item.xml" value="0.2731936725096195" />
         <entry key="app/src/main/res/layout/fragment_item_list.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.26079521162890124" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.2731936725096195" />
         <entry key="app/src/main/res/layout/fragment_routine.xml" value="0.2731936725096195" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.2731936725096195" />
