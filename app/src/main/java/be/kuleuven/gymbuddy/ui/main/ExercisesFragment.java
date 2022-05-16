@@ -2,20 +2,13 @@ package be.kuleuven.gymbuddy.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.util.ArrayList;
+import androidx.fragment.app.Fragment;
 
 import be.kuleuven.gymbuddy.R;
 import be.kuleuven.gymbuddy.ui.exercise_page.ExercisePage;
@@ -69,6 +62,33 @@ public class ExercisesFragment extends Fragment {
 
         //opening exercise page onClick
         listView = (ListView) getView().findViewById(R.id.listExerciseCategory);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
+                if (true) {
+                    Intent intent = new Intent(ExercisesFragment.this.getActivity(), ExercisePage.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+
+
+        /**
+        listView = (ListView) getView().findViewById(R.id.listExerciseCategory);
+        View.OnClickListener myOnClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ExercisesFragment.this.getActivity(),  ExercisePage.class);
+                ExercisesFragment.this.startActivity(intent);
+            }
+        };
+        if (listView != null) {
+            listView.setOnClickListener(myOnClickListener);
+        }
+
+        /**
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -76,6 +96,7 @@ public class ExercisesFragment extends Fragment {
                 ExercisesFragment.this.startActivity(intent);
             }
         });
+         **/
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
