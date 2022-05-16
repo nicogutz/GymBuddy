@@ -7,20 +7,4 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class DoneExercise {
-    @PrimaryKey
-    public int id;
-
-    @ForeignKey(parentColumns = "saved_routinesid")
-    public String name;
-    @ColumnInfo(name = 'name')
-    public String name;
-    @ColumnInfo(name = 'name')
-    public String name;
-    @ColumnInfo(name = 'name')
-    public String name;
-    @ColumnInfo(name = 'name')
-    public String name;
-    @ColumnInfo(name = 'name')
-    public String name;
-
 }
