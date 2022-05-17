@@ -5,6 +5,8 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import java.util.Date;
+
 @Entity(foreignKeys = {
         @ForeignKey(
                 entity = SavedRoutine.class,
@@ -28,5 +30,8 @@ public class RecordedRoutine {
 
     @ColumnInfo(name = "recorded_exercise_id", index = true)
     public int recordedExerciseID;
+
+    @ColumnInfo(name = "date")
+    public Date date;
 
 }

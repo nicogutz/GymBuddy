@@ -30,5 +30,4 @@ public interface SavedRoutinesDAO {
             "JOIN saved_exercise se " +
             "ON sr.savedRoutineID = se.saved_routine_id")
     public Map<SavedRoutine, List<SavedExercise>> getAllSavedRoutinesAndExercises();
-
 }
