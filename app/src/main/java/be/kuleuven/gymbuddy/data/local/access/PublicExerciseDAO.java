@@ -7,20 +7,21 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import be.kuleuven.gymbuddy.data.local.entities.PublicExercise;
 import be.kuleuven.gymbuddy.data.local.entities.RecordedRoutine;
 
 
 @Dao
 public interface PublicExerciseDAO {
     @Insert
-    void insert(RecordedRoutine recordedRoutine);
+    void insert(PublicExercise publicExercise);
 
     @Insert
-    void insertAll(RecordedRoutine... recordedRoutines);
+    void insertAll(PublicExercise... publicExercises);
 
     @Delete
-    void delete(RecordedRoutine recordedRoutine);
+    void delete(PublicExercise publicExercise);
 
-    @Query("SELECT * FROM recorded_routine")
-    List<RecordedRoutine> getAll();
+    @Query("SELECT * FROM public_exercise")
+    List<PublicExercise> getAll();
 }

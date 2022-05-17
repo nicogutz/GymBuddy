@@ -8,24 +8,24 @@ import androidx.room.PrimaryKey;
 @Entity(foreignKeys = {
         @ForeignKey(
         entity = SavedRoutine.class,
-        parentColumns = "id",
+        parentColumns = "savedRoutineID",
         childColumns = "saved_routine_id",
         onDelete = ForeignKey.CASCADE),
 
         @ForeignKey(
         entity = PublicExercise.class,
-        parentColumns = "id",
+        parentColumns = "publicExerciseID",
         childColumns = "public_exercise_id",
         onDelete = ForeignKey.CASCADE)},
 
         tableName = "saved_exercise")
 public class SavedExercise {
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    public int savedExerciseID;
 
-    @ColumnInfo(name = "saved_routine_id")
+    @ColumnInfo(name = "saved_routine_id", index = true)
     public int savedRoutineID;
 
-    @ColumnInfo(name = "public_exercise_id")
+    @ColumnInfo(name = "public_exercise_id", index = true)
     public int publicExerciseID;
 }

@@ -24,11 +24,11 @@ public interface SavedRoutinesDAO {
     void delete(SavedRoutine SavedRoutine);
 
     @Query("SELECT * FROM saved_routine")
-    List<SavedRoutine> getAll();
+    public List<SavedRoutine> getAll();
 
     @Query("SELECT * FROM saved_routine sr " +
             "JOIN saved_exercise se " +
             "ON sr.savedRoutineID = se.saved_routine_id")
-    Map<SavedRoutine, List<SavedExercise>> getAllSavedRoutinesAndExercises();
+    public Map<SavedRoutine, List<SavedExercise>> getAllSavedRoutinesAndExercises();
 
 }

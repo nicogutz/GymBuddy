@@ -8,12 +8,12 @@ import androidx.room.PrimaryKey;
 @Entity(foreignKeys = {
         @ForeignKey(
                 entity = SavedRoutine.class,
-                parentColumns = "id",
+                parentColumns = "savedRoutineID",
                 childColumns = "saved_routine_id",
                 onDelete = ForeignKey.CASCADE),
         @ForeignKey(
                 entity = RecordedExercise.class,
-                parentColumns = "id",
+                parentColumns = "recordedExerciseID",
                 childColumns = "recorded_exercise_id",
                 onDelete = ForeignKey.CASCADE)
 },
@@ -23,10 +23,10 @@ public class RecordedRoutine {
     @PrimaryKey(autoGenerate = true)
     public int recordedRoutineID;
 
-    @ColumnInfo(name = "saved_routine_id")
+    @ColumnInfo(name = "saved_routine_id", index = true)
     public int savedRoutineID;
 
-    @ColumnInfo(name = "recorded_exercise_id")
+    @ColumnInfo(name = "recorded_exercise_id", index = true)
     public int recordedExerciseID;
 
 }
