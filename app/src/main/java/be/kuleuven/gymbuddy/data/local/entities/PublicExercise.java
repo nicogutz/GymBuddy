@@ -7,10 +7,10 @@ import androidx.room.PrimaryKey;
 import java.net.URL;
 import java.util.ArrayList;
 
-@Entity
+@Entity(tableName = "public_exercise")
 public class PublicExercise {
     @PrimaryKey
-    public int id;
+    public int publicExerciseID;
 
     @ColumnInfo(name = "identifier")
     public String identifier;
@@ -32,9 +32,6 @@ public class PublicExercise {
 
     @ColumnInfo(name = "synergist_muscles")
     public ArrayList<String> synergistMuscles;
-
-    @ColumnInfo(name = "video_uri")
-    public URL videoURI;
 
     @ColumnInfo(name = "preparation")
     public String preparation;

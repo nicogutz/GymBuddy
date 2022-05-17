@@ -11,13 +11,12 @@ import androidx.room.PrimaryKey;
         onDelete = ForeignKey.CASCADE), @ForeignKey(entity = RecordedRoutine.class,
         parentColumns = "id",
         childColumns = "public_exercise_id",
-        onDelete = ForeignKey.CASCADE)})
+        onDelete = ForeignKey.CASCADE)
+},
+        tableName = "recorded_exercise")
 public class RecordedExercise {
-    @PrimaryKey
-    public int id;
-
-    @ColumnInfo(name = "recorded_routine_id")
-    public int recordedRoutineID;
+    @PrimaryKey(autoGenerate = true)
+    public int recordedExerciseID;
 
     @ColumnInfo(name = "saved_exercise_id")
     public int savedExerciseID;
@@ -26,7 +25,7 @@ public class RecordedExercise {
     public int sets;
 
     @ColumnInfo(name = "weight")
-    public int weight;
+    public float weight;
 
     @ColumnInfo(name = "reps")
     public int reps;

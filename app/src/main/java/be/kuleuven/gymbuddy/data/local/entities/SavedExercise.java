@@ -5,15 +5,22 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(foreignKeys = {@ForeignKey(entity = SavedRoutine.class,
+@Entity(foreignKeys = {
+        @ForeignKey(
+        entity = SavedRoutine.class,
         parentColumns = "id",
         childColumns = "saved_routine_id",
-        onDelete = ForeignKey.CASCADE), @ForeignKey(entity = PublicExercise.class,
+        onDelete = ForeignKey.CASCADE),
+
+        @ForeignKey(
+        entity = PublicExercise.class,
         parentColumns = "id",
         childColumns = "public_exercise_id",
-        onDelete = ForeignKey.CASCADE)})
+        onDelete = ForeignKey.CASCADE)},
+
+        tableName = "saved_exercise")
 public class SavedExercise {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int id;
 
     @ColumnInfo(name = "saved_routine_id")
