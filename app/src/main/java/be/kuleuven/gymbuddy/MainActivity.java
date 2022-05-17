@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void OnLogin(){
+    public void changeView(View v){
         BottomNavigationView bottomNavigationView = binding.navView;
         bottomNavigationView.setVisibility(View.VISIBLE);
 

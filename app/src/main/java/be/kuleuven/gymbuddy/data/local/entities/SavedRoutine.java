@@ -1,13 +1,14 @@
-package be.kuleuven.gymbuddy.data.model;
+package be.kuleuven.gymbuddy.data.local.entities;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class DoneExercise {
+public class SavedRoutine {
     @PrimaryKey
     public int id;
 
+    @ColumnInfo(name = "name")
+    public String name;
 }

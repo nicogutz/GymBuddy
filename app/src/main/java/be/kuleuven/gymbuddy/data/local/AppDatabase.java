@@ -3,25 +3,16 @@ package be.kuleuven.gymbuddy.data.local;
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
-import be.kuleuven.gymbuddy.data.local.access.DoneExerciseDAO;
-import be.kuleuven.gymbuddy.data.local.access.PublicExercisesDAO;
 import be.kuleuven.gymbuddy.data.local.access.SavedRoutinesDAO;
-import be.kuleuven.gymbuddy.data.model.DoneExercise;
-import be.kuleuven.gymbuddy.data.model.PublicExercises;
-import be.kuleuven.gymbuddy.data.model.SavedRoutines;
+import be.kuleuven.gymbuddy.data.local.entities.PublicExercise;
+import be.kuleuven.gymbuddy.data.local.entities.SavedRoutine;
 
 @Database(entities = {
-        PublicExercises.class,
-        SavedRoutines.class,
-        DoneExercise.class }, version = 1)
+        PublicExercise.class,
+        SavedRoutine.class,
+}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
-
-
     public abstract SavedRoutinesDAO savedRoutinesDAO();
-
-    public abstract DoneExerciseDAO doneExerciseDAO();
-
-    public abstract PublicExercisesDAO publicExercisesDAO();
 }
 
 
