@@ -25,11 +25,11 @@ import be.kuleuven.gymbuddy.data.local.entities.SavedRoutine;
 }, version = 1, exportSchema = true)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
-    public abstract PublicExerciseDAO publicExerciseDAO();
-    public abstract RecordedExerciseDAO recordedExerciseDAO();
-    public abstract RecordedRoutineDAO recordedRoutineDAO();
-    public abstract SavedExerciseDAO savedExerciseDAO();
-    public abstract SavedRoutinesDAO savedRoutinesDAO();
+    public abstract PublicExerciseDAO getPublicExerciseDAO();
+    public abstract RecordedExerciseDAO getRecordedExerciseDAO();
+    public abstract RecordedRoutineDAO getRecordedRoutineDAO();
+    public abstract SavedExerciseDAO getSavedExerciseDAO();
+    public abstract SavedRoutinesDAO getSavedRoutinesDAO();
 }
 
 

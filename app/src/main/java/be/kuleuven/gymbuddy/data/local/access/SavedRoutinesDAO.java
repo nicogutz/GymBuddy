@@ -15,13 +15,13 @@ import be.kuleuven.gymbuddy.data.local.entities.SavedRoutine;
 @Dao
 public interface SavedRoutinesDAO {
     @Insert
-    void insert(SavedRoutine SavedRoutine);
+    void insert(SavedRoutine savedRoutine);
 
     @Insert
-    void insertAll(SavedRoutine... SavedRoutines);
+    void insertAll(SavedRoutine... savedRoutines);
 
     @Delete
-    void delete(SavedRoutine SavedRoutine);
+    void delete(SavedRoutine savedRoutine);
 
     @Query("SELECT * FROM saved_routine")
     public List<SavedRoutine> getAll();
