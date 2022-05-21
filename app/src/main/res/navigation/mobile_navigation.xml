@@ -30,4 +30,11 @@
         android:label="@string/title_exercises"
         tools:layout="@layout/fragment_exercises" />
 
+    <fragment
+        android:id="@+id/navigation_exercise_page"
+        android:name="be.kuleuven.gymbuddy.ui.exercise_page.ExercisePageFragment"
+        android:label="@string/title_exercise_page"
+        tools:layout="@layout/fragment_exercise_page" />
+
+
 </navigation>

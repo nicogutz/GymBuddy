@@ -8,11 +8,11 @@
 
     <ListView
         android:id="@+id/listExerciseCategory"
+        style="@style/DefaultTheme"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="50dp"
         android:clickable="true"
-        android:entries="@array/exerciseCatArrayList"
         android:scrollIndicators="end|right"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"

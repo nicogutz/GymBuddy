@@ -4,9 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
+
+import java.util.ArrayList;
 
 import be.kuleuven.gymbuddy.R;
 
@@ -19,6 +22,7 @@ public class ExercisesFragment extends Fragment {
 
     //get listView widget reference
     private ListView listView;
+    private ArrayList<String> exCatList =  new ArrayList<String>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -58,7 +62,6 @@ public class ExercisesFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
 
-
         /**
         listView = (ListView) getView().findViewById(R.id.listExerciseCategory);
         View.OnClickListener myOnClickListener = new View.OnClickListener() {
@@ -87,6 +90,40 @@ public class ExercisesFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+    }
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        listView = (ListView) view.findViewById(R.id.listExerciseCategory);
+        exCatList.add("legs");
+        exCatList.add("glutes");
+        exCatList.add("chest");
+
+
+    }
+
+    class CustomAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return 0;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            return null;
+        }
     }
 
     @Override

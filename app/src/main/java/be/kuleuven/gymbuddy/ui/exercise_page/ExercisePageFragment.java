@@ -1,4 +1,4 @@
-package be.kuleuven.gymbuddy.ui.main;
+package be.kuleuven.gymbuddy.ui.exercise_page;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,10 +11,10 @@ import be.kuleuven.gymbuddy.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
+ * Use the {@link ExercisePageFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
+public class ExercisePageFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,11 +25,7 @@ public class HomeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    //graph jjoe64
-    //private LineGraphSeries<DataPoint> series1;
-
-
-    public HomeFragment() {
+    public ExercisePageFragment() {
         // Required empty public constructor
     }
 
@@ -39,50 +35,31 @@ public class HomeFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
+     * @return A new instance of fragment ExercisePageFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
+    public static ExercisePageFragment newInstance(String param1, String param2) {
+        ExercisePageFragment fragment = new ExercisePageFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
-
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        //for jjoe64 graph:
-//        double x,y;
-//        x = 0;
-//
-//        GraphView graph = (GraphView) requireActivity().findViewById(R.id.graph);
-//        series1 = new LineGraphSeries<>();
-//
-//        int numDataPoints = 500;
-//        for (int i = 0; i <numDataPoints; i++) {
-//            x += 0.1;
-//            y = Math.sin(x);
-//            series1.appendData(new DataPoint(x,y), true, 100);
-//        }
-//        graph.addSeries(series1);
-    } //class or interface expected here?
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_exercise_page, container, false);
     }
 }
