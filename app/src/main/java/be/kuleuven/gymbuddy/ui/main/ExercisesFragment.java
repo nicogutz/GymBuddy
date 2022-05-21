@@ -4,13 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.ExpandableListView;
 
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import be.kuleuven.gymbuddy.R;
 
@@ -21,9 +21,13 @@ import be.kuleuven.gymbuddy.R;
  */
 public class ExercisesFragment extends Fragment {
 
-    //get listView widget reference
-    private ListView listView;
-    private ArrayList<String> exCatList =  new ArrayList<String>();
+    //private ListView listView;
+    //private ArrayList<String> exCatList =  new ArrayList<String>();
+    ExpandableListView expandableListView;
+    List<ArrayList> listGroup = new ArrayList<>(); //where we place the categories (legs, chest, glutes, etc)
+    HashMap<String,List<String>> listItem;
+    MainAdapter adapter;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,30 +66,6 @@ public class ExercisesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        /**
-        listView = (ListView) getView().findViewById(R.id.listExerciseCategory);
-        View.OnClickListener myOnClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ExercisesFragment.this.getActivity(),  ExercisePage.class);
-                ExercisesFragment.this.startActivity(intent);
-            }
-        };
-        if (listView != null) {
-            listView.setOnClickListener(myOnClickListener);
-        }
-
-        /**
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(ExercisesFragment.this.getActivity(),  ExercisePage.class);
-                ExercisesFragment.this.startActivity(intent);
-            }
-        });
-         **/
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -96,16 +76,46 @@ public class ExercisesFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        listView = (ListView) view.findViewById(R.id.listExerciseCategory);
-        exCatList.add("legs");
-        exCatList.add("glutes");
-        exCatList.add("chest");
+        expandableListView = view.findViewById(R.id.expandable_listview);
+        listGroup = new ArrayList<>();
+        listItem = new HashMap<>();
+        initListData();
 
-        CustomAdapter customAdapter = new CustomAdapter();
-        listView.setAdapter(customAdapter);
+
+
+
+//        listView = (ListView) view.findViewById(R.id.listExerciseCategory);
+//        exCatList.add("legs");
+//        exCatList.add("glutes");
+//        exCatList.add("chest");
+//
+//        CustomAdapter customAdapter = new CustomAdapter();
+//        listView.setAdapter(customAdapter);
 
     }
 
+    private void initListData() {
+
+        //optimize data architecture later
+        ArrayList<String> group1 = new ArrayList();
+        ArrayList<String> group2 = new ArrayList();
+        ArrayList<String> group3 = new ArrayList();
+        ArrayList<String> group4 = new ArrayList();
+        ArrayList<String> group5 = new ArrayList();
+
+        listGroup.add(group1); //add the groups here
+        listGroup.add(group2);
+        listGroup.add(group3);
+        listGroup.add(group4);
+        listGroup.add(group5);
+
+        for(int i = 0; i < listGroup.size(); i++) {
+            for (int j = 0; j < 5; j++)
+            listGroup.get(i).add("subgroup" + j);
+        }
+    }
+
+    /**
     class CustomAdapter extends BaseAdapter {
 
         @Override
@@ -132,7 +142,9 @@ public class ExercisesFragment extends Fragment {
             textView_title.setText(exCatList.get(position));
             return convertView;
         }
+
     }
+     **/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
