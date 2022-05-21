@@ -1,20 +1,25 @@
 package be.kuleuven.gymbuddy.ui.main;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import be.kuleuven.gymbuddy.R;
 
 public class MainAdapter extends BaseExpandableListAdapter {
 
     Context context;
-    List<String> listGroup;
+    List<ArrayList> listGroup;
     HashMap<String,List<String>> listItem;
 
-    public MainAdapter(Context context, List<String> listGroup, HashMap<String,List<String>> listItem) {
+    public MainAdapter(Context context, List<ArrayList> listGroup, HashMap<String,List<String>> listItem) {
         this.context = context;
         this.listGroup = listGroup;
         this.listItem = listItem;
@@ -58,16 +63,32 @@ public class MainAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        return null;
+        String group = (String) getGroup(groupPosition);
+        if(convertView==null){
+            LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = layoutInflater.inflate(R.layout.custom_layout_ex_ategory,  null);
+        }
+
+        TextView textView = convertView.findViewById(R.id.list_parent);
+        textView.setText(group);
+        return convertView;
+
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        return null;
+        String child = (String) getChild(groupPosition, childPosition);
+        if(convertView == null) {
+            LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = layoutInflater.inflate(R.layout.exercise_item, null);
+        }
+        TextView textView = convertView.findViewById(R.id.list_child);
+        textView.setText(child);
+        return convertView;
     }
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return false;
+        return true;
     }
 }

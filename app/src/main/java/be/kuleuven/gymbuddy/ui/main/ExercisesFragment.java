@@ -79,6 +79,8 @@ public class ExercisesFragment extends Fragment {
         expandableListView = view.findViewById(R.id.expandable_listview);
         listGroup = new ArrayList<>();
         listItem = new HashMap<>();
+        adapter = new MainAdapter(getContext(), listGroup, listItem);
+        expandableListView.setAdapter(adapter);
         initListData();
 
 
@@ -97,11 +99,11 @@ public class ExercisesFragment extends Fragment {
     private void initListData() {
 
         //optimize data architecture later
-        ArrayList<String> group1 = new ArrayList();
-        ArrayList<String> group2 = new ArrayList();
-        ArrayList<String> group3 = new ArrayList();
-        ArrayList<String> group4 = new ArrayList();
-        ArrayList<String> group5 = new ArrayList();
+        ArrayList<ArrayList> group1 = new ArrayList();
+        ArrayList<ArrayList> group2 = new ArrayList();
+        ArrayList<ArrayList> group3 = new ArrayList();
+        ArrayList<ArrayList> group4 = new ArrayList();
+        ArrayList<ArrayList> group5 = new ArrayList();
 
         listGroup.add(group1); //add the groups here
         listGroup.add(group2);
@@ -110,9 +112,14 @@ public class ExercisesFragment extends Fragment {
         listGroup.add(group5);
 
         for(int i = 0; i < listGroup.size(); i++) {
-            for (int j = 0; j < 5; j++)
-            listGroup.get(i).add("subgroup" + j);
+            for (int j = 0; j < 5; j++){
+                listGroup.get(i).add(new ArrayList<>());
+            }
         }
+
+        // hashmap .put()
+        adapter.notifyDataSetChanged();
+
     }
 
     /**
