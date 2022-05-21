@@ -5,8 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
+import java.util.Objects;
 
 import be.kuleuven.gymbuddy.R;
 
@@ -25,6 +30,10 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    //graph
+    private LineGraphSeries<DataPoint> series1;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -58,6 +67,19 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        double x,y;
+        x = 0;
+
+        GraphView graph = (GraphView) requireActivity().findViewById(R.id.graph);
+        series1 = new LineGraphSeries<>();
+
+        int numDataPoints = 500;
+        for (int i = 0; i <numDataPoints; i++) {
+            x += 0.1;
+            y = Math.sin(x);
+            series1.appendData(new DataPoint(x,y), true, 100);
+        }
+        graph.addSeries(series1);
     }
 
     @Override

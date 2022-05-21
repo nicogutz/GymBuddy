@@ -1,17 +1,14 @@
 package be.kuleuven.gymbuddy.ui.main;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
 import be.kuleuven.gymbuddy.R;
-import be.kuleuven.gymbuddy.ui.exercise_page.ExercisePage;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +28,7 @@ public class ExercisesFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
 
     public ExercisesFragment() {
         // Required empty public constructor
@@ -58,20 +56,6 @@ public class ExercisesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        //opening exercise page onClick
-        listView = (ListView) getView().findViewById(R.id.listExerciseCategory);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
-                if (true) {
-                    Intent intent = new Intent(ExercisesFragment.this.getActivity(), ExercisePage.class);
-                    startActivity(intent);
-                }
-            }
-        });
 
 
 

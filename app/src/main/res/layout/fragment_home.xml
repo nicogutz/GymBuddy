@@ -13,45 +13,25 @@
         tools:context=".HomeFragment">
 
         <TextView
-            android:id="@+id/generalData_textView"
+            android:id="@+id/progressTrack_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="General Data"
+            android:text="My Progress"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
-        <TextView
-            android:id="@+id/bodyM_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="212dp"
-            android:text="Body Measurements"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/generalData_textView" />
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/graph"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="40dp"
+            tools:layout_editor_absoluteY="104dp" />
+"
 
-        <TextView
-            android:id="@+id/progress_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="344dp"
-            android:text="Progress Tracker"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bodyM_textView" />
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="341dp"
-            android:layout_height="114dp"
-            android:layout_marginTop="32dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/progress_textView"
-            app:srcCompat="@drawable/ic_no_background" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>
