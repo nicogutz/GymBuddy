@@ -127,13 +127,9 @@ public class ExercisesFragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             convertView = getLayoutInflater().inflate(R.layout.custom_layout_ex_ategory, null);
 
-
             TextView textView_title = (TextView) convertView.findViewById(R.id.textView_exCatItem);
-            TextView textView_subtitle = (TextView) convertView.findViewById(R.id.textView_exCatExercise);
 
             textView_title.setText(exCatList.get(position));
-
-
             return convertView;
         }
     }
