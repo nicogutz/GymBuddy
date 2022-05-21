@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -100,6 +101,8 @@ public class ExercisesFragment extends Fragment {
         exCatList.add("glutes");
         exCatList.add("chest");
 
+        CustomAdapter customAdapter = new CustomAdapter();
+        listView.setAdapter(customAdapter);
 
     }
 
@@ -107,7 +110,7 @@ public class ExercisesFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return 0;
+            return exCatList.size();  //or should we use .size() -1?
         }
 
         @Override
@@ -122,7 +125,16 @@ public class ExercisesFragment extends Fragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            return null;
+            convertView = getLayoutInflater().inflate(R.layout.custom_layout_ex_ategory, null);
+
+
+            TextView textView_title = (TextView) convertView.findViewById(R.id.textView_exCatItem);
+            TextView textView_subtitle = (TextView) convertView.findViewById(R.id.textView_exCatExercise);
+
+            textView_title.setText(exCatList.get(position));
+
+
+            return convertView;
         }
     }
 
