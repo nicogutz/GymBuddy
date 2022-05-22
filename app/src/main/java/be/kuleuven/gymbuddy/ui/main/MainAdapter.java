@@ -13,6 +13,8 @@ import java.util.List;
 
 import be.kuleuven.gymbuddy.R;
 
+//depending on implementation we might just need to override the getCount() and getView()
+
 public class MainAdapter extends BaseExpandableListAdapter {
 
     Context context;
