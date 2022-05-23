@@ -56,10 +56,6 @@ public class PublicExerciseRepository {
     }
 
     void insert(List<PublicExercise> publicExercises) {
-        AppDatabase.databaseWriteExecutor.execute(() -> {
-            publicExerciseDAO.insertAll(publicExercises);
-        });
+        AppDatabase.databaseWriteExecutor.execute(() -> publicExerciseDAO.insertAll(publicExercises));
     }
-
-
 }

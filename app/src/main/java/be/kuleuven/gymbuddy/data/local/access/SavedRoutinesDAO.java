@@ -1,7 +1,6 @@
 package be.kuleuven.gymbuddy.data.local.access;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -9,7 +8,6 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import java.util.List;
-import java.util.Map;
 
 import be.kuleuven.gymbuddy.data.local.entities.SavedRoutine;
 

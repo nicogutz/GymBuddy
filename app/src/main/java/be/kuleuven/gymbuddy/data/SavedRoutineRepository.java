@@ -24,14 +24,10 @@ public class SavedRoutineRepository {
     }
 
     public void insertAllRecordedExercise(SavedRoutine savedRoutine) {
-        AppDatabase.databaseWriteExecutor.execute(() -> {
-            savedRoutinesDAO.insert(savedRoutine);
-        });
+        AppDatabase.databaseWriteExecutor.execute(() -> savedRoutinesDAO.insert(savedRoutine));
     }
 
     public void removeRecordedExercise(SavedRoutine savedRoutine) {
-        AppDatabase.databaseWriteExecutor.execute(() -> {
-            savedRoutinesDAO.delete(savedRoutine);
-        });
+        AppDatabase.databaseWriteExecutor.execute(() -> savedRoutinesDAO.delete(savedRoutine));
     }
 }

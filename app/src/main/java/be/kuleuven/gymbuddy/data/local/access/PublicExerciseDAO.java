@@ -23,10 +23,10 @@ public interface PublicExerciseDAO {
     @Delete
     void delete(PublicExercise publicExercise);
 
-    @Query("SELECT * FROM public_exercise pe")
+    @Query("SELECT * FROM public_exercise pe ORDER BY identifier")
     public LiveData<List<PublicExercise>> getAllExercises();
 
-    @Query("SELECT pe.identifier FROM public_exercise pe")
+    @Query("SELECT pe.identifier FROM public_exercise pe ORDER BY pe.identifier")
     public LiveData<List<String>> getExerciseCategories();
 
     @Query("SELECT * FROM public_exercise pe WHERE identifier = :identifier")

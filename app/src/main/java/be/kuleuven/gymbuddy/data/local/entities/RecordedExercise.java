@@ -1,8 +1,8 @@
 package be.kuleuven.gymbuddy.data.local.entities;
 
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
@@ -29,4 +29,32 @@ public class RecordedExercise {
 
     @ColumnInfo(name = "reps")
     public int reps;
+
+    public int getRecordedExerciseID() {
+        return recordedExerciseID;
+    }
+
+    public int getPublicExerciseIdentifier() {
+        return publicExerciseIdentifier;
+    }
+
+    public int getPublicExerciseName() {
+        return publicExerciseName;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public int getSets() {
+        return sets;
+    }
+
+    public float getWeight() {
+        return weight;
+    }
+
+    public int getReps() {
+        return reps;
+    }
 }

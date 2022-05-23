@@ -5,7 +5,6 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 @Entity(tableName = "saved_routine")
 public class SavedRoutine {
