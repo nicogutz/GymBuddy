@@ -12,8 +12,8 @@ import java.util.Map;
 import be.kuleuven.gymbuddy.data.PublicExerciseRepository;
 import be.kuleuven.gymbuddy.data.RecordedExerciseRepository;
 import be.kuleuven.gymbuddy.data.SavedRoutineRepository;
-import be.kuleuven.gymbuddy.data.local.entities.RecordedExercise;
 import be.kuleuven.gymbuddy.data.model.ExerciseValue;
+import be.kuleuven.gymbuddy.data.model.RecordedExerciseValue;
 
 public class SharedViewModel extends AndroidViewModel {
     private final RecordedExerciseRepository recordedExerciseRepository;
@@ -32,7 +32,7 @@ public class SharedViewModel extends AndroidViewModel {
         return publicExerciseRepository.getExercisesGroupedByMuscles();
     }
 
-    public LiveData<List<RecordedExercise>> getAllRecordedExercises(){
-        return recordedExerciseRepository.getAllRecordedExercises();
+    public LiveData<Map<String, List<RecordedExerciseValue>>> getRecordedExerciseValues(){
+        return recordedExerciseRepository.getAllRecordedExerciseValues();
     }
 }

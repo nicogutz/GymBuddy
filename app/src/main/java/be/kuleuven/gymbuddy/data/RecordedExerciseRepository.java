@@ -5,10 +5,12 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+import java.util.Map;
 
 import be.kuleuven.gymbuddy.data.local.AppDatabase;
 import be.kuleuven.gymbuddy.data.local.access.RecordedExerciseDAO;
 import be.kuleuven.gymbuddy.data.local.entities.RecordedExercise;
+import be.kuleuven.gymbuddy.data.model.RecordedExerciseValue;
 
 /**
  * Same thing as with the Public Exercises Repository but a bit simpler,
@@ -25,6 +27,11 @@ public class RecordedExerciseRepository {
     public LiveData<List<RecordedExercise>> getAllRecordedExercises() {
         return recordedExerciseDAO.getAll();
     }
+
+    public LiveData<Map<String, List<RecordedExerciseValue>>> getAllRecordedExerciseValues() {
+        return recordedExerciseDAO.getMapWithDates();
+    }
+
 
     public void insertAllRecordedExercise(List<RecordedExercise> recordedExercise) {
         AppDatabase.databaseWriteExecutor.execute(
