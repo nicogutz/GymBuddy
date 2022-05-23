@@ -19,7 +19,7 @@ public interface RecordedExerciseDAO {
     void insert(RecordedExercise recordedExercise);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(RecordedExercise... recordedExercises);
+    void insertAll(List<RecordedExercise> recordedExercises);
 
     @Delete
     void delete(RecordedExercise recordedExercise);

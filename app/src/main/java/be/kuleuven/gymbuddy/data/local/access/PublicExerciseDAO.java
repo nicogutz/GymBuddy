@@ -32,5 +32,6 @@ public interface PublicExerciseDAO {
     @Query("SELECT * FROM public_exercise pe WHERE identifier = :identifier")
     public LiveData<PublicExercise> getExerciseByIdentifier(String identifier);
 
-
+    @Query("DELETE FROM public_exercise")
+    void deleteAll();
 }

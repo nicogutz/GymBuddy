@@ -25,7 +25,7 @@ import be.kuleuven.gymbuddy.data.local.entities.SavedRoutine;
 @Database(entities = {
         PublicExercise.class,
         SavedRoutine.class,
-        RecordedExercise.class}, version = 1, exportSchema = true)
+        RecordedExercise.class}, version = 2, exportSchema = true)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
     public abstract PublicExerciseDAO publicExerciseDAO();
@@ -43,6 +43,7 @@ public abstract class AppDatabase extends RoomDatabase {
                             context.getApplicationContext(),
                             AppDatabase.class ,
                             "main-db")
+                    .fallbackToDestructiveMigration()
                     .build();
         }
         return instance;

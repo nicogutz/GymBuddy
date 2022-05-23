@@ -20,7 +20,7 @@ public interface SavedRoutinesDAO {
     void insert(SavedRoutine savedRoutine);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(SavedRoutine... savedRoutines);
+    void insertAll(List<SavedRoutine> savedRoutines);
 
     @Delete
     void delete(SavedRoutine savedRoutine);

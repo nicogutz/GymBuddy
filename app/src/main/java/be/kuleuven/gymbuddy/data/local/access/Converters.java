@@ -9,6 +9,10 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
 
+/***
+ * This class is in charge of converting the values from the databases to variables that SQLite
+ * can understand, Room disallows object references between entity classes.
+ */
 public class Converters {
     @TypeConverter
     public static ArrayList<String> arrayFromString(String value) {

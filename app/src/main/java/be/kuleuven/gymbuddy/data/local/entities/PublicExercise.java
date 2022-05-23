@@ -8,7 +8,9 @@ import com.google.gson.annotations.SerializedName;
 
 @Entity(tableName = "public_exercise")
 public class PublicExercise {
-    @PrimaryKey(autoGenerate = true)
+
+    @SerializedName("id")
+    @PrimaryKey
     public int publicExerciseID;
 
     @SerializedName("identifier")

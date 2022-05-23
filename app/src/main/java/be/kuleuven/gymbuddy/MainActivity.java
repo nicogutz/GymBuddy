@@ -21,15 +21,21 @@ import be.kuleuven.gymbuddy.databinding.ActivityMainPageBinding;
 public class MainActivity extends AppCompatActivity {
 
     private @NonNull ActivityMainPageBinding binding;
+    private PublicExerciseRepository publicExerciseRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PublicExerciseRepository publicExerciseRepository = new PublicExerciseRepository(getApplication());
+         publicExerciseRepository = new PublicExerciseRepository(getApplication());
 
     }
 
     public void changeView(View v){
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        publicExerciseRepository.deleteAll();
+    }
 }
