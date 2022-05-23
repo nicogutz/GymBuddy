@@ -24,12 +24,10 @@ import retrofit2.Response;
  * I am using a basic call.enqueue to get the response from studev. Thanks to the database
  * singleton we don't need to instantiate the database and also we don't have to worry about
  * making AsyncCalls every time we make a Query.
- *
+ * <p>
  * This repository is specific for the Public Exercises, we don't need to change anything on the
  * database except delete it all when it changed on the source.
- *
- * TODO: Handle remote database changes. Maybe a Stream that adds all id's from the response?
- * TODO: What to do without internet?
+ * <p>
  */
 
 public class PublicExerciseRepository {
@@ -40,6 +38,7 @@ public class PublicExerciseRepository {
      * This gets the Dao and the LiveData from the database. Notice how we don't need to
      * insert data to the database before accessing the LiveData object. This is because we can
      * get the data once it is "ready.
+     *
      * @param application the context it is run in, will be provided in the view model
      */
     public PublicExerciseRepository(Application application) {
@@ -47,13 +46,14 @@ public class PublicExerciseRepository {
 
         publicExerciseDAO = AppDatabase.getInstance(application).publicExerciseDAO();
 
-        this.exercisesGroupedByMuscles = publicExerciseDAO.getExercisesGroupedByMuscles();
+        exercisesGroupedByMuscles = publicExerciseDAO.getExercisesGroupedByMuscles();
 
         getPublicExerciseFromAPI(api);
     }
 
     /**
      * Simple API call, gets all the exercises from the remote database.
+     *
      * @param api the api that is to be used.
      */
     private void getPublicExerciseFromAPI(PublicExerciseAPI api) {
@@ -86,10 +86,14 @@ public class PublicExerciseRepository {
      * Since the list we get from the response.body() is already de-serialized, we can insert it
      * as is to the local database. We just need to run it in the WriteExecutor so that it runs
      * outside the main thread.
+     *
      * @param publicExercises a list of PublicExercises to be inserted to the database.
      */
     void insert(List<PublicExercise> publicExercises) {
         AppDatabase.databaseWriteExecutor.execute(
                 () -> publicExerciseDAO.insertAll(publicExercises));
     }
+
 }
+
+

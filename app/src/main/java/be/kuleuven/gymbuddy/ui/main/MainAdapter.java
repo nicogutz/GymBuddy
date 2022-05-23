@@ -74,7 +74,7 @@ public class MainAdapter extends BaseExpandableListAdapter {
                              boolean isExpanded,
                              View convertView,
                              ViewGroup parent) {
-        String group = keyArray[groupPosition].toString();
+        String group = splitCamelCase(keyArray[groupPosition].toString());
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
@@ -94,7 +94,7 @@ public class MainAdapter extends BaseExpandableListAdapter {
                              boolean isLastChild,
                              View convertView,
                              ViewGroup parent) {
-        String child = (String) getChild(groupPosition, childPosition).toString();
+        String child = (getChild(groupPosition, childPosition).toString());
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
@@ -104,7 +104,16 @@ public class MainAdapter extends BaseExpandableListAdapter {
         textView.setText(child);
         return convertView;
     }
-
+    static String splitCamelCase(String s) {
+        return s.replaceAll(
+                String.format("%s|%s|%s",
+                        "(?<=[A-Z])(?=[A-Z][a-z])",
+                        "(?<=[^A-Z])(?=[A-Z])",
+                        "(?<=[A-Za-z])(?=[^A-Za-z])"
+                ),
+                " "
+        );
+    }
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
