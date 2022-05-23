@@ -53,7 +53,6 @@ public class ExercisesFragment extends Fragment {
             // Update the UI, in this case, a TextView.
             adapter = new MainAdapter(getContext(), stringListMap);
             expandableListView.setAdapter(adapter);
-
         };
 
         // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.

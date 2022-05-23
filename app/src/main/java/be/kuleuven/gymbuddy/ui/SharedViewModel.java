@@ -12,27 +12,27 @@ import java.util.Map;
 import be.kuleuven.gymbuddy.data.PublicExerciseRepository;
 import be.kuleuven.gymbuddy.data.RecordedExerciseRepository;
 import be.kuleuven.gymbuddy.data.SavedRoutineRepository;
+import be.kuleuven.gymbuddy.data.local.entities.RecordedExercise;
 import be.kuleuven.gymbuddy.data.model.ExerciseValue;
 
 public class SharedViewModel extends AndroidViewModel {
-    private LiveData<Map<String, List<ExerciseValue>>> exercisesGroupedByMuscles;
+    private final RecordedExerciseRepository recordedExerciseRepository;
+    private final SavedRoutineRepository savedRoutineRepository;
+    private PublicExerciseRepository publicExerciseRepository;
 
     public SharedViewModel(@NonNull Application application) {
         super(application);
 
-        PublicExerciseRepository publicExerciseRepository =
-                new PublicExerciseRepository(application);
-
-        RecordedExerciseRepository recordedExerciseRepository =
-                new RecordedExerciseRepository(application);
-
-        SavedRoutineRepository savedRoutineRepository =
-                new SavedRoutineRepository(application);
-
-        exercisesGroupedByMuscles = publicExerciseRepository.getExercisesGroupedByMuscles();
+        publicExerciseRepository = new PublicExerciseRepository(application);
+        recordedExerciseRepository = new RecordedExerciseRepository(application);
+        savedRoutineRepository = new SavedRoutineRepository(application);
     }
 
     public LiveData<Map<String, List<ExerciseValue>>> getExercisesGroupedByMuscles() {
-        return exercisesGroupedByMuscles;
+        return publicExerciseRepository.getExercisesGroupedByMuscles();
+    }
+
+    public LiveData<List<RecordedExercise>> getAllRecordedExercises(){
+        return recordedExerciseRepository.getAllRecordedExercises();
     }
 }

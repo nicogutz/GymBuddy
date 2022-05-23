@@ -30,7 +30,7 @@ import be.kuleuven.gymbuddy.data.local.entities.SavedRoutine;
 @Database(entities = {
         PublicExercise.class,
         SavedRoutine.class,
-        RecordedExercise.class}, version = 3, exportSchema = true)
+        RecordedExercise.class}, version = 4, exportSchema = true)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
     /**
@@ -62,7 +62,6 @@ public abstract class AppDatabase extends RoomDatabase {
                             context.getApplicationContext(),
                             AppDatabase.class,
                             "main-db")
-                    //Needed so when we change the schema it doesn't break.
                     .fallbackToDestructiveMigration()
                     .build();
         }

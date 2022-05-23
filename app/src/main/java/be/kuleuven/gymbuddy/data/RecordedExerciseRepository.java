@@ -10,22 +10,25 @@ import be.kuleuven.gymbuddy.data.local.AppDatabase;
 import be.kuleuven.gymbuddy.data.local.access.RecordedExerciseDAO;
 import be.kuleuven.gymbuddy.data.local.entities.RecordedExercise;
 
+/**
+ * Same thing as with the Public Exercises Repository but a bit simpler,
+ * the list of recorded exercises eventually has to be casted into MutableLiveData
+ * since we need to delete and add new recorded exercises.
+ */
 public class RecordedExerciseRepository {
     private final RecordedExerciseDAO recordedExerciseDAO;
-    private final LiveData<List<RecordedExercise>> allRecordedExercises;
 
     public RecordedExerciseRepository(Application application) {
         recordedExerciseDAO = AppDatabase.getInstance(application).recordedExerciseDAO();
-        allRecordedExercises = recordedExerciseDAO.getAll();
     }
 
     public LiveData<List<RecordedExercise>> getAllRecordedExercises() {
-        return allRecordedExercises;
+        return recordedExerciseDAO.getAll();
     }
 
-    public void insertAllRecordedExercise(RecordedExercise recordedExercise) {
+    public void insertAllRecordedExercise(List<RecordedExercise> recordedExercise) {
         AppDatabase.databaseWriteExecutor.execute(
-                () -> recordedExerciseDAO.insert(recordedExercise));
+                () -> recordedExerciseDAO.insertAll(recordedExercise));
     }
 
     public void removeRecordedExercise(RecordedExercise recordedExercise) {

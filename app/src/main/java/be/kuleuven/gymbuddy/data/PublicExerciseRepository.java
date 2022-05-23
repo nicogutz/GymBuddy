@@ -3,6 +3,7 @@ package be.kuleuven.gymbuddy.data;
 import android.app.Application;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
@@ -32,27 +33,24 @@ import retrofit2.Response;
 
 public class PublicExerciseRepository {
     private final PublicExerciseDAO publicExerciseDAO;
-    private LiveData<Map<String, List<ExerciseValue>>> exercisesGroupedByMuscles;
 
     /**
      * This gets the Dao and the LiveData from the database. Notice how we don't need to
      * insert data to the database before accessing the LiveData object. This is because we can
-     * get the data once it is "ready.
+     * get the data once it is "ready".
      *
      * @param application the context it is run in, will be provided in the view model
      */
     public PublicExerciseRepository(Application application) {
         PublicExerciseAPI api = RetrofitInstance.getInstance().create(PublicExerciseAPI.class);
-
         publicExerciseDAO = AppDatabase.getInstance(application).publicExerciseDAO();
-
-        exercisesGroupedByMuscles = publicExerciseDAO.getExercisesGroupedByMuscles();
 
         getPublicExerciseFromAPI(api);
     }
 
     /**
-     * Simple API call, gets all the exercises from the remote database.
+     * Simple API call, gets all the exercises from the remote database. Using enqueue to
+     * run it on a separate thread.
      *
      * @param api the api that is to be used.
      */
@@ -60,22 +58,26 @@ public class PublicExerciseRepository {
         Call<List<PublicExercise>> call = api.getPublicExercises();
         call.enqueue(new retrofit2.Callback<List<PublicExercise>>() {
             @Override
-            public void onResponse(Call<List<PublicExercise>> call,
-                                   Response<List<PublicExercise>> response) {
+            public void onResponse(@NonNull Call<List<PublicExercise>> call,
+                                   @NonNull Response<List<PublicExercise>> response) {
                 if (response.isSuccessful()) {
                     insert(response.body());
                 }
             }
 
             @Override
-            public void onFailure(Call<List<PublicExercise>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<PublicExercise>> call, @NonNull Throwable t) {
                 Log.d("main", "onFailure: " + t.getMessage());
             }
         });
     }
 
+    public LiveData<PublicExercise> getPublicExerciseByID(int id) {
+        return publicExerciseDAO.getExerciseByID(id);
+    }
+
     public LiveData<Map<String, List<ExerciseValue>>> getExercisesGroupedByMuscles() {
-        return exercisesGroupedByMuscles;
+        return publicExerciseDAO.getExercisesGroupedByMuscles();
     }
 
     public void deleteAll() {

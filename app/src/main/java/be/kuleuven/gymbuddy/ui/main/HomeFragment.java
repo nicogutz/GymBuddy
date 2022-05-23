@@ -15,11 +15,8 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import be.kuleuven.gymbuddy.R;
 
 public class HomeFragment extends Fragment {
-
     //    graph jjoe64
     private LineGraphSeries<DataPoint> series1;
-
-
     public HomeFragment() {
         // Required empty public constructor
     }
