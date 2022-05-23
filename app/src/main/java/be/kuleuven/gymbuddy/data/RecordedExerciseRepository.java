@@ -4,6 +4,9 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +25,18 @@ public class RecordedExerciseRepository {
 
     public RecordedExerciseRepository(Application application) {
         recordedExerciseDAO = AppDatabase.getInstance(application).recordedExerciseDAO();
+//        Calendar cal = Calendar.getInstance();
+//        cal.set(Calendar.YEAR, 2022);
+//        cal.set(Calendar.MONTH, Calendar.MARCH);
+//
+//        List<RecordedExercise> testList = new ArrayList<RecordedExercise>();
+//        for (int i = 1; i < 10; i++) {
+//            cal.set(Calendar.DAY_OF_MONTH, i);
+//            testList.add(new RecordedExercise("TestGroup",
+//                    "Test_1", "Test 1", cal.getTime(), i,i,i));
+//        }
+//
+//        insertAllRecordedExercise(testList);
     }
 
     public LiveData<List<RecordedExercise>> getAllRecordedExercises() {

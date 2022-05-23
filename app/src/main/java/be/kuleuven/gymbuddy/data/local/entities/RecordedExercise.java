@@ -73,4 +73,19 @@ public class RecordedExercise {
     public int getReps() {
         return reps;
     }
+
+    public RecordedExercise(String muscleGroup,
+                            String internalName,
+                            String name,
+                            Date date,
+                            int sets,
+                            float weight, int reps) {
+        this.muscleGroup = muscleGroup;
+        this.internalName = internalName;
+        this.name = name;
+        this.date = date;
+        this.sets = sets;
+        this.weight = weight;
+        this.reps = reps;
+    }
 }
