@@ -1,13 +1,15 @@
 package be.kuleuven.gymbuddy.ui.main;
 
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
+import androidx.fragment.app.Fragment;
+
+import java.util.ArrayList;
 
 import be.kuleuven.gymbuddy.R;
 
@@ -17,6 +19,10 @@ import be.kuleuven.gymbuddy.R;
  * create an instance of this fragment.
  */
 public class RoutinesFragment extends Fragment {
+
+    ArrayList<String> spinnerArray = new ArrayList<>();
+
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,6 +68,36 @@ public class RoutinesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_routine, container, false);
     }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Spinner spinner  = view.findViewById(R.id.spinner);
+        itemsInSpinnerArray();
+        ArrayAdapter<Cha>
+
+    }
+
+    //populating spinnerArray
+    public void itemsInSpinnerArray() {
+        spinnerArray.add("Sets");
+        spinnerArray.add("Reps");
+        spinnerArray.add("Weight");
+    }
+
+    public void setSets(int x) {
+
+    }
+
+    public void setReps(int x) {
+
+    }
+
+    public void setWeight(int x) {
+
+    }
+
 }
