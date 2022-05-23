@@ -8,6 +8,7 @@ import androidx.room.MapInfo;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +36,7 @@ public interface PublicExerciseDAO {
     @Query("SELECT DISTINCT muscle_group, publicExerciseID, internal_name, name FROM " +
             "public_exercise ORDER BY muscle_group")
     @MapInfo(keyColumn = "muscle_group")
-    public LiveData<Map<String, List<ExerciseValue>>> getExerciseCategories();
+    public LiveData<Map<String, List<ExerciseValue>>> getExercisesGroupedByMuscles();
 
     @Query("SELECT * FROM public_exercise pe WHERE pe.publicExerciseID = :id")
     public LiveData<PublicExercise> getExerciseByIdentifier(int id);

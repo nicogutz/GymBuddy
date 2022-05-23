@@ -5,12 +5,13 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import be.kuleuven.gymbuddy.data.local.AppDatabase;
 import be.kuleuven.gymbuddy.data.local.access.PublicExerciseDAO;
 import be.kuleuven.gymbuddy.data.local.entities.PublicExercise;
+import be.kuleuven.gymbuddy.data.model.ExerciseValue;
 import be.kuleuven.gymbuddy.data.remote.PublicExerciseAPI;
 import be.kuleuven.gymbuddy.data.remote.RetrofitInstance;
 import retrofit2.Call;
@@ -33,7 +34,7 @@ import retrofit2.Response;
 
 public class PublicExerciseRepository {
     private final PublicExerciseDAO publicExerciseDAO;
-//    private final LiveData<List<PublicExercise>> allPublicExercises;
+    private LiveData<Map<String, List<ExerciseValue>>> exercisesGroupedByMuscles;
 
     /**
      * This gets the Dao and the LiveData from the database. Notice how we don't need to
@@ -46,15 +47,14 @@ public class PublicExerciseRepository {
 
         publicExerciseDAO = AppDatabase.getInstance(application).publicExerciseDAO();
 
-//        allPublicExercises = publicExerciseDAO.getAllExercises();
-//        ArrayList<PublicExercise> list = (ArrayList<PublicExercise>) allPublicExercises.getValue();
+        this.exercisesGroupedByMuscles = publicExerciseDAO.getExercisesGroupedByMuscles();
 
         getPublicExerciseFromAPI(api);
     }
 
     /**
      * Simple API call, gets all the exercises from the remote database.
-     * @param api
+     * @param api the api that is to be used.
      */
     private void getPublicExerciseFromAPI(PublicExerciseAPI api) {
         Call<List<PublicExercise>> call = api.getPublicExercises();
@@ -74,9 +74,9 @@ public class PublicExerciseRepository {
         });
     }
 
-//    public LiveData<List<PublicExercise>> getAllPublicExercises() {
-//        return allPublicExercises;
-//    }
+    public LiveData<Map<String, List<ExerciseValue>>> getExercisesGroupedByMuscles() {
+        return exercisesGroupedByMuscles;
+    }
 
     public void deleteAll() {
         AppDatabase.databaseWriteExecutor.execute(publicExerciseDAO::deleteAll);

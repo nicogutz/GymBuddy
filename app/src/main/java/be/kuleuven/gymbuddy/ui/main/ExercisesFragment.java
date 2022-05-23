@@ -7,22 +7,29 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
+import java.util.Map;
 
 import be.kuleuven.gymbuddy.R;
 import be.kuleuven.gymbuddy.data.model.ExerciseValue;
+import be.kuleuven.gymbuddy.ui.SharedViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
+@SuppressWarnings("ConstantConditions")
 public class ExercisesFragment extends Fragment {
 
     ExpandableListView expandableListView;
     MainAdapter adapter;
+    private LiveData<Map<String, List<ExerciseValue>>> exercisesGroupedByMuscles;
+
 
     public ExercisesFragment() {
     }
@@ -37,16 +44,22 @@ public class ExercisesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         expandableListView = view.findViewById(R.id.expandable_listview);
+        // Create the observer which updates the UI.
+        LifecycleOwner model = getViewLifecycleOwner();
+        SharedViewModel viewModel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
 
-        TreeMap<String, ArrayList<ExerciseValue>> exerciseListGroups = new TreeMap<>();
-        ArrayList<ExerciseValue> list = new ArrayList<>();
-        list.add(new ExerciseValue(123, "test_ex", "Test"));
-        list.add(new ExerciseValue(132, "dsaasd", "dasasd"));
-        exerciseListGroups.put("Test Group", list);
+        final Observer<Map<String, List<ExerciseValue>>> nameObserver = (Observer<Map<String,
+                List<ExerciseValue>>>) stringListMap -> {
+            // Update the UI, in this case, a TextView.
+            adapter = new MainAdapter(getContext(), stringListMap);
+            expandableListView.setAdapter(adapter);
 
-        adapter = new MainAdapter(getContext(), exerciseListGroups);
-        expandableListView.setAdapter(adapter);
+        };
 
+        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
+        viewModel.getExercisesGroupedByMuscles().observe(getActivity(), nameObserver);
+
+    }
 
 //        listView = (ListView) view.findViewById(R.id.listExerciseCategory);
 //        exCatList.add("legs");
@@ -55,8 +68,6 @@ public class ExercisesFragment extends Fragment {
 //
 //        CustomAdapter customAdapter = new CustomAdapter();
 //        listView.setAdapter(customAdapter);
-
-    }
 
 
     /**

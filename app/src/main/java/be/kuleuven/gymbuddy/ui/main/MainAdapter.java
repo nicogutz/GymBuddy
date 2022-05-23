@@ -1,5 +1,6 @@
 package be.kuleuven.gymbuddy.ui.main;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
+import java.util.Map;
+import java.util.Objects;
 
 import be.kuleuven.gymbuddy.R;
 import be.kuleuven.gymbuddy.data.model.ExerciseValue;
@@ -20,15 +21,15 @@ import be.kuleuven.gymbuddy.data.model.ExerciseValue;
 public class MainAdapter extends BaseExpandableListAdapter {
 
     Context context;
-    TreeMap<String, ArrayList<ExerciseValue>> exercisesGroupedByMuscle;
+    Map<String, List<ExerciseValue>> exercisesGroupedByMuscle;
     Object[] keyArray;
 
     public MainAdapter(Context context,
-                       TreeMap<String, ArrayList<ExerciseValue>> exercisesGroupedByMuscle) {
+                       Map<String, List<ExerciseValue>> exercisesGroupedByMuscle) {
 
         this.context = context;
         this.exercisesGroupedByMuscle = exercisesGroupedByMuscle;
-        keyArray =  exercisesGroupedByMuscle.keySet().toArray();
+        keyArray = exercisesGroupedByMuscle.keySet().toArray();
 
     }
 
@@ -39,7 +40,7 @@ public class MainAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this.exercisesGroupedByMuscle.get(keyArray[groupPosition]).size();
+        return Objects.requireNonNull(this.exercisesGroupedByMuscle.get(keyArray[groupPosition])).size();
     }
 
     @Override
@@ -49,7 +50,7 @@ public class MainAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return this.exercisesGroupedByMuscle.get(keyArray[groupPosition]).get(childPosition);
+        return Objects.requireNonNull(this.exercisesGroupedByMuscle.get(keyArray[groupPosition])).get(childPosition);
     }
 
     @Override
@@ -67,12 +68,13 @@ public class MainAdapter extends BaseExpandableListAdapter {
         return false;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getGroupView(int groupPosition,
                              boolean isExpanded,
                              View convertView,
                              ViewGroup parent) {
-        String group =  keyArray[groupPosition].toString();
+        String group = keyArray[groupPosition].toString();
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
@@ -85,6 +87,7 @@ public class MainAdapter extends BaseExpandableListAdapter {
 
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getChildView(int groupPosition,
                              int childPosition,
