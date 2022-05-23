@@ -45,11 +45,11 @@ public class ExercisesFragment extends Fragment {
 
         expandableListView = view.findViewById(R.id.expandable_listview);
         // Create the observer which updates the UI.
-        LifecycleOwner model = getViewLifecycleOwner();
+
         SharedViewModel viewModel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
 
-        final Observer<Map<String, List<ExerciseValue>>> nameObserver = (Observer<Map<String,
-                List<ExerciseValue>>>) stringListMap -> {
+        final Observer<Map<String, List<ExerciseValue>>> nameObserver =
+                (Observer<Map<String, List<ExerciseValue>>>) stringListMap -> {
             // Update the UI, in this case, a TextView.
             adapter = new MainAdapter(getContext(), stringListMap);
             expandableListView.setAdapter(adapter);
@@ -61,38 +61,6 @@ public class ExercisesFragment extends Fragment {
 
     }
 
-//        listView = (ListView) view.findViewById(R.id.listExerciseCategory);
-//        exCatList.add("legs");
-//        exCatList.add("glutes");
-//        exCatList.add("chest");
-//
-//        CustomAdapter customAdapter = new CustomAdapter();
-//        listView.setAdapter(customAdapter);
-
-
-    /**
-     * class CustomAdapter extends BaseAdapter {
-     *
-     * @Override public int getCount() {
-     * return exCatList.size();  //or should we use .size() -1?
-     * }
-     * @Override public Object getItem(int position) {
-     * return null;
-     * }
-     * @Override public long getItemId(int position) {
-     * return 0;
-     * }
-     * @Override public View getView(int position, View convertView, ViewGroup parent) {
-     * convertView = getLayoutInflater().inflate(R.layout.custom_layout_ex_ategory, null);
-     * <p>
-     * TextView textView_title = (TextView) convertView.findViewById(R.id.textView_exCatItem);
-     * <p>
-     * textView_title.setText(exCatList.get(position));
-     * return convertView;
-     * }
-     * <p>
-     * }
-     **/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

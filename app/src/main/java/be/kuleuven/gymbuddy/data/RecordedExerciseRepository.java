@@ -24,10 +24,12 @@ public class RecordedExerciseRepository {
     }
 
     public void insertAllRecordedExercise(RecordedExercise recordedExercise) {
-        AppDatabase.databaseWriteExecutor.execute(() -> recordedExerciseDAO.insert(recordedExercise));
+        AppDatabase.databaseWriteExecutor.execute(
+                () -> recordedExerciseDAO.insert(recordedExercise));
     }
 
     public void removeRecordedExercise(RecordedExercise recordedExercise) {
-        AppDatabase.databaseWriteExecutor.execute(() -> recordedExerciseDAO.delete(recordedExercise));
+        AppDatabase.databaseWriteExecutor.execute(
+                () -> recordedExerciseDAO.delete(recordedExercise));
     }
 }

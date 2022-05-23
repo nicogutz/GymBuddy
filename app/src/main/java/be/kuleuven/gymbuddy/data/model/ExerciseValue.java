@@ -4,6 +4,10 @@ import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * A class to map the query results of exercises to a map of lists. This class maps the equivalent
+ * columns in the PublicExercise table.
+ */
 public class ExerciseValue {
     @SerializedName("publicExerciseID")
     public int publicExerciseID;
@@ -32,6 +36,9 @@ public class ExerciseValue {
         return name;
     }
 
+    /**
+     * Just for testing, Exercises are final.
+     */
     public ExerciseValue(int publicExerciseID, String internal_name, String name) {
         this.publicExerciseID = publicExerciseID;
         this.internal_name = internal_name;
