@@ -27,21 +27,21 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-//        for jjoe64 graph:
-        double x,y;
-        x = 0;
-
-        GraphView graph = (GraphView) requireActivity().findViewById(R.id.graph);
-        series1 = new LineGraphSeries<>();
-
-        int numDataPoints = 500;
-        for (int i = 0; i <numDataPoints; i++) {
-            x += 0.1;
-            y = Math.sin(x);
-            series1.appendData(new DataPoint(x,y), true, 100);
-        }
-        graph.addSeries(series1);
+//        setHasOptionsMenu(true);
+////        for jjoe64 graph:
+//        double x,y;
+//        x = 0;
+//
+//        GraphView graph = (GraphView) requireActivity().findViewById(R.id.graph);
+//        series1 = new LineGraphSeries<>();
+//
+//        int numDataPoints = 500;
+//        for (int i = 0; i <numDataPoints; i++) {
+//            x += 0.1;
+//            y = Math.sin(x);
+//            series1.appendData(new DataPoint(x,y), true, 100);
+//        }
+//        graph.addSeries(series1);
     } //class or interface expected here?
 
     @Override
