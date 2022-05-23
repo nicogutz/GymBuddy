@@ -11,13 +11,28 @@ import java.util.Date;
 
 public class Converters {
     @TypeConverter
-    public static ArrayList<String> fromString(String value) {
-        Type listType = new TypeToken<ArrayList<String>>() {}.getType();
+    public static ArrayList<String> arrayFromString(String value) {
+        Type listType = new TypeToken<ArrayList<String>>() {
+        }.getType();
         return new Gson().fromJson(value, listType);
     }
 
     @TypeConverter
     public static String fromArrayList(ArrayList<String> list) {
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        return json;
+    }
+
+    @TypeConverter
+    public static ArrayList<String[]> mapFromString(String value) {
+        Type listType = new TypeToken<ArrayList<String[]>>() {
+        }.getType();
+        return new Gson().fromJson(value, listType);
+    }
+
+    @TypeConverter
+    public static String fromMap(ArrayList<String[]> list) {
         Gson gson = new Gson();
         String json = gson.toJson(list);
         return json;

@@ -1,35 +1,53 @@
 package be.kuleuven.gymbuddy.data.local;
 
+import static be.kuleuven.gymbuddy.common.Constants.NUMBER_OF_THREADS;
+
+import android.content.Context;
+
+import androidx.annotation.NonNull;
 import androidx.room.Database;
+import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
+import androidx.sqlite.db.SupportSQLiteDatabase;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import be.kuleuven.gymbuddy.data.local.access.Converters;
 import be.kuleuven.gymbuddy.data.local.access.PublicExerciseDAO;
 import be.kuleuven.gymbuddy.data.local.access.RecordedExerciseDAO;
-import be.kuleuven.gymbuddy.data.local.access.RecordedRoutineDAO;
-import be.kuleuven.gymbuddy.data.local.access.SavedExerciseDAO;
 import be.kuleuven.gymbuddy.data.local.access.SavedRoutinesDAO;
 import be.kuleuven.gymbuddy.data.local.entities.PublicExercise;
 import be.kuleuven.gymbuddy.data.local.entities.RecordedExercise;
-import be.kuleuven.gymbuddy.data.local.entities.RecordedRoutine;
-import be.kuleuven.gymbuddy.data.local.entities.SavedExercise;
 import be.kuleuven.gymbuddy.data.local.entities.SavedRoutine;
 
 @Database(entities = {
         PublicExercise.class,
         SavedRoutine.class,
-        SavedExercise.class,
-        RecordedRoutine.class,
-        RecordedExercise.class
-}, version = 1, exportSchema = true)
+        RecordedExercise.class}, version = 1, exportSchema = true)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
-    public abstract PublicExerciseDAO getPublicExerciseDAO();
-    public abstract RecordedExerciseDAO getRecordedExerciseDAO();
-    public abstract RecordedRoutineDAO getRecordedRoutineDAO();
-    public abstract SavedExerciseDAO getSavedExerciseDAO();
-    public abstract SavedRoutinesDAO getSavedRoutinesDAO();
+    public abstract PublicExerciseDAO publicExerciseDAO();
+    public abstract RecordedExerciseDAO recordedExerciseDAO();
+    public abstract SavedRoutinesDAO savedRoutinesDAO();
+
+    public static final ExecutorService databaseWriteExecutor =
+            Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+
+    private static AppDatabase instance;
+
+    public static synchronized AppDatabase getInstance(Context context){
+        if(instance == null){
+            instance = Room.databaseBuilder(
+                            context.getApplicationContext(),
+                            AppDatabase.class ,
+                            "main-db")
+                    .build();
+        }
+        return instance;
+    }
+
 }
 
 

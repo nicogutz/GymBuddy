@@ -5,18 +5,21 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(foreignKeys = {@ForeignKey(entity = SavedExercise.class,
-        parentColumns = "savedExerciseID",
-        childColumns = "saved_exercise_id",
-        onDelete = ForeignKey.CASCADE)
-},
-        tableName = "recorded_exercise")
+import java.util.Date;
+
+@Entity(tableName = "recorded_exercise")
 public class RecordedExercise {
     @PrimaryKey(autoGenerate = true)
     public int recordedExerciseID;
 
-    @ColumnInfo(name = "saved_exercise_id", index = true)
-    public int savedExerciseID;
+    @ColumnInfo(name = "public_exercise_identifier")
+    public int publicExerciseIdentifier;
+
+    @ColumnInfo(name = "public_exercise_name")
+    public int publicExerciseName;
+
+    @ColumnInfo(name = "date")
+    public Date date;
 
     @ColumnInfo(name = "sets")
     public int sets;
@@ -26,5 +29,4 @@ public class RecordedExercise {
 
     @ColumnInfo(name = "reps")
     public int reps;
-
 }
