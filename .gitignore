@@ -13,3 +13,4 @@
 .externalNativeBuild
 .cxx
 local.properties
+/app/schemas/be.kuleuven.gymbuddy.data.local.AppDatabase/1.json
