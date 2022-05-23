@@ -12,40 +12,40 @@ import java.util.HashMap;
 import java.util.List;
 
 import be.kuleuven.gymbuddy.R;
+import be.kuleuven.gymbuddy.ui.objects.MuscleGroup;
 
 //depending on implementation we might just need to override the getCount() and getView()
 
 public class MainAdapter extends BaseExpandableListAdapter {
 
     Context context;
-    List<ArrayList> listGroup;
-    HashMap<String,List<String>> listItem;
+    ArrayList<MuscleGroup> muscleGroups;
 
-    public MainAdapter(Context context, List<ArrayList> listGroup, HashMap<String,List<String>> listItem) {
+    public MainAdapter(Context context,
+                       ArrayList<MuscleGroup> muscleGroups) {
         this.context = context;
-        this.listGroup = listGroup;
-        this.listItem = listItem;
+        this.muscleGroups = muscleGroups;
     }
 
 
     @Override
     public int getGroupCount() {
-        return listGroup.size();
+        return muscleGroups.size();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this.listItem.get(this.listGroup.get(groupPosition)).size();
+        return this.muscleGroups.get(groupPosition).size();
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return this.listGroup.get(groupPosition);
+        return this.muscleGroups.get(groupPosition);
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return this.listItem.get(this.listGroup.get(groupPosition)).get(childPosition);
+        return this.muscleGroups.get(groupPosition).get(childPosition);
     }
 
     @Override
@@ -64,11 +64,15 @@ public class MainAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        String group = (String) getGroup(groupPosition);
-        if(convertView==null){
-            LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.custom_layout_ex_ategory,  null);
+    public View getGroupView(int groupPosition,
+                             boolean isExpanded,
+                             View convertView,
+                             ViewGroup parent) {
+        String group =  getGroup(groupPosition).toString();
+        if (convertView == null) {
+            LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(
+                    Context.LAYOUT_INFLATER_SERVICE);
+            convertView = layoutInflater.inflate(R.layout.custom_layout_ex_ategory, null);
         }
 
         TextView textView = convertView.findViewById(R.id.list_parent);
@@ -78,10 +82,15 @@ public class MainAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(int groupPosition,
+                             int childPosition,
+                             boolean isLastChild,
+                             View convertView,
+                             ViewGroup parent) {
         String child = (String) getChild(groupPosition, childPosition);
-        if(convertView == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (convertView == null) {
+            LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(
+                    Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.exercise_item, null);
         }
         TextView textView = convertView.findViewById(R.id.list_child);
