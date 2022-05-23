@@ -1,0 +1,182 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "3192a62dca191d8da23d18f6cc2f1ae1",
+    "entities": [
+      {
+        "tableName": "public_exercise",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`publicExerciseID` INTEGER NOT NULL, `identifier` TEXT, `name` TEXT, `utility` TEXT, `mechanics` TEXT, `force` TEXT, `target_muscles` TEXT, `synergist_muscles` TEXT, `preparation` TEXT, `execution` TEXT, `comments` TEXT, PRIMARY KEY(`publicExerciseID`))",
+        "fields": [
+          {
+            "fieldPath": "publicExerciseID",
+            "columnName": "publicExerciseID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "identifier",
+            "columnName": "identifier",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "utility",
+            "columnName": "utility",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mechanics",
+            "columnName": "mechanics",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "force",
+            "columnName": "force",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "targetMuscles",
+            "columnName": "target_muscles",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "synergistMuscles",
+            "columnName": "synergist_muscles",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "preparation",
+            "columnName": "preparation",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "execution",
+            "columnName": "execution",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "comments",
+            "columnName": "comments",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "publicExerciseID"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "saved_routine",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`savedRoutineID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `saved_exercises` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "savedRoutineID",
+            "columnName": "savedRoutineID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "savedExercises",
+            "columnName": "saved_exercises",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "savedRoutineID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "recorded_exercise",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recordedExerciseID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `public_exercise_identifier` INTEGER NOT NULL, `public_exercise_name` INTEGER NOT NULL, `date` INTEGER, `sets` INTEGER NOT NULL, `weight` REAL NOT NULL, `reps` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "recordedExerciseID",
+            "columnName": "recordedExerciseID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "publicExerciseIdentifier",
+            "columnName": "public_exercise_identifier",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "publicExerciseName",
+            "columnName": "public_exercise_name",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sets",
+            "columnName": "sets",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "weight",
+            "columnName": "weight",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reps",
+            "columnName": "reps",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "recordedExerciseID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3192a62dca191d8da23d18f6cc2f1ae1')"
+    ]
+  }
+}
