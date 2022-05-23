@@ -11,8 +11,8 @@ import be.kuleuven.gymbuddy.data.local.access.RecordedExerciseDAO;
 import be.kuleuven.gymbuddy.data.local.entities.RecordedExercise;
 
 public class RecordedExerciseRepository {
-    private RecordedExerciseDAO recordedExerciseDAO;
-    private LiveData<List<RecordedExercise>> allRecordedExercises;
+    private final RecordedExerciseDAO recordedExerciseDAO;
+    private final LiveData<List<RecordedExercise>> allRecordedExercises;
 
     public RecordedExerciseRepository(Application application) {
         recordedExerciseDAO = AppDatabase.getInstance(application).recordedExerciseDAO();

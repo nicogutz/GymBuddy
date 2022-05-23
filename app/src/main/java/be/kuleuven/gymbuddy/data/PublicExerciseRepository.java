@@ -16,8 +16,8 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 public class PublicExerciseRepository {
-    private PublicExerciseDAO publicExerciseDAO;
-    private LiveData<List<PublicExercise>> allPublicExercises;
+    private final PublicExerciseDAO publicExerciseDAO;
+    private final LiveData<List<PublicExercise>> allPublicExercises;
 
     public PublicExerciseRepository(Application application) {
         PublicExerciseAPI api = RetrofitInstance.getInstance().create(PublicExerciseAPI.class);

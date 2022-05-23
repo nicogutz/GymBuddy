@@ -11,8 +11,8 @@ import be.kuleuven.gymbuddy.data.local.access.SavedRoutinesDAO;
 import be.kuleuven.gymbuddy.data.local.entities.SavedRoutine;
 
 public class SavedRoutineRepository {
-    private SavedRoutinesDAO savedRoutinesDAO;
-    private LiveData<List<SavedRoutine>> allSavedRoutines;
+    private final SavedRoutinesDAO savedRoutinesDAO;
+    private final LiveData<List<SavedRoutine>> allSavedRoutines;
 
     public SavedRoutineRepository(Application application) {
         savedRoutinesDAO = AppDatabase.getInstance(application).savedRoutinesDAO();
