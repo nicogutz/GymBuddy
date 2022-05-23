@@ -32,8 +32,7 @@ public interface PublicExerciseDAO {
     @Query("SELECT * FROM public_exercise pe ORDER BY identifier")
     public LiveData<List<PublicExercise>> getAllExercises();
 
-    //TODO: Change when new column is available.
-    @Query("SELECT pe.identifier FROM public_exercise pe ORDER BY pe.identifier")
+    @Query("SELECT DISTINCT pe.muscle_group FROM public_exercise pe ORDER BY pe.muscle_group")
     public LiveData<List<String>> getExerciseCategories();
 
     @Query("SELECT * FROM public_exercise pe WHERE identifier = :identifier")

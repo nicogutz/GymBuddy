@@ -61,6 +61,14 @@ public class PublicExercise {
     @ColumnInfo(name = "comments")
     public String comments;
 
+    @SerializedName("muscle_group")
+    @ColumnInfo(name = "muscle_group")
+    public String muscle_group;
+
+    @SerializedName("internal_name")
+    @ColumnInfo(name = "internal_name")
+    public String internal_name;
+
     public int getPublicExerciseID() {
         return publicExerciseID;
     }

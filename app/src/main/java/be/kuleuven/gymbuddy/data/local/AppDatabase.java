@@ -30,7 +30,7 @@ import be.kuleuven.gymbuddy.data.local.entities.SavedRoutine;
 @Database(entities = {
         PublicExercise.class,
         SavedRoutine.class,
-        RecordedExercise.class}, version = 2, exportSchema = true)
+        RecordedExercise.class}, version = 3, exportSchema = true)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
     /**
@@ -51,6 +51,7 @@ public abstract class AppDatabase extends RoomDatabase {
      * tests and run them in the Emulator #NoThanks. The upside is that the default emulator in
      * Android Studio has a database inspector, so we can see the database state at runtime
      * without too much hassle. Good thing I could never install Genymotion.
+     * Synchronization makes the instance thread safe.
      *
      * @param context the application it is running.
      * @return an instance of AppDatabase.
