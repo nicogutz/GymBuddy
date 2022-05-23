@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import be.kuleuven.gymbuddy.data.local.AppDatabase;
@@ -32,7 +33,7 @@ import retrofit2.Response;
 
 public class PublicExerciseRepository {
     private final PublicExerciseDAO publicExerciseDAO;
-    private final LiveData<List<PublicExercise>> allPublicExercises;
+//    private final LiveData<List<PublicExercise>> allPublicExercises;
 
     /**
      * This gets the Dao and the LiveData from the database. Notice how we don't need to
@@ -45,7 +46,8 @@ public class PublicExerciseRepository {
 
         publicExerciseDAO = AppDatabase.getInstance(application).publicExerciseDAO();
 
-        allPublicExercises = publicExerciseDAO.getAllExercises();
+//        allPublicExercises = publicExerciseDAO.getAllExercises();
+//        ArrayList<PublicExercise> list = (ArrayList<PublicExercise>) allPublicExercises.getValue();
 
         getPublicExerciseFromAPI(api);
     }
@@ -72,9 +74,9 @@ public class PublicExerciseRepository {
         });
     }
 
-    public LiveData<List<PublicExercise>> getAllPublicExercises() {
-        return allPublicExercises;
-    }
+//    public LiveData<List<PublicExercise>> getAllPublicExercises() {
+//        return allPublicExercises;
+//    }
 
     public void deleteAll() {
         AppDatabase.databaseWriteExecutor.execute(publicExerciseDAO::deleteAll);

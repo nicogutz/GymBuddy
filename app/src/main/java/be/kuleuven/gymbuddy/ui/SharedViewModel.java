@@ -14,7 +14,6 @@ import be.kuleuven.gymbuddy.data.SavedRoutineRepository;
 import be.kuleuven.gymbuddy.data.local.entities.PublicExercise;
 
 public class SharedViewModel extends AndroidViewModel {
-    private final MutableLiveData<List<PublicExercise>> publicExercises;
     private PublicExerciseRepository publicExerciseRepository;
     private RecordedExerciseRepository recordedExerciseRepository;
     private SavedRoutineRepository savedRoutineRepository;
@@ -26,8 +25,5 @@ public class SharedViewModel extends AndroidViewModel {
         recordedExerciseRepository = new RecordedExerciseRepository(application);
         savedRoutineRepository = new SavedRoutineRepository(application);
 
-        publicExercises =
-                (MutableLiveData<List<PublicExercise>>)
-                        publicExerciseRepository.getAllPublicExercises();
     }
 }

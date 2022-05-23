@@ -4,12 +4,15 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.MapInfo;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import java.util.List;
+import java.util.Map;
 
 import be.kuleuven.gymbuddy.data.local.entities.PublicExercise;
+import be.kuleuven.gymbuddy.data.model.ExerciseValue;
 
 /**
  * A DAO is a Data Access Object, pretty much an interface between SQLite and Java, it works in
@@ -29,14 +32,13 @@ public interface PublicExerciseDAO {
     @Delete
     void delete(PublicExercise publicExercise);
 
-    @Query("SELECT * FROM public_exercise pe ORDER BY identifier")
-    public LiveData<List<PublicExercise>> getAllExercises();
+    @Query("SELECT DISTINCT muscle_group, publicExerciseID, internal_name, name FROM " +
+            "public_exercise ORDER BY muscle_group")
+    @MapInfo(keyColumn = "muscle_group")
+    public LiveData<Map<String, List<ExerciseValue>>> getExerciseCategories();
 
-    @Query("SELECT DISTINCT pe.muscle_group FROM public_exercise pe ORDER BY pe.muscle_group")
-    public LiveData<List<String>> getExerciseCategories();
-
-    @Query("SELECT * FROM public_exercise pe WHERE identifier = :identifier")
-    public LiveData<PublicExercise> getExerciseByIdentifier(String identifier);
+    @Query("SELECT * FROM public_exercise pe WHERE pe.publicExerciseID = :id")
+    public LiveData<PublicExercise> getExerciseByIdentifier(int id);
 
     @Query("DELETE FROM public_exercise")
     void deleteAll();

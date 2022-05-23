@@ -62,6 +62,7 @@ public abstract class AppDatabase extends RoomDatabase {
                             context.getApplicationContext(),
                             AppDatabase.class,
                             "main-db")
+                    //Needed so when we change the schema it doesn't break.
                     .fallbackToDestructiveMigration()
                     .build();
         }

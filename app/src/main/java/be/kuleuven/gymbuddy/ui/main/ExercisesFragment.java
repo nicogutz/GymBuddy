@@ -9,12 +9,11 @@ import android.widget.ExpandableListView;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.TreeMap;
 
 import be.kuleuven.gymbuddy.R;
-import be.kuleuven.gymbuddy.ui.objects.MuscleGroup;
+import be.kuleuven.gymbuddy.data.model.ExerciseValue;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,7 +23,6 @@ public class ExercisesFragment extends Fragment {
 
     ExpandableListView expandableListView;
     MainAdapter adapter;
-    ArrayList<MuscleGroup> muscleGroups;
 
     public ExercisesFragment() {
     }
@@ -40,8 +38,13 @@ public class ExercisesFragment extends Fragment {
 
         expandableListView = view.findViewById(R.id.expandable_listview);
 
-        initListData();
-        adapter = new MainAdapter(getContext(), muscleGroups);
+        TreeMap<String, ArrayList<ExerciseValue>> exerciseListGroups = new TreeMap<>();
+        ArrayList<ExerciseValue> list = new ArrayList<>();
+        list.add(new ExerciseValue(123, "test_ex", "Test"));
+        list.add(new ExerciseValue(132, "dsaasd", "dasasd"));
+        exerciseListGroups.put("Test Group", list);
+
+        adapter = new MainAdapter(getContext(), exerciseListGroups);
         expandableListView.setAdapter(adapter);
 
 
@@ -55,15 +58,6 @@ public class ExercisesFragment extends Fragment {
 
     }
 
-    private void initListData() {
-
-        ArrayList<String> strings = new ArrayList<String>();
-        strings.add("BWSupineRowFeetElevated");
-        strings.add("BWSupineRowHigh");
-        muscleGroups= new ArrayList<MuscleGroup>();
-
-        muscleGroups.add(new MuscleGroup(strings, "BackGeneral"));
-    }
 
     /**
      * class CustomAdapter extends BaseAdapter {
