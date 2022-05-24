@@ -18,20 +18,22 @@ import be.kuleuven.gymbuddy.data.model.ExerciseValue;
 //depending on implementation we might just need to override the getCount() and getView()
 
 @SuppressWarnings("SuspiciousMethodCalls")
-public class MainAdapter extends BaseExpandableListAdapter {
+public class ExercisesFragmentAdapter extends BaseExpandableListAdapter {
 
     Context context;
     Map<String, List<ExerciseValue>> exercisesGroupedByMuscle;
     Object[] keyArray;
 
-    public MainAdapter(Context context,
-                       Map<String, List<ExerciseValue>> exercisesGroupedByMuscle) {
+    public ExercisesFragmentAdapter(Context context,
+                                    Map<String, List<ExerciseValue>> exercisesGroupedByMuscle) {
 
         this.context = context;
         this.exercisesGroupedByMuscle = exercisesGroupedByMuscle;
         keyArray = exercisesGroupedByMuscle.keySet().toArray();
 
     }
+
+    //constructor for the routines
 
     @Override
     public int getGroupCount() {

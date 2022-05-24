@@ -29,7 +29,7 @@ import be.kuleuven.gymbuddy.ui.SharedViewModel;
 public class ExercisesFragment extends Fragment {
 
     ExpandableListView expandableListView;
-    MainAdapter adapter;
+    ExercisesFragmentAdapter adapter;
     private LiveData<Map<String, List<ExerciseValue>>> exercisesGroupedByMuscles;
 
 
@@ -54,7 +54,7 @@ public class ExercisesFragment extends Fragment {
         final Observer<Map<String, List<ExerciseValue>>> nameObserver =
                 (Observer<Map<String, List<ExerciseValue>>>) stringListMap -> {
             // Update the UI, in this case, a TextView.
-            adapter = new MainAdapter(getContext(), stringListMap);
+            adapter = new ExercisesFragmentAdapter(getContext(), stringListMap);
             expandableListView.setAdapter(adapter);
         };
 
