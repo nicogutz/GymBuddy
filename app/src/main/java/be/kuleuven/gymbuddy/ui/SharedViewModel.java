@@ -4,20 +4,21 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.LiveData;
 
 import java.util.List;
+import java.util.Map;
 
 import be.kuleuven.gymbuddy.data.PublicExerciseRepository;
 import be.kuleuven.gymbuddy.data.RecordedExerciseRepository;
 import be.kuleuven.gymbuddy.data.SavedRoutineRepository;
-import be.kuleuven.gymbuddy.data.local.entities.PublicExercise;
+import be.kuleuven.gymbuddy.data.model.ExerciseValue;
+import be.kuleuven.gymbuddy.data.model.RecordedExerciseValue;
 
 public class SharedViewModel extends AndroidViewModel {
-    private final MutableLiveData<List<PublicExercise>> publicExercises;
+    private final RecordedExerciseRepository recordedExerciseRepository;
+    private final SavedRoutineRepository savedRoutineRepository;
     private PublicExerciseRepository publicExerciseRepository;
-    private RecordedExerciseRepository recordedExerciseRepository;
-    private SavedRoutineRepository savedRoutineRepository;
 
     public SharedViewModel(@NonNull Application application) {
         super(application);
@@ -25,9 +26,13 @@ public class SharedViewModel extends AndroidViewModel {
         publicExerciseRepository = new PublicExerciseRepository(application);
         recordedExerciseRepository = new RecordedExerciseRepository(application);
         savedRoutineRepository = new SavedRoutineRepository(application);
+    }
 
-        publicExercises =
-                (MutableLiveData<List<PublicExercise>>)
-                        publicExerciseRepository.getAllPublicExercises();
+    public LiveData<Map<String, List<ExerciseValue>>> getExercisesGroupedByMuscles() {
+        return publicExerciseRepository.getExercisesGroupedByMuscles();
+    }
+
+    public LiveData<Map<String, List<RecordedExerciseValue>>> getRecordedExerciseValues(){
+        return recordedExerciseRepository.getAllRecordedExerciseValues();
     }
 }

@@ -16,11 +16,14 @@ public class RecordedExercise {
     @PrimaryKey(autoGenerate = true)
     public int recordedExerciseID;
 
-    @ColumnInfo(name = "public_exercise_identifier")
-    public int publicExerciseIdentifier;
+    @ColumnInfo(name = "muscle_group")
+    public String muscleGroup;
 
-    @ColumnInfo(name = "public_exercise_name")
-    public int publicExerciseName;
+    @ColumnInfo(name = "internal_name")
+    public String internalName;
+
+    @ColumnInfo(name = "name")
+    public String name;
 
     /**
      * Weirdly enough dates are not accepted as types for a Room column, this means we need to set
@@ -43,12 +46,16 @@ public class RecordedExercise {
         return recordedExerciseID;
     }
 
-    public int getPublicExerciseIdentifier() {
-        return publicExerciseIdentifier;
+    public String getMuscleGroup() {
+        return muscleGroup;
     }
 
-    public int getPublicExerciseName() {
-        return publicExerciseName;
+    public String getInternalName() {
+        return internalName;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Date getDate() {
@@ -65,5 +72,20 @@ public class RecordedExercise {
 
     public int getReps() {
         return reps;
+    }
+
+    public RecordedExercise(String muscleGroup,
+                            String internalName,
+                            String name,
+                            Date date,
+                            int sets,
+                            float weight, int reps) {
+        this.muscleGroup = muscleGroup;
+        this.internalName = internalName;
+        this.name = name;
+        this.date = date;
+        this.sets = sets;
+        this.weight = weight;
+        this.reps = reps;
     }
 }

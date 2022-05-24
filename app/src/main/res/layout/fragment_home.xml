@@ -7,34 +7,38 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:padding="40dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
         tools:context=".HomeFragment">
 
         <TextView
             android:id="@+id/progressTrack_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="My Progress"
+            android:text="@string/my_progress"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/homeExerciseSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressTrack_textView" />
 
         <com.jjoe64.graphview.GraphView
             android:id="@+id/graph"
             android:layout_width="wrap_content"
             android:layout_height="300dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginTop="24dp"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/progressTrack_textView"
+            app:layout_constraintTop_toBottomOf="@+id/homeExerciseSpinner"
             tools:visibility="visible" />
 
 

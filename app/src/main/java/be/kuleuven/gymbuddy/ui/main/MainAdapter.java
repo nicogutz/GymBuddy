@@ -1,5 +1,6 @@
 package be.kuleuven.gymbuddy.ui.main;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,45 +8,49 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import be.kuleuven.gymbuddy.R;
-import be.kuleuven.gymbuddy.ui.objects.MuscleGroup;
+import be.kuleuven.gymbuddy.data.model.ExerciseValue;
 
 //depending on implementation we might just need to override the getCount() and getView()
 
+@SuppressWarnings("SuspiciousMethodCalls")
 public class MainAdapter extends BaseExpandableListAdapter {
 
     Context context;
-    ArrayList<MuscleGroup> muscleGroups;
+    Map<String, List<ExerciseValue>> exercisesGroupedByMuscle;
+    Object[] keyArray;
 
     public MainAdapter(Context context,
-                       ArrayList<MuscleGroup> muscleGroups) {
-        this.context = context;
-        this.muscleGroups = muscleGroups;
-    }
+                       Map<String, List<ExerciseValue>> exercisesGroupedByMuscle) {
 
+        this.context = context;
+        this.exercisesGroupedByMuscle = exercisesGroupedByMuscle;
+        keyArray = exercisesGroupedByMuscle.keySet().toArray();
+
+    }
 
     @Override
     public int getGroupCount() {
-        return muscleGroups.size();
+        return exercisesGroupedByMuscle.size();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this.muscleGroups.get(groupPosition).size();
+        return Objects.requireNonNull(this.exercisesGroupedByMuscle.get(keyArray[groupPosition])).size();
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return this.muscleGroups.get(groupPosition);
+        return this.exercisesGroupedByMuscle.get(keyArray[groupPosition]);
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return this.muscleGroups.get(groupPosition).get(childPosition);
+        return Objects.requireNonNull(this.exercisesGroupedByMuscle.get(keyArray[groupPosition])).get(childPosition);
     }
 
     @Override
@@ -63,12 +68,13 @@ public class MainAdapter extends BaseExpandableListAdapter {
         return false;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getGroupView(int groupPosition,
                              boolean isExpanded,
                              View convertView,
                              ViewGroup parent) {
-        String group =  getGroup(groupPosition).toString();
+        String group = splitCamelCase(keyArray[groupPosition].toString());
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
@@ -81,13 +87,14 @@ public class MainAdapter extends BaseExpandableListAdapter {
 
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getChildView(int groupPosition,
                              int childPosition,
                              boolean isLastChild,
                              View convertView,
                              ViewGroup parent) {
-        String child = (String) getChild(groupPosition, childPosition);
+        String child = (getChild(groupPosition, childPosition).toString());
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
@@ -97,7 +104,16 @@ public class MainAdapter extends BaseExpandableListAdapter {
         textView.setText(child);
         return convertView;
     }
-
+    static String splitCamelCase(String s) {
+        return s.replaceAll(
+                String.format("%s|%s|%s",
+                        "(?<=[A-Z])(?=[A-Z][a-z])",
+                        "(?<=[^A-Z])(?=[A-Z])",
+                        "(?<=[A-Za-z])(?=[^A-Za-z])"
+                ),
+                " "
+        );
+    }
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;

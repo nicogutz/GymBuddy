@@ -1,59 +1,172 @@
 package be.kuleuven.gymbuddy.ui.main;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.LegendRenderer;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
 import be.kuleuven.gymbuddy.R;
+import be.kuleuven.gymbuddy.data.model.RecordedExerciseValue;
+import be.kuleuven.gymbuddy.ui.SharedViewModel;
 
+/**
+ * This fragment holds the graph and a spinner to select the exercise we want to display.
+ * TODO: Add max, avg, etc.
+ */
 public class HomeFragment extends Fragment {
-
-    //    graph jjoe64
-    private LineGraphSeries<DataPoint> series1;
-
+    View fragView;
+    Spinner spinner;
+    GraphView graph;
+    Map<String, List<RecordedExerciseValue>> stringListMapLocal;
 
     public HomeFragment() {
-        // Required empty public constructor
     }
 
 
+    /**
+     * TODO: Why is the options menu not showing up?
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        //        for jjoe64 graph:
+    }
 
-
-    } //class or interface expected here?
-
+    /**
+     * This method connects the objects with their respective class. we also add a listener to the
+     * spinner. When a new item is selected then the graph changes.
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        View fragView = inflater.inflate(R.layout.fragment_home, container,
-                false); //inflate up here and assign to variable
+        fragView = inflater.inflate(R.layout.fragment_home, container, false);
 
-        GraphView graph = fragView.findViewById(R.id.graph); //change getActivity() to fragView
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                new DataPoint(0, 1),
-                new DataPoint(1, 5),
-                new DataPoint(2, 3)
-        });
-        graph.addSeries(series);
+        //Setup the spinner, we want to disable it until we get data.
+        spinner = fragView.findViewById(R.id.homeExerciseSpinner);
+        spinner.setEnabled(false);
 
-        return fragView; //return fragView        return fragView;
+        //Setup for the graphs TODO: Change the range, etc
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM", Locale.GERMANY);
+
+        graph = fragView.findViewById(R.id.graph);
+        graph.getGridLabelRenderer().setNumHorizontalLabels(3);
+        graph.getGridLabelRenderer()
+             .setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity(), dateFormat));
+        graph.setCursorMode(true);
+
+        createGraph();
+
+        return fragView;
     }
 
+    /**
+     * Here we setup a listener to make a new graph every time the spinner changes.
+     * Not super efficient but the library is not super mature, it is nevertheless the easiest
+     * interactive graph we could find. Also a lot of comments because its the only thing that
+     * keeps me sane.
+     */
+    private void createGraph() {
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
+                                       int position, long id) {
+                graph.removeAllSeries();
+
+                // Kinda shady way of getting the values from the map.
+                List<RecordedExerciseValue> exerciseValues = stringListMapLocal.get(
+                        (String) parentView.getItemAtPosition(position));
+
+                // Actually super proud of this one. It has a bit of boilerplate code because of
+                // all the type conversion going on but *shrugs*. Since the graph only takes
+                // DataPoint[] we need to map the arraylist of values to that
+                // I guess I could've made the mapping happen in the SQL query but if my
+                // grandma had wheels she'd be a bike.
+                LineGraphSeries<DataPoint> seriesReps = new LineGraphSeries<>(
+                        exerciseValues.stream().map(i -> new DataPoint(i.date, i.reps))
+                                      .toArray(DataPoint[]::new));
+
+                //Make it a bit pretty.
+                seriesReps.setColor(Color.RED);
+                seriesReps.setTitle("Repetitions");
+                seriesReps.setDrawDataPoints(true);
+                graph.addSeries(seriesReps);
+
+                // Programmers should not copy paste, but we need to do it for reps and weight too.
+                LineGraphSeries<DataPoint> seriesSets = new LineGraphSeries<>(
+                        exerciseValues.stream().map(i -> new DataPoint(i.date, i.sets))
+                                      .toArray(DataPoint[]::new));
+
+                seriesSets.setColor(Color.YELLOW);
+                seriesSets.setTitle("Sets");
+                seriesSets.setDrawDataPoints(true);
+                graph.addSeries(seriesSets);
+
+                LineGraphSeries<DataPoint> seriesWeight = new LineGraphSeries<>(
+                        exerciseValues.stream().map(i -> new DataPoint(i.date, i.weight))
+                                      .toArray(DataPoint[]::new));
+                seriesWeight.setColor(Color.GREEN);
+                seriesWeight.setTitle("Weight");
+                seriesWeight.setDrawDataPoints(true);
+                graph.addSeries(seriesWeight);
+
+            }
+            // Doesn't really matter since we only care what happens on a new selection.
+            // The spinner also defaults to the first item on the lists and triggers the on
+            // selected as soon as it is created, so there is always a graph with the first exercise.
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+
+        });
+    }
+
+    /**
+     * We need to observe the live data from the database to register any changes on the spinner.
+     */
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        SharedViewModel viewModel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
+
+        final Observer<Map<String, List<RecordedExerciseValue>>> exerciseObserver =
+                stringListMap -> {
+                    spinner.setAdapter(
+                            new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,
+                                    stringListMap.keySet().toArray(new String[0])));
+
+                    // If the spinner is not empty then enable it.
+                    if (!spinner.getAdapter().isEmpty())
+                        spinner.setEnabled(true);
+
+                    //We copy the data to the class, it is probably not a great idea but we only
+                    //access the data when the spinner is active so I think its fine.
+                    stringListMapLocal = stringListMap;
+                };
+
+        // Observe the LiveData, passing in the main activity as the LifecycleOwner and the
+        // observer we just created.
+        viewModel.getRecordedExerciseValues().observe(getActivity(), exerciseObserver);
 
     }
 }
