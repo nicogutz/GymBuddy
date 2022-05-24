@@ -1,6 +1,8 @@
 package be.kuleuven.gymbuddy;
 
+import android.media.MediaController2;
 import android.os.Bundle;
+import android.widget.MediaController;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

@@ -1,6 +1,8 @@
 package be.kuleuven.gymbuddy.ui;
 
 import android.app.Application;
+import android.media.MediaController2;
+import android.widget.MediaController;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -28,6 +30,7 @@ public class SharedViewModel extends AndroidViewModel {
         publicExerciseRepository = new PublicExerciseRepository(application);
         recordedExerciseRepository = new RecordedExerciseRepository(application);
         savedRoutineRepository = new SavedRoutineRepository(application);
+
     }
 
     public LiveData<Map<String, List<ExerciseValue>>> getExercisesGroupedByMuscles() {

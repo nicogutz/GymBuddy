@@ -8,8 +8,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="29dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -18,7 +20,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/ex_name_TextView"
+                android:id="@+id/exerciseNameText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -188,7 +190,6 @@
                     tools:text="Hold small or folded cushioned mat behind head. Facing away from wall or column position head and back of shoulders low on wall or column with mat between. Stand with feet far away from wall or column so body is angled back. Position hips and back straight and bend knees just slightly. Place arms to side or hold hands on abdomen." />
 
                 <TextView
-                    android:id="@+id/textView13"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
