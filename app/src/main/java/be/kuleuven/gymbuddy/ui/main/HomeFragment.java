@@ -1,5 +1,6 @@
 package be.kuleuven.gymbuddy.ui.main;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -15,13 +17,14 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -34,11 +37,20 @@ import be.kuleuven.gymbuddy.ui.SharedViewModel;
  * This fragment holds the graph and a spinner to select the exercise we want to display.
  * TODO: Add max, avg, etc.
  */
+@SuppressWarnings("ALL")
 public class HomeFragment extends Fragment {
     View fragView;
     Spinner spinner;
     GraphView graph;
     Map<String, List<RecordedExerciseValue>> stringListMapLocal;
+    TextView maxSetsText;
+    TextView maxRepsText;
+    TextView maxWeightText;
+    TextView maxVolumeText;
+    TextView avgSetsText;
+    TextView avgRepsText;
+    TextView avgWeightText;
+    TextView avgVolumeText;
 
     public HomeFragment() {
     }
@@ -67,7 +79,7 @@ public class HomeFragment extends Fragment {
         spinner = fragView.findViewById(R.id.homeExerciseSpinner);
         spinner.setEnabled(false);
 
-        //Setup for the graphs TODO: Change the range, etc
+        //Setup for the graphs TODO: Changethe range, etc
         DateFormat dateFormat = new SimpleDateFormat("dd-MM", Locale.GERMANY);
 
         graph = fragView.findViewById(R.id.graph);
@@ -75,6 +87,13 @@ public class HomeFragment extends Fragment {
         graph.getGridLabelRenderer()
              .setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity(), dateFormat));
         graph.setCursorMode(true);
+
+        maxSetsText = fragView.findViewById(R.id.maxSetsText);
+        maxRepsText = fragView.findViewById(R.id.maxRepsText);
+        maxWeightText = fragView.findViewById(R.id.maxWeightText);
+        avgSetsText = fragView.findViewById(R.id.avgSetsText);
+        avgRepsText = fragView.findViewById(R.id.avgRepsText);
+        avgWeightText = fragView.findViewById(R.id.avgWeightText);
 
         createGraph();
 
@@ -89,6 +108,7 @@ public class HomeFragment extends Fragment {
      */
     private void createGraph() {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @SuppressLint("DefaultLocale")
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
                                        int position, long id) {
@@ -97,6 +117,31 @@ public class HomeFragment extends Fragment {
                 // Kinda shady way of getting the values from the map.
                 List<RecordedExerciseValue> exerciseValues = stringListMapLocal.get(
                         (String) parentView.getItemAtPosition(position));
+
+                // Quick mafs
+                Integer[] setArray = exerciseValues.stream()
+                                                   .map(i -> i.sets)
+                                                   .toArray(Integer[]::new);
+                Integer[] repsArray = exerciseValues.stream()
+                                                    .map(i -> i.reps)
+                                                    .toArray(Integer[]::new);
+                Float[] weightArray = exerciseValues.stream()
+                                                    .map(i -> i.weight)
+                                                    .toArray(Float[]::new);
+
+                maxSetsText.setText(String.valueOf(
+                        Arrays.stream(setArray).max(Comparator.comparingInt(x -> x)).get()));
+                maxRepsText.setText(String.valueOf(
+                        Arrays.stream(repsArray).max(Comparator.comparingInt(x -> x)).get()));
+                maxWeightText.setText(String.format("%.1f",
+                        Arrays.stream(weightArray).max(Comparator.comparingDouble(x -> x)).get()));
+
+                avgSetsText.setText(String.format("%.1f",
+                        Arrays.stream(setArray).mapToDouble(i -> i).average().getAsDouble()));
+                avgRepsText.setText(String.format("%.1f",
+                        Arrays.stream(repsArray).mapToDouble(i -> i).average().getAsDouble()));
+                avgWeightText.setText(String.format("%.1f",
+                        Arrays.stream(weightArray).mapToDouble(i -> i).average().getAsDouble()));
 
                 // Actually super proud of this one. It has a bit of boilerplate code because of
                 // all the type conversion going on but *shrugs*. Since the graph only takes
@@ -112,6 +157,7 @@ public class HomeFragment extends Fragment {
                 seriesReps.setTitle("Repetitions");
                 seriesReps.setDrawDataPoints(true);
                 graph.addSeries(seriesReps);
+
 
                 // Programmers should not copy paste, but we need to do it for reps and weight too.
                 LineGraphSeries<DataPoint> seriesSets = new LineGraphSeries<>(
@@ -132,9 +178,11 @@ public class HomeFragment extends Fragment {
                 graph.addSeries(seriesWeight);
 
             }
+
             // Doesn't really matter since we only care what happens on a new selection.
             // The spinner also defaults to the first item on the lists and triggers the on
-            // selected as soon as it is created, so there is always a graph with the first exercise.
+            // selected as soon as it is created, so there is always a graph with the first
+            // exercise.
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
             }
