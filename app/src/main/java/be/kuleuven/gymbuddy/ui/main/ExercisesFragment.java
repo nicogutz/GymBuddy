@@ -112,6 +112,13 @@ public class ExercisesFragment extends Fragment {
                 return false;
             }
         });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                adapter.filterData("");
+                return false;
+            }
+        });
         searchView.setOnClickListener(new View.OnClickListener() {
                                           @Override
                                           public void onClick(View v) {

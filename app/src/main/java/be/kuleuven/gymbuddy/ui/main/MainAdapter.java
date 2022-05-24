@@ -141,13 +141,14 @@ public class MainAdapter extends BaseExpandableListAdapter {
 
     public void filterData(String query) {
         exercisesGroupedByMuscle.clear();
+        exercisesGroupedByMuscle.putAll(originalExercisesGroupedByMuscle);
         if (query.isEmpty()) {
             notifyDataSetChanged();
             return;
         }
-        exercisesGroupedByMuscle.putAll(originalExercisesGroupedByMuscle);
         exercisesGroupedByMuscle.forEach(
                 (k, v) -> v.removeIf(i -> !i.getNameLower().contains(query.toLowerCase())));
+
         exercisesGroupedByMuscle.values().removeAll(Collections.emptyList());
 
 
