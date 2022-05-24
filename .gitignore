@@ -14,3 +14,4 @@
 .cxx
 local.properties
 /app/schemas/be.kuleuven.gymbuddy.data.local.AppDatabase/1.json
+/app/schemas/be.kuleuven.gymbuddy.data.local.AppDatabase/3.json
