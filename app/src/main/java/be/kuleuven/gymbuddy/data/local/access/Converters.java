@@ -17,14 +17,14 @@ import java.util.Date;
 public class Converters {
 
     @TypeConverter
-    public static ArrayList<String[]> mapFromString(String value) {
-        Type listType = new TypeToken<ArrayList<String[]>>() {
+    public static ArrayList<String> mapFromString(String value) {
+        Type listType = new TypeToken<ArrayList<String>>() {
         }.getType();
         return new Gson().fromJson(value, listType);
     }
 
     @TypeConverter
-    public static String fromMap(ArrayList<String[]> list) {
+    public static String fromMap(ArrayList<String> list) {
         Gson gson = new Gson();
         String json = gson.toJson(list);
         return json;

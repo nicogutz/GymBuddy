@@ -23,7 +23,7 @@ public interface SavedRoutinesDAO {
     @Delete
     void delete(SavedRoutine savedRoutine);
 
-    @Query("SELECT * FROM saved_routine")
+    @Query("SELECT * FROM saved_routine ORDER BY name")
     public LiveData<List<SavedRoutine>> getAll();
 
     @Query("SELECT * FROM saved_routine WHERE name = :name")

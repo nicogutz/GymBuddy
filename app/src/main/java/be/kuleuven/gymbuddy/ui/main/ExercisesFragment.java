@@ -12,7 +12,6 @@ import android.widget.ExpandableListView;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
-import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -31,7 +30,7 @@ public class ExercisesFragment extends Fragment {
 
     SearchManager searchManager;
     private ExpandableListView expandableListView;
-    private MainAdapter adapter;
+    private ExercisesFragmentAdapter adapter;
     private MainActivity mainActivity;
 
     public ExercisesFragment() {
@@ -53,8 +52,8 @@ public class ExercisesFragment extends Fragment {
         expandableListView.setOnChildClickListener(
                 (parent, v, groupPosition, childPosition, id) -> {
 
-                    MainAdapter mainAdapter = (MainAdapter) parent.getExpandableListAdapter();
-                    ExerciseValue exerciseValue = (ExerciseValue) mainAdapter.getChild(
+                    ExercisesFragmentAdapter exercisesFragmentAdapter = (ExercisesFragmentAdapter) parent.getExpandableListAdapter();
+                    ExerciseValue exerciseValue = (ExerciseValue) exercisesFragmentAdapter.getChild(
                             groupPosition, childPosition);
                     Bundle args = new Bundle();
                     args.putInt("exerciseID", exerciseValue.publicExerciseID);
@@ -74,7 +73,7 @@ public class ExercisesFragment extends Fragment {
     @NonNull
     private Observer<Map<String, List<ExerciseValue>>> getMapObserver() {
         return stringListMap -> {
-            adapter = new MainAdapter(getContext(), stringListMap);
+            adapter = new ExercisesFragmentAdapter(getContext(), stringListMap);
             expandableListView.setAdapter(adapter);
         };
     }

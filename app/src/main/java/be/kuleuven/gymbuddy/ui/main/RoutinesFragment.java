@@ -8,7 +8,8 @@ import android.widget.ExpandableListView;
 
 import androidx.fragment.app.Fragment;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import be.kuleuven.gymbuddy.R;
 import be.kuleuven.gymbuddy.data.local.entities.SavedRoutine;
@@ -17,7 +18,7 @@ public class RoutinesFragment extends Fragment {
 
     ExpandableListView expandableListViewRoutines;
     ExercisesFragmentAdapter adapterRoutines;
-    Map<String, SavedRoutine> routines;
+    List<SavedRoutine> routines;
 
     public RoutinesFragment() {
     }
@@ -40,25 +41,31 @@ public class RoutinesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         expandableListViewRoutines = view.findViewById(R.id.expandable_listview_routines);
+        routines = new ArrayList<>();
+        ArrayList<String> exercises = new ArrayList<>();
+        exercises.add("Exercise TEST 1");
+        exercises.add("EXERCISE TEST 2");
 
-        RoutinesFragmentAdapter adapterRoutines = new RoutinesFragmentAdapter(getContext(), routines);
+        routines.add(new SavedRoutine("Routine Test", exercises));
+        RoutinesFragmentAdapter adapterRoutines = new RoutinesFragmentAdapter(getContext(),
+                (ArrayList<SavedRoutine>) routines);
         expandableListViewRoutines.setAdapter(adapterRoutines);
 
     }
 
     /**
-    public void initData(){
-        ArrayList<String> array1 = new ArrayList<>();
-        array1.add("squats");
-        array1.add("bench press");
+     public void initData(){
+     ArrayList<String> array1 = new ArrayList<>();
+     array1.add("squats");
+     array1.add("bench press");
 
-        ArrayList<String> array2 = new ArrayList<>();
-        array2.add("chest press");
-        array2.add("deadlift");
+     ArrayList<String> array2 = new ArrayList<>();
+     array2.add("chest press");
+     array2.add("deadlift");
 
-        routinesMap.put("Monday Routine", array1);
-        routinesMap.put("Wednesday Routine", array2);
-    }
+     routinesMap.put("Monday Routine", array1);
+     routinesMap.put("Wednesday Routine", array2);
+     }
      **/
 
 }

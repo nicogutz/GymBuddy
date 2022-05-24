@@ -20,5 +20,11 @@ public class SavedRoutine {
     public String name;
 
     @ColumnInfo(name = "saved_exercises")
-    public ArrayList<String[]> savedExercises;
+    public ArrayList<String> savedExercises;
+
+    public SavedRoutine(String name,
+                        ArrayList<String> savedExercises) {
+        this.name = name;
+        this.savedExercises = savedExercises;
+    }
 }
