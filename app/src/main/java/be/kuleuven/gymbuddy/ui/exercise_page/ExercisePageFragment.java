@@ -90,5 +90,4 @@ public class ExercisePageFragment extends Fragment {
             videoView.start();
         };
     }
-
 }

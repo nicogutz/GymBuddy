@@ -12,6 +12,7 @@ import android.widget.ExpandableListView;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -83,6 +84,11 @@ public class ExercisesFragment extends Fragment {
             expandableListView.expandGroup(i);
         }
     }
+    public void collapseAll() {
+        for (int i = 0; i < adapter.getGroupCount(); i++) {
+            expandableListView.collapseGroup(i);
+        }
+    }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -93,6 +99,20 @@ public class ExercisesFragment extends Fragment {
         MenuItem item = menu.findItem(R.id.app_bar_search);
         SearchView searchView = new SearchView(
                 mainActivity.getSupportActionBar().getThemedContext());
+        item.expandActionView();
+        item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                adapter.filterData("");
+                collapseAll();
+                return true;
+            }
+        });
 
         item.setShowAsAction(
                 MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_IF_ROOM);
@@ -112,20 +132,14 @@ public class ExercisesFragment extends Fragment {
                 return false;
             }
         });
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                adapter.filterData("");
-                return false;
-            }
+        searchView.setOnCloseListener(() -> {
+            adapter.filterData("");
+            collapseAll();
+            return false;
         });
-        searchView.setOnClickListener(new View.OnClickListener() {
-                                          @Override
-                                          public void onClick(View v) {
+        searchView.setOnClickListener(v -> {
 
-                                          }
-                                      }
-        );
+        });
     }
 
     @Override

@@ -37,6 +37,11 @@ public class ExerciseValue {
         return name;
     }
 
+    public ExerciseValue(ExerciseValue exerciseValue){
+        this.publicExerciseID = exerciseValue.publicExerciseID;
+        this.internal_name = exerciseValue.internal_name;
+        this.name = exerciseValue.name;
+    }
     /**
      * Just for testing, Exercises are final.
      */

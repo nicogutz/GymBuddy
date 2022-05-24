@@ -9,11 +9,13 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import be.kuleuven.gymbuddy.R;
 import be.kuleuven.gymbuddy.data.model.ExerciseValue;
@@ -34,11 +36,8 @@ public class MainAdapter extends BaseExpandableListAdapter {
         checkmarkVisible = false;
         this.context = context;
 
-        this.exercisesGroupedByMuscle = new TreeMap<>();
-        this.exercisesGroupedByMuscle.putAll(exercisesGroupedByMuscle);
-
-        this.originalExercisesGroupedByMuscle = new TreeMap<>();
-        this.originalExercisesGroupedByMuscle.putAll(exercisesGroupedByMuscle);
+        this.exercisesGroupedByMuscle = clone(exercisesGroupedByMuscle);
+        this.originalExercisesGroupedByMuscle = clone(exercisesGroupedByMuscle);
 
         keyArray = exercisesGroupedByMuscle.keySet().toArray();
     }
@@ -141,17 +140,24 @@ public class MainAdapter extends BaseExpandableListAdapter {
 
     public void filterData(String query) {
         exercisesGroupedByMuscle.clear();
-        exercisesGroupedByMuscle.putAll(originalExercisesGroupedByMuscle);
+        exercisesGroupedByMuscle = clone(originalExercisesGroupedByMuscle);
         if (query.isEmpty()) {
             notifyDataSetChanged();
             return;
         }
-        exercisesGroupedByMuscle.forEach(
-                (k, v) -> v.removeIf(i -> !i.getNameLower().contains(query.toLowerCase())));
 
-        exercisesGroupedByMuscle.values().removeAll(Collections.emptyList());
-
+        exercisesGroupedByMuscle.forEach((k, v) ->{
+                v.removeIf(i -> !i.getNameLower().contains(query.toLowerCase()));
+        });
 
         notifyDataSetChanged();
+    }
+
+    private Map<String, List<ExerciseValue>> clone(Map<String, List<ExerciseValue>> originalExercisesGroupedByMuscle) {
+        TreeMap<String, List<ExerciseValue>> newMap = new TreeMap<>();
+
+        originalExercisesGroupedByMuscle.forEach((k, v)
+                -> newMap.put(k, v.stream().map(ExerciseValue::new).collect(Collectors.toList())));
+        return newMap;
     }
 }
