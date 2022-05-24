@@ -6,6 +6,14 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Entities represent a table in SQL, they have keys and columns. This is the only entity that has
+ * something extra. The SerializedName decorator tells the GSON converter in the Retrofit instance
+ * where to put the values from the JSON response. It can convert basic things like strings to
+ * integers.
+ * This table represents an exercise, it has the same structure as its remote counterpart to make
+ * the de-serialization easier.
+ */
 @Entity(tableName = "public_exercise")
 public class PublicExercise {
 
@@ -52,6 +60,14 @@ public class PublicExercise {
     @SerializedName("comments")
     @ColumnInfo(name = "comments")
     public String comments;
+
+    @SerializedName("muscle_group")
+    @ColumnInfo(name = "muscle_group")
+    public String muscle_group;
+
+    @SerializedName("internal_name")
+    @ColumnInfo(name = "internal_name")
+    public String internal_name;
 
     public int getPublicExerciseID() {
         return publicExerciseID;

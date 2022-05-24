@@ -2,29 +2,36 @@ package be.kuleuven.gymbuddy.ui.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import be.kuleuven.gymbuddy.R;
-import be.kuleuven.gymbuddy.ui.objects.MuscleGroup;
+import be.kuleuven.gymbuddy.data.model.ExerciseValue;
+import be.kuleuven.gymbuddy.ui.SharedViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
+@SuppressWarnings("ConstantConditions")
 public class ExercisesFragment extends Fragment {
 
     ExpandableListView expandableListView;
     MainAdapter adapter;
-    ArrayList<MuscleGroup> muscleGroups;
+    private LiveData<Map<String, List<ExerciseValue>>> exercisesGroupedByMuscles;
+
 
     public ExercisesFragment() {
     }
@@ -32,6 +39,7 @@ public class ExercisesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -39,55 +47,26 @@ public class ExercisesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         expandableListView = view.findViewById(R.id.expandable_listview);
+        // Create the observer which updates the UI.
 
-        initListData();
-        adapter = new MainAdapter(getContext(), muscleGroups);
-        expandableListView.setAdapter(adapter);
+        SharedViewModel viewModel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
 
+        final Observer<Map<String, List<ExerciseValue>>> nameObserver =
+                (Observer<Map<String, List<ExerciseValue>>>) stringListMap -> {
+            // Update the UI, in this case, a TextView.
+            adapter = new MainAdapter(getContext(), stringListMap);
+            expandableListView.setAdapter(adapter);
+        };
 
-//        listView = (ListView) view.findViewById(R.id.listExerciseCategory);
-//        exCatList.add("legs");
-//        exCatList.add("glutes");
-//        exCatList.add("chest");
-//
-//        CustomAdapter customAdapter = new CustomAdapter();
-//        listView.setAdapter(customAdapter);
+        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
+        viewModel.getExercisesGroupedByMuscles().observe(getActivity(), nameObserver);
 
     }
 
-    private void initListData() {
-
-        ArrayList<String> strings = new ArrayList<String>();
-        strings.add("BWSupineRowFeetElevated");
-        strings.add("BWSupineRowHigh");
-        muscleGroups= new ArrayList<MuscleGroup>();
-
-        muscleGroups.add(new MuscleGroup(strings, "BackGeneral"));
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.top_app_bar, menu);
     }
-
-    /**
-     * class CustomAdapter extends BaseAdapter {
-     *
-     * @Override public int getCount() {
-     * return exCatList.size();  //or should we use .size() -1?
-     * }
-     * @Override public Object getItem(int position) {
-     * return null;
-     * }
-     * @Override public long getItemId(int position) {
-     * return 0;
-     * }
-     * @Override public View getView(int position, View convertView, ViewGroup parent) {
-     * convertView = getLayoutInflater().inflate(R.layout.custom_layout_ex_ategory, null);
-     * <p>
-     * TextView textView_title = (TextView) convertView.findViewById(R.id.textView_exCatItem);
-     * <p>
-     * textView_title.setText(exCatList.get(position));
-     * return convertView;
-     * }
-     * <p>
-     * }
-     **/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
