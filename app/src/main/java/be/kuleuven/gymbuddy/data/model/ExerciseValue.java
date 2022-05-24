@@ -29,6 +29,7 @@ public class ExerciseValue {
     public String getName() {
         return name;
     }
+    public String getNameLower(){return name.toLowerCase();}
 
     @NonNull
     @Override

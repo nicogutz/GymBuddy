@@ -20,20 +20,24 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import be.kuleuven.gymbuddy.R;
 import be.kuleuven.gymbuddy.data.local.entities.PublicExercise;
 import be.kuleuven.gymbuddy.ui.SharedViewModel;
 
 public class ExercisePageFragment extends Fragment {
     MediaController mediaController;
+    BottomNavigationView navBar;
 
     public ExercisePageFragment() {
     }
 
-    private static void setNavigation(View viewFragment) {
+    private void setNavigation(View viewFragment) {
         viewFragment.setFocusableInTouchMode(true);
         viewFragment.requestFocus();
         viewFragment.setOnKeyListener((v, keyCode, event) -> {
+            navBar.setVisibility(View.VISIBLE);
             Navigation.findNavController(v)
                       .navigate(R.id.action_exercise_page_to_exercises);
             return keyCode == KeyEvent.KEYCODE_BACK;
@@ -48,6 +52,7 @@ public class ExercisePageFragment extends Fragment {
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
+        navBar.setVisibility(View.VISIBLE);
         Navigation.findNavController(getView())
                   .navigate(R.id.action_exercise_page_to_exercises);
         return true;
@@ -57,7 +62,7 @@ public class ExercisePageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View viewFragment = inflater.inflate(R.layout.fragment_exercise_page, container, false);
-
+        navBar = getActivity().findViewById(R.id.nav_view);
         SharedViewModel viewModel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
         setNavigation(viewFragment);
 

@@ -51,9 +51,10 @@ public class ExercisesFragment extends Fragment {
                             groupPosition, childPosition);
                     Bundle args = new Bundle();
                     args.putInt("exerciseID", exerciseValue.publicExerciseID);
+                    getActivity().findViewById(R.id.nav_view).setVisibility(View.INVISIBLE);
+
                     Navigation.findNavController(view)
-                              .navigate(R.id.action_exercises_to_exercise_page,
-                                      args);
+                              .navigate(R.id.action_exercises_to_exercise_page, args);
                     return false;
                 });
 

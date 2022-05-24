@@ -12,6 +12,8 @@ import android.widget.TextView;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import be.kuleuven.gymbuddy.R;
 import be.kuleuven.gymbuddy.data.model.ExerciseValue;
@@ -22,21 +24,19 @@ import be.kuleuven.gymbuddy.data.model.ExerciseValue;
 public class MainAdapter extends BaseExpandableListAdapter {
 
     private Context context;
-    private Map<String, List<ExerciseValue>> exercisesGroupedByMuscle;
+    private TreeMap<String, List<ExerciseValue>> exercisesGroupedByMuscle,
+            originalExercisesGroupedByMuscle;
     private Object[] keyArray;
     private boolean checkmarkVisible;
-
-    public void setCheckmarkVisible(boolean checkmarkVisible) {
-        this.checkmarkVisible = checkmarkVisible;
-    }
 
     public MainAdapter(Context context,
                        Map<String, List<ExerciseValue>> exercisesGroupedByMuscle) {
         checkmarkVisible = false;
         this.context = context;
-        this.exercisesGroupedByMuscle = exercisesGroupedByMuscle;
+        this.exercisesGroupedByMuscle = (TreeMap<String, List<ExerciseValue>>) exercisesGroupedByMuscle;
+        this.originalExercisesGroupedByMuscle =
+                (TreeMap<String, List<ExerciseValue>>) exercisesGroupedByMuscle;
         keyArray = exercisesGroupedByMuscle.keySet().toArray();
-
     }
 
     static String splitCamelCase(String s) {
@@ -48,6 +48,10 @@ public class MainAdapter extends BaseExpandableListAdapter {
                 ),
                 " "
         );
+    }
+
+    public void setCheckmarkVisible(boolean checkmarkVisible) {
+        this.checkmarkVisible = checkmarkVisible;
     }
 
     @Override
@@ -120,7 +124,7 @@ public class MainAdapter extends BaseExpandableListAdapter {
             convertView = layoutInflater.inflate(R.layout.exercise_item, null);
         }
         CheckBox checkBox = convertView.findViewById(R.id.checkBox);
-        checkBox.setVisibility(checkmarkVisible ? View.VISIBLE: View.INVISIBLE);
+        checkBox.setVisibility(checkmarkVisible ? View.VISIBLE : View.INVISIBLE);
         TextView textView = convertView.findViewById(R.id.list_child);
         textView.setText(child);
         return convertView;
@@ -129,5 +133,21 @@ public class MainAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    public void filterData(String query) {
+        exercisesGroupedByMuscle.clear();
+        if (query.isEmpty()) {
+            notifyDataSetChanged();
+            return;
+        }
+        exercisesGroupedByMuscle.putAll(originalExercisesGroupedByMuscle);
+        exercisesGroupedByMuscle.forEach((k, v) -> {
+                v.removeIf(i -> !i.getNameLower().contains(query.toLowerCase()));
+                if (v.isEmpty())
+                    exercisesGroupedByMuscle.remove(k);
+        });
+
+        notifyDataSetChanged();
     }
 }
