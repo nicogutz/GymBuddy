@@ -27,7 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -60,18 +59,7 @@
                 android:id="@+id/tableRow4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_span="6"
-                    android:gravity="center"
-                    android:text="@string/statistics"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:typeface="serif" />
-            </TableRow>
+                android:gravity="center_horizontal"/>
 
             <TableRow
                 android:layout_width="match_parent"

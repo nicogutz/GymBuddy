@@ -25,6 +25,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -56,9 +57,6 @@ public class HomeFragment extends Fragment {
     }
 
 
-    /**
-     * TODO: Why is the options menu not showing up?
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,10 +78,10 @@ public class HomeFragment extends Fragment {
         spinner.setEnabled(false);
 
         //Setup for the graphs TODO: Changethe range, etc
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM", Locale.GERMANY);
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM", Locale.GERMANY);
 
         graph = fragView.findViewById(R.id.graph);
-        graph.getGridLabelRenderer().setNumHorizontalLabels(3);
+        graph.getGridLabelRenderer().setNumHorizontalLabels(5);
         graph.getGridLabelRenderer()
              .setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity(), dateFormat));
         graph.setCursorMode(true);
@@ -129,6 +127,7 @@ public class HomeFragment extends Fragment {
                                                     .map(i -> i.weight)
                                                     .toArray(Float[]::new);
 
+                // Would be nice to make it a function but who has the time
                 maxSetsText.setText(String.valueOf(
                         Arrays.stream(setArray).max(Comparator.comparingInt(x -> x)).get()));
                 maxRepsText.setText(String.valueOf(
@@ -177,6 +176,8 @@ public class HomeFragment extends Fragment {
                 seriesWeight.setDrawDataPoints(true);
                 graph.addSeries(seriesWeight);
 
+                graph.getViewport().setMaxX(new Date().getTime());
+                graph.getViewport().setXAxisBoundsManual(true);
             }
 
             // Doesn't really matter since we only care what happens on a new selection.
