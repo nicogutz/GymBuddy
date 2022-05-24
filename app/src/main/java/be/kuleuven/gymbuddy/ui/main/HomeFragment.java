@@ -57,9 +57,6 @@ public class HomeFragment extends Fragment {
     }
 
 
-    /**
-     * TODO: Why is the options menu not showing up?
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
