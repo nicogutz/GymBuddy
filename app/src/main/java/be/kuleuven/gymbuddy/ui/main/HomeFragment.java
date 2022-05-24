@@ -37,6 +37,7 @@ import be.kuleuven.gymbuddy.ui.SharedViewModel;
  * This fragment holds the graph and a spinner to select the exercise we want to display.
  * TODO: Add max, avg, etc.
  */
+@SuppressWarnings("ALL")
 public class HomeFragment extends Fragment {
     View fragView;
     Spinner spinner;
