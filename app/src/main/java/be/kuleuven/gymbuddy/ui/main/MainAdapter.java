@@ -9,11 +9,11 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 import be.kuleuven.gymbuddy.R;
 import be.kuleuven.gymbuddy.data.model.ExerciseValue;
@@ -24,7 +24,7 @@ import be.kuleuven.gymbuddy.data.model.ExerciseValue;
 public class MainAdapter extends BaseExpandableListAdapter {
 
     private Context context;
-    private TreeMap<String, List<ExerciseValue>> exercisesGroupedByMuscle,
+    private Map<String, List<ExerciseValue>> exercisesGroupedByMuscle,
             originalExercisesGroupedByMuscle;
     private Object[] keyArray;
     private boolean checkmarkVisible;
@@ -33,9 +33,13 @@ public class MainAdapter extends BaseExpandableListAdapter {
                        Map<String, List<ExerciseValue>> exercisesGroupedByMuscle) {
         checkmarkVisible = false;
         this.context = context;
-        this.exercisesGroupedByMuscle = (TreeMap<String, List<ExerciseValue>>) exercisesGroupedByMuscle;
-        this.originalExercisesGroupedByMuscle =
-                (TreeMap<String, List<ExerciseValue>>) exercisesGroupedByMuscle;
+
+        this.exercisesGroupedByMuscle = new TreeMap<>();
+        this.exercisesGroupedByMuscle.putAll(exercisesGroupedByMuscle);
+
+        this.originalExercisesGroupedByMuscle = new TreeMap<>();
+        this.originalExercisesGroupedByMuscle.putAll(exercisesGroupedByMuscle);
+
         keyArray = exercisesGroupedByMuscle.keySet().toArray();
     }
 
@@ -142,11 +146,10 @@ public class MainAdapter extends BaseExpandableListAdapter {
             return;
         }
         exercisesGroupedByMuscle.putAll(originalExercisesGroupedByMuscle);
-        exercisesGroupedByMuscle.forEach((k, v) -> {
-                v.removeIf(i -> !i.getNameLower().contains(query.toLowerCase()));
-                if (v.isEmpty())
-                    exercisesGroupedByMuscle.remove(k);
-        });
+        exercisesGroupedByMuscle.forEach(
+                (k, v) -> v.removeIf(i -> !i.getNameLower().contains(query.toLowerCase())));
+        exercisesGroupedByMuscle.values().removeAll(Collections.emptyList());
+
 
         notifyDataSetChanged();
     }

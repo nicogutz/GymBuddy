@@ -1,16 +1,18 @@
 package be.kuleuven.gymbuddy.ui.main;
 
+import android.app.SearchManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -18,6 +20,7 @@ import androidx.navigation.Navigation;
 import java.util.List;
 import java.util.Map;
 
+import be.kuleuven.gymbuddy.MainActivity;
 import be.kuleuven.gymbuddy.R;
 import be.kuleuven.gymbuddy.data.model.ExerciseValue;
 import be.kuleuven.gymbuddy.ui.SharedViewModel;
@@ -25,8 +28,10 @@ import be.kuleuven.gymbuddy.ui.SharedViewModel;
 @SuppressWarnings("ConstantConditions")
 public class ExercisesFragment extends Fragment {
 
-    ExpandableListView expandableListView;
-    MainAdapter adapter;
+    SearchManager searchManager;
+    private ExpandableListView expandableListView;
+    private MainAdapter adapter;
+    private MainActivity mainActivity;
 
     public ExercisesFragment() {
     }
@@ -34,13 +39,14 @@ public class ExercisesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mainActivity = (MainActivity) getActivity();
         setHasOptionsMenu(true);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SharedViewModel viewModel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
+        SharedViewModel viewModel = new ViewModelProvider(mainActivity).get(SharedViewModel.class);
 
         expandableListView = view.findViewById(R.id.expandable_listview);
         expandableListView.setOnChildClickListener(
@@ -72,9 +78,47 @@ public class ExercisesFragment extends Fragment {
         };
     }
 
+    public void expandAll() {
+        for (int i = 0; i < adapter.getGroupCount(); i++) {
+            expandableListView.expandGroup(i);
+        }
+    }
+
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+
         inflater.inflate(R.menu.top_app_bar, menu);
+        MenuItem item = menu.findItem(R.id.app_bar_search);
+        SearchView searchView = new SearchView(
+                mainActivity.getSupportActionBar().getThemedContext());
+
+        item.setShowAsAction(
+                MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        item.setActionView(searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.filterData(query);
+                expandAll();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.filterData(newText);
+                expandAll();
+                return false;
+            }
+        });
+        searchView.setOnClickListener(new View.OnClickListener() {
+                                          @Override
+                                          public void onClick(View v) {
+
+                                          }
+                                      }
+        );
     }
 
     @Override
@@ -84,5 +128,4 @@ public class ExercisesFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_exercises, container, false);
 
     }
-
 }
