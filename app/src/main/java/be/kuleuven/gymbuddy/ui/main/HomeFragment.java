@@ -1,5 +1,6 @@
 package be.kuleuven.gymbuddy.ui.main;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +52,10 @@ public class HomeFragment extends Fragment {
 
         spinner = fragView.findViewById(R.id.homeExerciseSpinner);
         spinner.setEnabled(false);
-        DateFormat dateFormat = new SimpleDateFormat("dd-mm-yy");
+
+        @SuppressLint("SimpleDateFormat") DateFormat dateFormat =
+                new SimpleDateFormat("dd-MM-yy");
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView,
