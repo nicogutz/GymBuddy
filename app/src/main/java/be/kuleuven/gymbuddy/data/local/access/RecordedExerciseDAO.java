@@ -29,7 +29,7 @@ public interface RecordedExerciseDAO {
     @Query("SELECT * FROM recorded_exercise")
     LiveData<List<RecordedExercise>> getAll();
 
-    @Query("SELECT name, date, reps, sets, weight FROM recorded_exercise ORDER BY date")
+    @Query("SELECT name, date, reps, sets, weight FROM recorded_exercise ORDER BY name, date")
     @MapInfo(keyColumn = "name")
     LiveData<Map<String, List<RecordedExerciseValue>>> getMapWithDates();
 }

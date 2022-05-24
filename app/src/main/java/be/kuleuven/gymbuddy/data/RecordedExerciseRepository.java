@@ -28,12 +28,16 @@ public class RecordedExerciseRepository {
 //        Calendar cal = Calendar.getInstance();
 //        cal.set(Calendar.YEAR, 2022);
 //        cal.set(Calendar.MONTH, Calendar.MARCH);
+//        cal.set(Calendar.HOUR, 12);
+//        cal.set(Calendar.MINUTE, 22);
+//        cal.set(Calendar.MILLISECOND, 0);
 //
 //        List<RecordedExercise> testList = new ArrayList<RecordedExercise>();
-//        for (int i = 1; i < 10; i++) {
+//        for (int i = 1; i < 29; i++) {
 //            cal.set(Calendar.DAY_OF_MONTH, i);
+//
 //            testList.add(new RecordedExercise("TestGroup",
-//                    "Test_1", "Test 1", cal.getTime(), i,i,i));
+//                    "Test_1", "Test 1", cal.getTime(), i, (float) (i*2.3),i*2));
 //        }
 //
 //        insertAllRecordedExercise(testList);
