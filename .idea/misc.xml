@@ -4,11 +4,16 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../layout/custom_preview.xml" value="0.325" />
+        <entry key="..\:/Users/isabe/AndroidStudioProjects/gymbuddy/app/src/main/res/layout/custom_layout_ex_ategory.xml" value="0.15534420289855072" />
         <entry key="..\:/Users/isabe/AndroidStudioProjects/gymbuddy/app/src/main/res/layout/exercise_item.xml" value="0.33" />
         <entry key="..\:/Users/isabe/AndroidStudioProjects/gymbuddy/app/src/main/res/layout/fragment_exercises.xml" value="0.19739583333333333" />
         <entry key="..\:/Users/isabe/AndroidStudioProjects/gymbuddy/app/src/main/res/layout/fragment_routine.xml" value="0.19739583333333333" />
+        <entry key="..\:/Users/isabe/AndroidStudioProjects/gymbuddy/app/src/main/res/layout/routine_subgroup.xml" value="0.33" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.335" />
+        <entry key="app/src/main/res/drawable/ic_baseline_calendar_today_24.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/ic_baseline_fitness_center_24.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.335" />
+        <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.335" />
         <entry key="app/src/main/res/drawable/ic_round_format_list_bulleted_24.xml" value="0.1835" />
         <entry key="app/src/main/res/layout-v29/activity_main.xml" value="0.3328125" />
@@ -19,16 +24,15 @@
         <entry key="app/src/main/res/layout/activity_main_page.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_new_routine.xml" value="0.19038984587488667" />
         <entry key="app/src/main/res/layout/calendar_fragment.xml" value="0.2731936725096195" />
-        <entry key="app/src/main/res/layout/exercise_item.xml" value="0.2817443351859769" />
         <entry key="app/src/main/res/layout/fragment_calendar.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.2731936725096195" />
         <entry key="app/src/main/res/layout/fragment_exercises.xml" value="0.2731936725096195" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.26440677966101694" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_item.xml" value="0.2731936725096195" />
         <entry key="app/src/main/res/layout/fragment_item_list.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.26079521162890124" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.2731936725096195" />
-        <entry key="app/src/main/res/layout/fragment_routine.xml" value="0.3781362007168459" />
+        <entry key="app/src/main/res/layout/fragment_routine.xml" value="0.2731936725096195" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.2731936725096195" />
         <entry key="app/src/main/res/layout/settings_fragment.xml" value="0.2731936725096195" />
         <entry key="app/src/main/res/menu-navexposed/menu_test.xml" value="1.996875" />
