@@ -12,13 +12,15 @@ import java.util.Map;
 import be.kuleuven.gymbuddy.data.PublicExerciseRepository;
 import be.kuleuven.gymbuddy.data.RecordedExerciseRepository;
 import be.kuleuven.gymbuddy.data.SavedRoutineRepository;
+import be.kuleuven.gymbuddy.data.local.entities.PublicExercise;
+import be.kuleuven.gymbuddy.data.local.entities.RecordedExercise;
 import be.kuleuven.gymbuddy.data.model.ExerciseValue;
 import be.kuleuven.gymbuddy.data.model.RecordedExerciseValue;
 
 public class SharedViewModel extends AndroidViewModel {
     private final RecordedExerciseRepository recordedExerciseRepository;
     private final SavedRoutineRepository savedRoutineRepository;
-    private PublicExerciseRepository publicExerciseRepository;
+    private final PublicExerciseRepository publicExerciseRepository;
 
     public SharedViewModel(@NonNull Application application) {
         super(application);
@@ -35,4 +37,9 @@ public class SharedViewModel extends AndroidViewModel {
     public LiveData<Map<String, List<RecordedExerciseValue>>> getRecordedExerciseValues(){
         return recordedExerciseRepository.getAllRecordedExerciseValues();
     }
+
+    public LiveData<PublicExercise> getPublicExerciseByID(int id){
+        return publicExerciseRepository.getPublicExerciseByID(id);
+    }
+
 }

@@ -10,10 +10,10 @@ import android.widget.ExpandableListView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import java.util.List;
 import java.util.Map;
@@ -22,17 +22,11 @@ import be.kuleuven.gymbuddy.R;
 import be.kuleuven.gymbuddy.data.model.ExerciseValue;
 import be.kuleuven.gymbuddy.ui.SharedViewModel;
 
-/**
- * A simple {@link Fragment} subclass.
- * create an instance of this fragment.
- */
 @SuppressWarnings("ConstantConditions")
 public class ExercisesFragment extends Fragment {
 
     ExpandableListView expandableListView;
     MainAdapter adapter;
-    private LiveData<Map<String, List<ExerciseValue>>> exercisesGroupedByMuscles;
-
 
     public ExercisesFragment() {
     }
@@ -46,22 +40,35 @@ public class ExercisesFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        expandableListView = view.findViewById(R.id.expandable_listview);
-        // Create the observer which updates the UI.
-
         SharedViewModel viewModel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
 
-        final Observer<Map<String, List<ExerciseValue>>> nameObserver =
-                (Observer<Map<String, List<ExerciseValue>>>) stringListMap -> {
-            // Update the UI, in this case, a TextView.
+        expandableListView = view.findViewById(R.id.expandable_listview);
+        expandableListView.setOnChildClickListener(
+                (parent, v, groupPosition, childPosition, id) -> {
+
+                    MainAdapter mainAdapter = (MainAdapter) parent.getExpandableListAdapter();
+                    ExerciseValue exerciseValue = (ExerciseValue) mainAdapter.getChild(
+                            groupPosition, childPosition);
+                    Bundle args = new Bundle();
+                    args.putInt("exerciseID", exerciseValue.publicExerciseID);
+                    Navigation.findNavController(view)
+                              .navigate(R.id.action_exercises_to_exercise_page,
+                                      args);
+                    return false;
+                });
+
+        // Observe the LiveData, passing in the main activity as
+        // the LifecycleOwner and the observer.
+        viewModel.getExercisesGroupedByMuscles().observe(getActivity(), getMapObserver());
+
+    }
+
+    @NonNull
+    private Observer<Map<String, List<ExerciseValue>>> getMapObserver() {
+        return stringListMap -> {
             adapter = new MainAdapter(getContext(), stringListMap);
             expandableListView.setAdapter(adapter);
         };
-
-        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
-        viewModel.getExercisesGroupedByMuscles().observe(getActivity(), nameObserver);
-
     }
 
     @Override

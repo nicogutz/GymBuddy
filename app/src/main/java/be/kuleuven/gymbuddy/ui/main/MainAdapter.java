@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.List;
@@ -20,17 +21,33 @@ import be.kuleuven.gymbuddy.data.model.ExerciseValue;
 @SuppressWarnings("SuspiciousMethodCalls")
 public class MainAdapter extends BaseExpandableListAdapter {
 
-    Context context;
-    Map<String, List<ExerciseValue>> exercisesGroupedByMuscle;
-    Object[] keyArray;
+    private Context context;
+    private Map<String, List<ExerciseValue>> exercisesGroupedByMuscle;
+    private Object[] keyArray;
+    private boolean checkmarkVisible;
+
+    public void setCheckmarkVisible(boolean checkmarkVisible) {
+        this.checkmarkVisible = checkmarkVisible;
+    }
 
     public MainAdapter(Context context,
                        Map<String, List<ExerciseValue>> exercisesGroupedByMuscle) {
-
+        checkmarkVisible = false;
         this.context = context;
         this.exercisesGroupedByMuscle = exercisesGroupedByMuscle;
         keyArray = exercisesGroupedByMuscle.keySet().toArray();
 
+    }
+
+    static String splitCamelCase(String s) {
+        return s.replaceAll(
+                String.format("%s|%s|%s",
+                        "(?<=[A-Z])(?=[A-Z][a-z])",
+                        "(?<=[^A-Z])(?=[A-Z])",
+                        "(?<=[A-Za-z])(?=[^A-Za-z])"
+                ),
+                " "
+        );
     }
 
     @Override
@@ -40,7 +57,8 @@ public class MainAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return Objects.requireNonNull(this.exercisesGroupedByMuscle.get(keyArray[groupPosition])).size();
+        return Objects.requireNonNull(this.exercisesGroupedByMuscle.get(keyArray[groupPosition]))
+                      .size();
     }
 
     @Override
@@ -50,7 +68,8 @@ public class MainAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return Objects.requireNonNull(this.exercisesGroupedByMuscle.get(keyArray[groupPosition])).get(childPosition);
+        return Objects.requireNonNull(this.exercisesGroupedByMuscle.get(keyArray[groupPosition]))
+                      .get(childPosition);
     }
 
     @Override
@@ -100,20 +119,13 @@ public class MainAdapter extends BaseExpandableListAdapter {
                     Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.exercise_item, null);
         }
+        CheckBox checkBox = convertView.findViewById(R.id.checkBox);
+        checkBox.setVisibility(checkmarkVisible ? View.VISIBLE: View.INVISIBLE);
         TextView textView = convertView.findViewById(R.id.list_child);
         textView.setText(child);
         return convertView;
     }
-    static String splitCamelCase(String s) {
-        return s.replaceAll(
-                String.format("%s|%s|%s",
-                        "(?<=[A-Z])(?=[A-Z][a-z])",
-                        "(?<=[^A-Z])(?=[A-Z])",
-                        "(?<=[A-Za-z])(?=[^A-Za-z])"
-                ),
-                " "
-        );
-    }
+
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;

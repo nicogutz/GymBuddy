@@ -6,47 +6,207 @@
     android:layout_height="match_parent"
     android:isScrollContainer="true">
 
-    <TextView
-        android:id="@+id/ex_title_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="12dp"
-        android:text="Exercise Name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/ex_videoView"
-        app:layout_constraintTop_toTopOf="@+id/ex_videoView" />
-
-    <TextView
-        android:id="@+id/ex_muscles_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="48dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/ex_videoView"
-        app:layout_constraintTop_toBottomOf="@+id/ex_title_textView" />
-
-    <VideoView
-        android:id="@+id/ex_videoView"
-        android:layout_width="171dp"
-        android:layout_height="176dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.175"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.16" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/ex_description_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="exercise description"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ex_videoView" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/ex_name_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:text="Exercise Name" />
+
+            <VideoView
+                android:id="@+id/ex_VideoView"
+                android:layout_width="match_parent"
+                android:layout_height="262dp"
+                android:layout_marginTop="8dp" />
+
+            <TableLayout
+                android:id="@+id/exerciseStatsTable"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/graph"
+                tools:layout_editor_absoluteX="10dp">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/border">
+
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:background="@drawable/border"
+                        android:text="Utility"
+                        android:textStyle="bold"
+                        android:typeface="serif" />
+
+                    <TextView
+                        android:id="@+id/utilityText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:typeface="serif"
+                        tools:text="Basic, Utility" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/border">
+
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:background="@drawable/border"
+                        android:text="Mechanics"
+                        android:textStyle="bold"
+                        android:typeface="serif" />
+
+                    <TextView
+                        android:id="@+id/mechanicsText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:typeface="serif"
+                        tools:text="Compound" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/border">
+
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:background="@drawable/border"
+                        android:text="Force"
+                        android:textStyle="bold"
+                        android:typeface="serif" />
+
+                    <TextView
+                        android:id="@+id/forceText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:typeface="serif"
+                        tools:text="Pull" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/border"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:background="@drawable/border"
+                        android:text="Target Muscle"
+                        android:textStyle="bold"
+                        android:typeface="serif" />
+
+                    <TextView
+                        android:id="@+id/targetMuscleText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:typeface="serif"
+                        tools:text="Splenius" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:background="@drawable/border"
+                        android:text="Synergist Muscles"
+                        android:textStyle="bold"
+                        android:typeface="serif" />
+
+                    <TextView
+                        android:id="@+id/synergistMuscleText"
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        android:typeface="serif"
+                        tools:text="Trapezius, Upper, Levator Scapulae, Sternocleidomastoid, Posterior Fibers, Erector Spinae, Quadriceps" />
+
+                </TableRow>
+
+            </TableLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:text="Preparation"
+                    android:textStyle="bold"
+                    android:typeface="serif" />
+
+                <TextView
+                    android:id="@+id/preparationText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textStyle="normal"
+                    android:typeface="serif"
+                    tools:text="Hold small or folded cushioned mat behind head. Facing away from wall or column position head and back of shoulders low on wall or column with mat between. Stand with feet far away from wall or column so body is angled back. Position hips and back straight and bend knees just slightly. Place arms to side or hold hands on abdomen." />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:text="Execution"
+                    android:textStyle="bold"
+                    android:typeface="serif" />
+
+                <TextView
+                    android:id="@+id/executionText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textStyle="normal"
+                    android:typeface="serif"
+                    tools:text="Hold small or folded cushioned mat behind head. Facing away from wall or column position head and back of shoulders low on wall or column with mat between. Stand with feet far away from wall or column so body is angled back. Position hips and back straight and bend knees just slightly. Place arms to side or hold hands on abdomen." />
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:text="Comments"
+                    android:textStyle="bold"
+                    android:typeface="serif" />
+
+                <TextView
+                    android:id="@+id/commentsText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textStyle="normal"
+                    android:typeface="serif"
+                    tools:text="Hold small or folded cushioned mat behind head. Facing away from wall or column position head and back of shoulders low on wall or column with mat between. Stand with feet far away from wall or column so body is angled back. Position hips and back straight and bend knees just slightly. Place arms to side or hold hands on abdomen." />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
