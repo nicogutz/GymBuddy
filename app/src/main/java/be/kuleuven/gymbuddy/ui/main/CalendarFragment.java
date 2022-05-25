@@ -9,11 +9,14 @@ import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.ListView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import be.kuleuven.gymbuddy.R;
 import be.kuleuven.gymbuddy.data.local.entities.RecordedExercise;
@@ -21,11 +24,9 @@ import be.kuleuven.gymbuddy.data.local.entities.RecordedExercise;
 public class CalendarFragment extends Fragment {
 
     public CalendarView calendarView;
-//    Map<Date, List<RecordedExercise>> exerciseMap = new HashMap<>();
-    public Map<String, RecordedExercise[]> exerciseMap = new HashMap<>();
+    public Map<Date, ArrayList<RecordedExercise>> exerciseMap;
     public ListView exsOfDayList;
-    String date;
-
+    Calendar cal;
 
     public CalendarFragment() {
 
@@ -35,6 +36,14 @@ public class CalendarFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        exerciseMap = new TreeMap<>();
+        cal = Calendar.getInstance();
+        cal.set(2022, Calendar.MAY, 25, 0, 0, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
+        exerciseMap.put(cal.getTime(), new ArrayList<>());
+        exerciseMap.get(cal.getTime()).add(new RecordedExercise("TEST", 2, 2.1f, 2));
+        exerciseMap.get(cal.getTime()).add(new RecordedExercise("TEST 2", 2, 2.1f, 2));
     }
 
     @Override
@@ -50,31 +59,32 @@ public class CalendarFragment extends Fragment {
         exsOfDayList = view.findViewById(R.id.list_exercises_date);
         calendarView = view.findViewById(R.id.calendarView);
 
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                String dateString = dayOfMonth + "/" + month + "/" + year; //dd/mm/yyyy
-                setDate(dateString);
-                Log.d("calendar", "date is" + dateString );
-
+        calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
+            cal.set(year, month, dayOfMonth, 0, 0, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+            Log.d("SELECTED: ", cal.getTime().toString());
+            exerciseMap.keySet().forEach(i -> Log.d("KEY: ", i.toString()));
+            ArrayList<RecordedExercise> selected = exerciseMap.get(cal.getTime());
+            if (selected == null) {
+                ArrayAdapter<String> calendarAdapter = new ArrayAdapter<>(getContext(),
+                        R.layout.empty_layout_textview, new ArrayList<String>());
+                exsOfDayList.setAdapter(calendarAdapter);
+                return;
             }
+
+            ArrayList<String> selectedStrings = (ArrayList<String>) selected.stream()
+                .map(i -> i.getNameFull())
+                                                                            .collect(
+                                                                                    Collectors.toList());
+            ArrayAdapter<String> calendarAdapter = new ArrayAdapter<>(getContext(),
+                    R.layout.empty_layout_textview, selectedStrings);
+
+            selectedStrings.forEach(i -> Log.d("TEST", i));
+            exsOfDayList.setAdapter(calendarAdapter);
         });
-        RecordedExercise array1[] = {};
-
-        exerciseMap.put("12/5/2022", array1);
-        //we are not showing
-        ArrayAdapter<String> calendarAdapter = new ArrayAdapter<String>(getContext(),R.layout.fragment_calendar ,array1);
-        exsOfDayList.setAdapter(calendarAdapter);
 
 
     }
 
-    public void setDate(String date){
-        this.date = date;
-    }
-//
-//    public String getDateString(){
-//        return this.dateString;
-//    }
 
 }

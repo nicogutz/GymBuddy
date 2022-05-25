@@ -3,6 +3,7 @@ package be.kuleuven.gymbuddy.data.local.entities;
 import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
@@ -87,5 +88,19 @@ public class RecordedExercise {
         this.sets = sets;
         this.weight = weight;
         this.reps = reps;
+    }
+
+    @Ignore
+    public RecordedExercise(String name,
+                            int sets,
+                            float weight, int reps) {
+        this.name = name;
+        this.sets = sets;
+        this.weight = weight;
+        this.reps = reps;
+    }
+
+    public String getNameFull() {
+        return name + ""
     }
 }
