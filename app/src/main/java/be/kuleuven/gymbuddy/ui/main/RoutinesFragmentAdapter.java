@@ -2,15 +2,19 @@ package be.kuleuven.gymbuddy.ui.main;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.InputType;
+import android.util.Log;
+import android.view.InputDevice;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import be.kuleuven.gymbuddy.R;
 import be.kuleuven.gymbuddy.data.local.entities.SavedRoutine;
@@ -36,7 +40,6 @@ public class RoutinesFragmentAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        //return Objects.requireNonNull(this.routinesMap.get(keyArray[groupPosition])).size();
         return 1;
     }
 
@@ -47,7 +50,7 @@ public class RoutinesFragmentAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return this.routineList.get(groupPosition).savedExercises.get(childPosition);
+        return this.routineList.get(groupPosition).savedExercises;
     }
 
     @Override
@@ -68,14 +71,12 @@ public class RoutinesFragmentAdapter extends BaseExpandableListAdapter {
     @SuppressLint("InflateParams")
 
     @Override
-    public View getGroupView(int groupPosition,
-                             boolean isExpanded,
-                             View convertView,
-                             ViewGroup parent) {
+    public View getGroupView(int groupPosition, boolean isExpanded,
+                             View convertView, ViewGroup parent) {
         if (convertView == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(
+            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.fragment_routine, null);
+            convertView = layoutInflater.inflate(R.layout.custom_layout_ex_ategory, null);
         }
 
         TextView routine_textView = convertView.findViewById(R.id.list_parent);
@@ -92,67 +93,41 @@ public class RoutinesFragmentAdapter extends BaseExpandableListAdapter {
                              boolean isLastChild,
                              View convertView,
                              ViewGroup parent) {
-        String child = (getChild(groupPosition, childPosition).toString());
         if (convertView == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(
+            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.routine_subgroup, null);
+
+            TableLayout tableLayout = (TableLayout) convertView.findViewById(R.id.routineExerciseListTable);
+
+            ArrayList<String> savedExercises = routineList.get(groupPosition).savedExercises;
+
+            for(String name: savedExercises){
+                TableRow tableRow = new TableRow(context);
+                tableRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+                TextView nameTextView = new TextView(context);
+                nameTextView.setText(name);
+                nameTextView.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+                tableRow.addView(nameTextView);
+
+                makeEditText(name, tableRow);
+                makeEditText(name, tableRow);
+                makeEditText(name, tableRow);
+
+                tableLayout.addView(tableRow, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
+            }
+
         }
 
-//        //exercise 1
-//        TextView ex1Name_textView = convertView.findViewById(R.id.ex1_textView);
-//        ex1Name_textView.setText(child);
-//
-//        TextView sets1_textView = convertView.findViewById(R.id.sets1);
-//        ex1Name_textView.setText(child);
-//
-//        TextView reps1_textView = convertView.findViewById(R.id.reps1);
-//        ex1Name_textView.setText(child);
-//
-//        TextView w1_textView = convertView.findViewById(R.id.weight1);
-//        ex1Name_textView.setText(child);
-//
-//        //exercise2
-//        TextView ex2Name_textView = convertView.findViewById(R.id.ex2_textView);
-//        ex1Name_textView.setText(child);
-//
-//        TextView sets2_textView = convertView.findViewById(R.id.sets2);
-//        ex1Name_textView.setText(child);
-//
-//        TextView reps2_textView = convertView.findViewById(R.id.reps2);
-//        ex1Name_textView.setText(child);
-//
-//        TextView w2_textView = convertView.findViewById(R.id.weight2);
-//        ex1Name_textView.setText(child);
-//
-//        //make till exercise10(?)
-//
-//        //buttons
-//        Button buttonRecord = convertView.findViewById(R.id.record_button);
-//        buttonRecord.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                View view;
-//                LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(
-//                        Context.LAYOUT_INFLATER_SERVICE);
-//                view = layoutInflater.inflate(R.layout.fragment_calendar, null);
-//            }
-//        });
-//
-//        Button buttonEdit = convertView.findViewById(R.id.edit_routine_button);
-//        buttonEdit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //make checkboxes visible now?
-//                View view;
-//                LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(
-//                        Context.LAYOUT_INFLATER_SERVICE);
-//                view = layoutInflater.inflate(R.layout.fragment_exercises, null);
-//
-//            }
-//        });
-
         return convertView;
+    }
+
+    private void makeEditText(String name, TableRow tableRow) {
+        EditText editText = new EditText(context);
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        editText.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+        tableRow.addView(editText);
     }
 
     @Override

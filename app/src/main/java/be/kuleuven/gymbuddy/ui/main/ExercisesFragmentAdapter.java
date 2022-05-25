@@ -64,8 +64,7 @@ public class ExercisesFragmentAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return Objects.requireNonNull(this.exercisesGroupedByMuscle.get(keyArray[groupPosition]))
-                      .size();
+        return this.exercisesGroupedByMuscle.get(keyArray[groupPosition]).size();
     }
 
     @Override

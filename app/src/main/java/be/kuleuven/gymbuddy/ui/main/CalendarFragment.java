@@ -8,10 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 import be.kuleuven.gymbuddy.R;
+import be.kuleuven.gymbuddy.data.local.entities.RecordedExercise;
 
 public class CalendarFragment extends Fragment {
-
     public CalendarFragment() {
         // Required empty public constructor
     }

@@ -17,8 +17,7 @@ import be.kuleuven.gymbuddy.data.local.entities.SavedRoutine;
 public class RoutinesFragment extends Fragment {
 
     ExpandableListView expandableListViewRoutines;
-    ExercisesFragmentAdapter adapterRoutines;
-    List<SavedRoutine> routines;
+    ExercisesFragmentAdapter adapter;
 
     public RoutinesFragment() {
     }
@@ -41,31 +40,16 @@ public class RoutinesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         expandableListViewRoutines = view.findViewById(R.id.expandable_listview_routines);
-        routines = new ArrayList<>();
+        ArrayList<SavedRoutine> routines = new ArrayList<>();
         ArrayList<String> exercises = new ArrayList<>();
         exercises.add("Exercise TEST 1");
         exercises.add("EXERCISE TEST 2");
 
         routines.add(new SavedRoutine("Routine Test", exercises));
-        RoutinesFragmentAdapter adapterRoutines = new RoutinesFragmentAdapter(getContext(),
-                (ArrayList<SavedRoutine>) routines);
+
+        RoutinesFragmentAdapter adapterRoutines = new RoutinesFragmentAdapter(getContext(), routines);
         expandableListViewRoutines.setAdapter(adapterRoutines);
 
     }
-
-    /**
-     public void initData(){
-     ArrayList<String> array1 = new ArrayList<>();
-     array1.add("squats");
-     array1.add("bench press");
-
-     ArrayList<String> array2 = new ArrayList<>();
-     array2.add("chest press");
-     array2.add("deadlift");
-
-     routinesMap.put("Monday Routine", array1);
-     routinesMap.put("Wednesday Routine", array2);
-     }
-     **/
 
 }

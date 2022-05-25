@@ -8,9 +8,9 @@
     tools:layout_editor_absoluteY="-9dp">
 
     <TableLayout
-        android:id="@+id/tableLayout"
+        android:id="@+id/routineExerciseListTable"
         android:layout_width="0dp"
-        android:layout_height="226dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,7 +23,7 @@
         <TableRow
             android:id="@+id/row1"
             android:layout_width="match_parent"
-            android:layout_height="16dp">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/exName_textView"
@@ -60,103 +60,67 @@
                 android:textSize="16sp" />
         </TableRow>
 
-        <TableRow
-            android:id="@+id/row2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/ex1_textView"
-                android:layout_width="164dp"
-                android:layout_height="wrap_content"
-                android:text="exercise1" />
-
-            <EditText
-                android:id="@+id/sets1"
-                android:layout_width="76dp"
-                android:layout_height="48dp"
-                android:ems="10"
-                android:inputType="number"
-                tools:ignore="SpeakableTextPresentCheck" />
-
-            <EditText
-                android:id="@+id/reps1"
-                android:layout_width="50dp"
-                android:layout_height="48dp"
-                android:ems="10"
-                android:inputType="number"
-                tools:ignore="SpeakableTextPresentCheck" />
-
-            <EditText
-                android:id="@+id/weight1"
-                android:layout_width="50dp"
-                android:layout_height="48dp"
-                android:ems="10"
-                android:inputType="number"
-                tools:ignore="SpeakableTextPresentCheck" />
-
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/row3"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/ex2_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="exercise2" />
-
-            <EditText
-                android:id="@+id/sets2"
-                android:layout_width="50dp"
-                android:layout_height="48dp"
-                android:ems="10"
-                android:inputType="number"
-                tools:ignore="SpeakableTextPresentCheck" />
-
-            <EditText
-                android:id="@+id/reps2"
-                android:layout_width="50dp"
-                android:layout_height="48dp"
-                android:ems="10"
-                android:inputType="number"
-                tools:ignore="SpeakableTextPresentCheck" />
-
-            <EditText
-                android:id="@+id/weight2"
-                android:layout_width="50dp"
-                android:layout_height="48dp"
-                android:ems="10"
-                android:inputType="number"
-                tools:ignore="SpeakableTextPresentCheck" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/row4"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
     </TableLayout>
 
     <Button
         android:id="@+id/record_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="37dp"
         android:text="Record Routine"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/edit_routine_button"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/routineExerciseListTable" />
 
     <Button
         android:id="@+id/edit_routine_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Edit Routine"
+        app:layout_constraintBottom_toBottomOf="@+id/record_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/record_button"
         app:layout_constraintTop_toTopOf="@+id/record_button" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--        <TableRow-->
+    <!--            android:id="@+id/row2"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent">-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/ex1_textView"-->
+    <!--                android:layout_width="164dp"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="exercise1" />-->
+
+    <!--            <EditText-->
+    <!--                android:id="@+id/sets1"-->
+    <!--                android:layout_width="76dp"-->
+    <!--                android:layout_height="48dp"-->
+    <!--                android:ems="10"-->
+    <!--                android:inputType="number"-->
+    <!--                tools:ignore="SpeakableTextPresentCheck" />-->
+
+    <!--            <EditText-->
+    <!--                android:id="@+id/reps1"-->
+    <!--                android:layout_width="50dp"-->
+    <!--                android:layout_height="48dp"-->
+    <!--                android:ems="10"-->
+    <!--                android:inputType="number"-->
+    <!--                tools:ignore="SpeakableTextPresentCheck" />-->
+
+    <!--            <EditText-->
+    <!--                android:id="@+id/weight1"-->
+    <!--                android:layout_width="50dp"-->
+    <!--                android:layout_height="48dp"-->
+    <!--                android:ems="10"-->
+    <!--                android:inputType="number"-->
+    <!--                tools:ignore="SpeakableTextPresentCheck" />-->
+
+    <!--        </TableRow>-->
