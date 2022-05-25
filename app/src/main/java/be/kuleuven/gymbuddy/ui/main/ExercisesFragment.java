@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,11 +28,11 @@ import be.kuleuven.gymbuddy.ui.SharedViewModel;
 @SuppressWarnings("ConstantConditions")
 public class ExercisesFragment extends Fragment {
 
-    Integer savedRoutineID;
+    private Integer savedRoutineID;
     private ExpandableListView expandableListView;
     private ExercisesFragmentAdapter adapter;
-
     private MainActivity mainActivity;
+    private List<String> localSavedExercises;
 
     public ExercisesFragment() {
     }
@@ -46,12 +47,12 @@ public class ExercisesFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         SharedViewModel viewModel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
+        localSavedExercises = new ArrayList<>();
         try {
             savedRoutineID = Integer.valueOf(getArguments().get("savedRoutineID").toString());
         } catch (NullPointerException ignore) {
             savedRoutineID = null;
         }
-
 
         super.onViewCreated(view, savedInstanceState);
 
@@ -72,6 +73,12 @@ public class ExercisesFragment extends Fragment {
                                   .navigate(R.id.action_exercises_to_exercise_page, args);
                         return false;
                     });
+        } else {
+            viewModel.getSavedRoutineByID(savedRoutineID).observe(getActivity(), strings -> {
+                        localSavedExercises.clear();
+                        localSavedExercises.addAll(strings);
+                    }
+            );
         }
 
         // Observe the LiveData, passing in the main activity as
@@ -89,7 +96,7 @@ public class ExercisesFragment extends Fragment {
             } else {
                 expandableListView.setAdapter(
                         new ExercisesFragmentAdapterChecked(getContext(), stringListMap,
-                                savedRoutineID));
+                                localSavedExercises));
             }
 
         };

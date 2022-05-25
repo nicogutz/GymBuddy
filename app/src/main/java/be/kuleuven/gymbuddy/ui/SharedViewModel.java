@@ -61,4 +61,8 @@ public class SharedViewModel extends AndroidViewModel {
     public LiveData<Map<Date, List<RecordedExercise>>> getRecordedExercisesByDate() {
         return recordedExerciseRepository.getRecordedExercisesByDate();
     }
+
+    public LiveData<List<String>> getSavedRoutineByID(Integer savedRoutineID) {
+        return savedRoutineRepository.getSavedRoutineByID(savedRoutineID);
+    }
 }

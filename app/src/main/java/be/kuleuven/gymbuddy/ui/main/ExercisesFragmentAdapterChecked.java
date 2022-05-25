@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.List;
@@ -23,16 +24,16 @@ import be.kuleuven.gymbuddy.data.model.ExerciseValue;
 public class ExercisesFragmentAdapterChecked extends BaseExpandableListAdapter {
 
     private Context context;
-    private Map<String, List<ExerciseValue>> exercisesGroupedByMuscle,
-            originalExercisesGroupedByMuscle;
+    private Map<String, List<ExerciseValue>> exercisesGroupedByMuscle;
     private Object[] keyArray;
+    private List<String> savedExercisesList;
 
     public ExercisesFragmentAdapterChecked(Context context,
                                            Map<String, List<ExerciseValue>> exercisesGroupedByMuscle,
-                                           Integer savedRoutineID) {
+                                           List<String> savedExerciseslist) {
+        this.savedExercisesList = savedExerciseslist;
         this.context = context;
-        this.exercisesGroupedByMuscle = clone(exercisesGroupedByMuscle);
-        this.originalExercisesGroupedByMuscle = clone(exercisesGroupedByMuscle);
+        this.exercisesGroupedByMuscle = exercisesGroupedByMuscle;
 
         keyArray = exercisesGroupedByMuscle.keySet().toArray();
     }
@@ -116,6 +117,12 @@ public class ExercisesFragmentAdapterChecked extends BaseExpandableListAdapter {
                     Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.exercise_item, null);
         }
+        CheckBox checkBox = convertView.findViewById(R.id.checkBox);
+        checkBox.setVisibility(View.VISIBLE);
+        checkBox.setChecked(savedExercisesList.stream().anyMatch(i -> i.equals(child)));
+//        checkBox.setText(child);
+//
+//        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> buttonView.getParent());
         TextView textView = convertView.findViewById(R.id.list_child);
         textView.setText(child);
         return convertView;
@@ -123,28 +130,10 @@ public class ExercisesFragmentAdapterChecked extends BaseExpandableListAdapter {
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return true;
+        return false;
     }
 
     public void filterData(String query) {
-        exercisesGroupedByMuscle.clear();
-        exercisesGroupedByMuscle = clone(originalExercisesGroupedByMuscle);
-        if (query.isEmpty()) {
-            notifyDataSetChanged();
-            return;
-        }
-
-        exercisesGroupedByMuscle.forEach(
-                (k, v) -> v.removeIf(i -> !i.getNameLower().contains(query.toLowerCase())));
-
-        notifyDataSetChanged();
     }
 
-    private Map<String, List<ExerciseValue>> clone(Map<String, List<ExerciseValue>> originalExercisesGroupedByMuscle) {
-        TreeMap<String, List<ExerciseValue>> newMap = new TreeMap<>();
-
-        originalExercisesGroupedByMuscle.forEach((k, v)
-                -> newMap.put(k, v.stream().map(ExerciseValue::new).collect(Collectors.toList())));
-        return newMap;
-    }
 }

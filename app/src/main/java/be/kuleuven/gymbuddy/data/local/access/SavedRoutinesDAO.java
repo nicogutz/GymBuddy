@@ -29,4 +29,6 @@ public interface SavedRoutinesDAO {
     @Query("SELECT * FROM saved_routine WHERE name = :name")
     public LiveData<SavedRoutine> getByName(String name);
 
+    @Query("SELECT saved_exercises FROM saved_routine WHERE savedRoutineID = :savedRoutineID")
+    LiveData<List<String>> getByID(Integer savedRoutineID);
 }

@@ -12,11 +12,9 @@ import be.kuleuven.gymbuddy.data.local.entities.SavedRoutine;
 
 public class SavedRoutineRepository {
     private final SavedRoutinesDAO savedRoutinesDAO;
-    private final LiveData<List<SavedRoutine>> allSavedRoutines;
 
     public SavedRoutineRepository(Application application) {
         savedRoutinesDAO = AppDatabase.getInstance(application).savedRoutinesDAO();
-        allSavedRoutines = savedRoutinesDAO.getAll();
     }
 
     public static void insertSavedRoutine(SavedRoutine savedRoutine, Application app) {
@@ -25,10 +23,14 @@ public class SavedRoutineRepository {
     }
 
     public LiveData<List<SavedRoutine>> getAllSavedRoutines() {
-        return allSavedRoutines;
+        return savedRoutinesDAO.getAll();
     }
 
     public void removeRecordedExercise(SavedRoutine savedRoutine) {
         AppDatabase.databaseWriteExecutor.execute(() -> savedRoutinesDAO.delete(savedRoutine));
+    }
+
+    public LiveData<List<String>> getSavedRoutineByID(Integer savedRoutineID) {
+    return savedRoutinesDAO.getByID(savedRoutineID);
     }
 }
