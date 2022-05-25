@@ -1,5 +1,6 @@
 package be.kuleuven.gymbuddy.ui.main;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.InputType;
@@ -15,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,7 @@ public class RoutinesFragment extends Fragment {
     ExpandableListView expandableListViewRoutines;
     RoutinesFragmentAdapter adapter;
     SharedViewModel viewModel;
-
+    Activity activity;
     public RoutinesFragment() {
     }
 
@@ -50,9 +52,8 @@ public class RoutinesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         expandableListViewRoutines = view.findViewById(R.id.expandable_listview_routines);
         viewModel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
+        activity = getActivity();
 
-
-        viewModel.getAllSavedRoutines().observe(getActivity(), getRoutineObserver());
         Button newRoutineButton = view.findViewById(R.id.newRoutineButton);
 
         newRoutineButton.setOnClickListener(v -> {
@@ -74,18 +75,19 @@ public class RoutinesFragment extends Fragment {
                 }
                 SharedViewModel.addSavedRoutine(
                         new SavedRoutine(input.getText().toString(), new ArrayList<>()),
-                        getActivity().getApplication());
+                        activity.getApplication());
             });
             builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
             builder.show();
         });
+        viewModel.getAllSavedRoutines().observe(getActivity(), getRoutineObserver());
     }
 
     @NonNull
     private Observer<List<SavedRoutine>> getRoutineObserver() {
         return routineList -> {
             adapter = new RoutinesFragmentAdapter(getContext(),
-                    routineList, getActivity().getApplication());
+                    routineList, activity.getApplication());
             expandableListViewRoutines.setAdapter(adapter);
         };
     }

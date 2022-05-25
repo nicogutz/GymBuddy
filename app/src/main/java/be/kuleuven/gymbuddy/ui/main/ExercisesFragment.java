@@ -31,6 +31,7 @@ public class ExercisesFragment extends Fragment {
     private ExpandableListView expandableListView;
     private ExercisesFragmentAdapter adapter;
     private MainActivity mainActivity;
+    Integer savedRoutineID;
 
     public ExercisesFragment() {
     }
@@ -44,14 +45,23 @@ public class ExercisesFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        SharedViewModel viewModel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
+        try {
+            savedRoutineID = Integer.valueOf(getArguments().get("savedRoutineID").toString());
+        } catch (NullPointerException ignore){
+            savedRoutineID = null;
+        }
+
+
         super.onViewCreated(view, savedInstanceState);
-        SharedViewModel viewModel = new ViewModelProvider(mainActivity).get(SharedViewModel.class);
 
         expandableListView = view.findViewById(R.id.expandable_listview);
+        if (savedRoutineID == null){
         expandableListView.setOnChildClickListener(
                 (parent, v, groupPosition, childPosition, id) -> {
 
-                    ExercisesFragmentAdapter exercisesFragmentAdapter = (ExercisesFragmentAdapter) parent.getExpandableListAdapter();
+                    ExercisesFragmentAdapter exercisesFragmentAdapter = (ExercisesFragmentAdapter)
+                            parent.getExpandableListAdapter();
                     ExerciseValue exerciseValue = (ExerciseValue) exercisesFragmentAdapter.getChild(
                             groupPosition, childPosition);
                     Bundle args = new Bundle();
@@ -60,7 +70,7 @@ public class ExercisesFragment extends Fragment {
                     Navigation.findNavController(view)
                               .navigate(R.id.action_exercises_to_exercise_page, args);
                     return false;
-                });
+                });}
 
         // Observe the LiveData, passing in the main activity as
         // the LifecycleOwner and the observer.
@@ -71,7 +81,7 @@ public class ExercisesFragment extends Fragment {
     @NonNull
     private Observer<Map<String, List<ExerciseValue>>> getMapObserver() {
         return stringListMap -> {
-            adapter = new ExercisesFragmentAdapter(getContext(), stringListMap);
+            adapter = new ExercisesFragmentAdapter(getContext(), stringListMap, savedRoutineID);
             expandableListView.setAdapter(adapter);
         };
     }

@@ -30,10 +30,16 @@ public class ExercisesFragmentAdapter extends BaseExpandableListAdapter {
             originalExercisesGroupedByMuscle;
     private Object[] keyArray;
     private boolean checkmarkVisible;
-
+    private Integer savedRoutineID;
     public ExercisesFragmentAdapter(Context context,
-                                    Map<String, List<ExerciseValue>> exercisesGroupedByMuscle) {
-        checkmarkVisible = false;
+                                    Map<String, List<ExerciseValue>> exercisesGroupedByMuscle,
+                                    Integer savedRoutineID) {
+        if (savedRoutineID == null){
+            checkmarkVisible = false;
+        }else {
+            checkmarkVisible = true;
+            this.savedRoutineID = savedRoutineID;
+        }
         this.context = context;
 
         this.exercisesGroupedByMuscle = clone(exercisesGroupedByMuscle);
@@ -145,9 +151,7 @@ public class ExercisesFragmentAdapter extends BaseExpandableListAdapter {
             return;
         }
 
-        exercisesGroupedByMuscle.forEach((k, v) ->{
-                v.removeIf(i -> !i.getNameLower().contains(query.toLowerCase()));
-        });
+        exercisesGroupedByMuscle.forEach((k, v) -> v.removeIf(i -> !i.getNameLower().contains(query.toLowerCase())));
 
         notifyDataSetChanged();
     }
