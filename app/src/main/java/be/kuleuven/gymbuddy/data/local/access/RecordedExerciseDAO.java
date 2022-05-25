@@ -8,6 +8,7 @@ import androidx.room.MapInfo;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +30,11 @@ public interface RecordedExerciseDAO {
     @Query("SELECT * FROM recorded_exercise")
     LiveData<List<RecordedExercise>> getAll();
 
-    @Query("SELECT name, date, reps, sets, weight FROM recorded_exercise ORDER BY name, date")
+    @Query("SELECT * FROM recorded_exercise ORDER BY name, date")
     @MapInfo(keyColumn = "name")
-    LiveData<Map<String, List<RecordedExerciseValue>>> getMapWithDates();
+    LiveData<Map<String, List<RecordedExercise>>> getMapWithDates();
+
+    @Query("SELECT * FROM recorded_exercise ORDER BY date, name")
+    @MapInfo(keyColumn = "date")
+    LiveData<Map<Date, List<RecordedExercise>>> getAllByDates();
 }

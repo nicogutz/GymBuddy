@@ -1,23 +1,33 @@
 package be.kuleuven.gymbuddy.ui.main;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import be.kuleuven.gymbuddy.R;
 import be.kuleuven.gymbuddy.data.local.entities.SavedRoutine;
+import be.kuleuven.gymbuddy.ui.SharedViewModel;
 
 public class RoutinesFragment extends Fragment {
 
     ExpandableListView expandableListViewRoutines;
-    ExercisesFragmentAdapter adapter;
+    RoutinesFragmentAdapter adapter;
+    SharedViewModel viewModel;
 
     public RoutinesFragment() {
     }
@@ -38,18 +48,47 @@ public class RoutinesFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         expandableListViewRoutines = view.findViewById(R.id.expandable_listview_routines);
-        ArrayList<SavedRoutine> routines = new ArrayList<>();
-        ArrayList<String> exercises = new ArrayList<>();
-        exercises.add("Exercise TEST 1");
-        exercises.add("EXERCISE TEST 2");
+        viewModel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
 
-        routines.add(new SavedRoutine("Routine Test", exercises));
 
-        RoutinesFragmentAdapter adapterRoutines = new RoutinesFragmentAdapter(getContext(), routines);
-        expandableListViewRoutines.setAdapter(adapterRoutines);
+        viewModel.getAllSavedRoutines().observe(getActivity(), getRoutineObserver());
+        Button newRoutineButton = view.findViewById(R.id.newRoutineButton);
 
+        newRoutineButton.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle("New Routine");
+            // Set up the input
+            final EditText input = new EditText(getContext());
+            // Specify the type of input expected; this, for example, sets the input as a
+            // password, and will mask the text
+            input.setInputType(InputType.TYPE_CLASS_TEXT);
+            builder.setView(input);
+
+            // Set up the buttons
+            builder.setPositiveButton("OK", (dialog, which) -> {
+                if (input.getText().toString().isEmpty()) {
+                    Toast.makeText(getContext(), "Name cannot be empty", Toast.LENGTH_SHORT)
+                         .show();
+                    return;
+                }
+                SharedViewModel.addSavedRoutine(
+                        new SavedRoutine(input.getText().toString(), new ArrayList<>()),
+                        getActivity().getApplication());
+            });
+            builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+            builder.show();
+        });
     }
+
+    @NonNull
+    private Observer<List<SavedRoutine>> getRoutineObserver() {
+        return routineList -> {
+            adapter = new RoutinesFragmentAdapter(getContext(),
+                    routineList, getActivity().getApplication());
+            expandableListViewRoutines.setAdapter(adapter);
+        };
+    }
+
 
 }

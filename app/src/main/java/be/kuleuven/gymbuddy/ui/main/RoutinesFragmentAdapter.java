@@ -1,6 +1,7 @@
 package be.kuleuven.gymbuddy.ui.main;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.text.InputType;
@@ -14,12 +15,20 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
+
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 import be.kuleuven.gymbuddy.R;
+import be.kuleuven.gymbuddy.data.local.entities.RecordedExercise;
 import be.kuleuven.gymbuddy.data.local.entities.SavedRoutine;
+import be.kuleuven.gymbuddy.ui.SharedViewModel;
 
 //depending on implementation we might just need to override the getCount() and getView()
 
@@ -27,10 +36,11 @@ import be.kuleuven.gymbuddy.data.local.entities.SavedRoutine;
 public class RoutinesFragmentAdapter extends BaseExpandableListAdapter {
 
     Context context;
-    ArrayList<SavedRoutine> routineList;
+    List<SavedRoutine> routineList;
+    Application app;
 
     public RoutinesFragmentAdapter(Context context,
-                                   ArrayList<SavedRoutine> routineList) {
+                                   List<SavedRoutine> routineList, Application app) {
         this.context = context;
         this.routineList = routineList;
     }
@@ -128,13 +138,22 @@ public class RoutinesFragmentAdapter extends BaseExpandableListAdapter {
             }
 
             Button recordButton = (Button) convertView.findViewById(R.id.record_button);
+
             Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+            ArrayList<RecordedExercise> newRecording = new ArrayList<>();
 
             DatePickerDialog datePickerDialog = new DatePickerDialog(context, (l, y, m, d) -> {
                 calendar.set(y, m, d);
+
+                newRecording.forEach(i -> i.setDate(y, m, d) );
+
+                if (!newRecording.isEmpty()) {
+                    SharedViewModel.addAllRecordedExercises(newRecording, app);
+                }
             },
                     calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                     calendar.get(Calendar.DAY_OF_MONTH));
+
 
             recordButton.setOnClickListener(v -> {
                 for (int i = 1; i < tableLayout.getChildCount(); i++) {
@@ -147,14 +166,22 @@ public class RoutinesFragmentAdapter extends BaseExpandableListAdapter {
                             (String) ((TextView) row.getChildAt(2)).getText().toString());
                     int weight = Integer.parseInt(
                             (String) ((TextView) row.getChildAt(3)).getText().toString());
+
+                    newRecording.add(new RecordedExercise(name, sets, weight, reps));
                 }
                 datePickerDialog.show();
+
             });
 
+            Button editRoutineButton = (Button) convertView.findViewById(R.id.edit_routine_button);
+            editRoutineButton.setOnClickListener(v -> {
+
+            });
         }
 
         return convertView;
     }
+
 
     private void makeEditText(String name, TableRow tableRow) {
         EditText editText = new EditText(context);

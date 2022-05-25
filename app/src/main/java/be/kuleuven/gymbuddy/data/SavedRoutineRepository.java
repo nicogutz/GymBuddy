@@ -19,12 +19,13 @@ public class SavedRoutineRepository {
         allSavedRoutines = savedRoutinesDAO.getAll();
     }
 
-    public LiveData<List<SavedRoutine>> getAllRecordedExercises() {
-        return allSavedRoutines;
+    public static void insertSavedRoutine(SavedRoutine savedRoutine, Application app) {
+        AppDatabase.databaseWriteExecutor.execute(
+                () -> AppDatabase.getInstance(app).savedRoutinesDAO().insert(savedRoutine));
     }
 
-    public void insertAllRecordedExercise(SavedRoutine savedRoutine) {
-        AppDatabase.databaseWriteExecutor.execute(() -> savedRoutinesDAO.insert(savedRoutine));
+    public LiveData<List<SavedRoutine>> getAllSavedRoutines() {
+        return allSavedRoutines;
     }
 
     public void removeRecordedExercise(SavedRoutine savedRoutine) {

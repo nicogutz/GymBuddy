@@ -30,7 +30,7 @@ import be.kuleuven.gymbuddy.data.local.entities.SavedRoutine;
 @Database(entities = {
         PublicExercise.class,
         SavedRoutine.class,
-        RecordedExercise.class}, version = 4, exportSchema = true)
+        RecordedExercise.class}, version = 5, exportSchema = true)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
     /**

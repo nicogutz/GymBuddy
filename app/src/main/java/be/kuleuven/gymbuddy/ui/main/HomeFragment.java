@@ -31,6 +31,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import be.kuleuven.gymbuddy.R;
+import be.kuleuven.gymbuddy.data.local.entities.RecordedExercise;
 import be.kuleuven.gymbuddy.data.model.RecordedExerciseValue;
 import be.kuleuven.gymbuddy.ui.SharedViewModel;
 
@@ -43,7 +44,7 @@ public class HomeFragment extends Fragment {
     View fragView;
     Spinner spinner;
     GraphView graph;
-    Map<String, List<RecordedExerciseValue>> stringListMapLocal;
+    Map<String, List<RecordedExercise>> stringListMapLocal;
     TextView maxSetsText;
     TextView maxRepsText;
     TextView maxWeightText;
@@ -113,7 +114,7 @@ public class HomeFragment extends Fragment {
                 graph.removeAllSeries();
 
                 // Kinda shady way of getting the values from the map.
-                List<RecordedExerciseValue> exerciseValues = stringListMapLocal.get(
+                List<RecordedExercise> exerciseValues = stringListMapLocal.get(
                         (String) parentView.getItemAtPosition(position));
 
                 // Quick mafs
@@ -198,7 +199,7 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         SharedViewModel viewModel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
 
-        final Observer<Map<String, List<RecordedExerciseValue>>> exerciseObserver =
+        final Observer<Map<String, List<RecordedExercise>>> exerciseObserver =
                 stringListMap -> {
                     spinner.setAdapter(
                             new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,

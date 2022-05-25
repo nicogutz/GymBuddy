@@ -25,40 +25,28 @@ public class RecordedExerciseRepository {
 
     public RecordedExerciseRepository(Application application) {
         recordedExerciseDAO = AppDatabase.getInstance(application).recordedExerciseDAO();
-//        Calendar cal = Calendar.getInstance();
-//        cal.set(Calendar.YEAR, 2022);
-//        cal.set(Calendar.MONTH, Calendar.MARCH);
-//        cal.set(Calendar.HOUR, 12);
-//        cal.set(Calendar.MINUTE, 22);
-//        cal.set(Calendar.MILLISECOND, 0);
-//
-//        List<RecordedExercise> testList = new ArrayList<RecordedExercise>();
-//        for (int i = 1; i < 29; i++) {
-//            cal.set(Calendar.DAY_OF_MONTH, i);
-//
-//            testList.add(new RecordedExercise("TestGroup",
-//                    "Test_1", "Test 1", cal.getTime(), i, (float) (i*2.3),i*2));
-//        }
-//
-//        insertAllRecordedExercise(testList);
     }
 
     public LiveData<List<RecordedExercise>> getAllRecordedExercises() {
         return recordedExerciseDAO.getAll();
     }
 
-    public LiveData<Map<String, List<RecordedExerciseValue>>> getAllRecordedExerciseValues() {
+    public LiveData<Map<String, List<RecordedExercise>>> getAllRecordedExerciseValues() {
         return recordedExerciseDAO.getMapWithDates();
     }
 
 
-    public void insertAllRecordedExercise(List<RecordedExercise> recordedExercise) {
+    public static void insertAllRecordedExercise(List<RecordedExercise> recordedExercise, Application app) {
         AppDatabase.databaseWriteExecutor.execute(
-                () -> recordedExerciseDAO.insertAll(recordedExercise));
+                () -> AppDatabase.getInstance(app).recordedExerciseDAO().insertAll(recordedExercise));
     }
 
     public void removeRecordedExercise(RecordedExercise recordedExercise) {
         AppDatabase.databaseWriteExecutor.execute(
                 () -> recordedExerciseDAO.delete(recordedExercise));
+    }
+
+    public LiveData<Map<Date, List<RecordedExercise>>> getRecordedExercisesByDate() {
+        return recordedExerciseDAO.getAllByDates();
     }
 }

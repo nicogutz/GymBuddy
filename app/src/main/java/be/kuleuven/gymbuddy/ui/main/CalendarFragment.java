@@ -10,23 +10,22 @@ import android.widget.CalendarView;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import be.kuleuven.gymbuddy.R;
 import be.kuleuven.gymbuddy.data.local.entities.RecordedExercise;
+import be.kuleuven.gymbuddy.ui.SharedViewModel;
 
 public class CalendarFragment extends Fragment {
 
-    public CalendarView calendarView;
-    public Map<Date, ArrayList<RecordedExercise>> exerciseMap;
-    public ListView exsOfDayList;
-    Calendar cal;
 
     public CalendarFragment() {
 
@@ -36,14 +35,6 @@ public class CalendarFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        exerciseMap = new TreeMap<>();
-        cal = Calendar.getInstance();
-        cal.set(2022, Calendar.MAY, 25, 0, 0, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-
-        exerciseMap.put(cal.getTime(), new ArrayList<>());
-        exerciseMap.get(cal.getTime()).add(new RecordedExercise("TEST", 2, 2.1f, 2));
-        exerciseMap.get(cal.getTime()).add(new RecordedExercise("TEST 2", 2, 2.1f, 2));
     }
 
     @Override
@@ -55,16 +46,25 @@ public class CalendarFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        SharedViewModel viewModel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
+        ListView exsOfDayList = view.findViewById(R.id.list_exercises_date);
+        CalendarView calendarView = view.findViewById(R.id.calendarView);
+        Map<Date, List<RecordedExercise>> exerciseMap = new TreeMap<>();
 
-        exsOfDayList = view.findViewById(R.id.list_exercises_date);
-        calendarView = view.findViewById(R.id.calendarView);
+        viewModel.getRecordedExercisesByDate().observe(getActivity(), stringListMap -> {
+                    exerciseMap.clear();
+                    exerciseMap.putAll(stringListMap);
+                    });
 
+        Calendar cal = Calendar.getInstance();
         calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
+            if (exerciseMap.isEmpty())
+                return;
             cal.set(year, month, dayOfMonth, 0, 0, 0);
             cal.set(Calendar.MILLISECOND, 0);
             Log.d("SELECTED: ", cal.getTime().toString());
             exerciseMap.keySet().forEach(i -> Log.d("KEY: ", i.toString()));
-            ArrayList<RecordedExercise> selected = exerciseMap.get(cal.getTime());
+            ArrayList<RecordedExercise> selected = (ArrayList<RecordedExercise>) exerciseMap.get(cal.getTime());
             if (selected == null) {
                 ArrayAdapter<String> calendarAdapter = new ArrayAdapter<>(getContext(),
                         R.layout.empty_layout_textview, new ArrayList<String>());
@@ -73,7 +73,7 @@ public class CalendarFragment extends Fragment {
             }
 
             ArrayList<String> selectedStrings = (ArrayList<String>) selected.stream()
-                .map(i -> i.getNameFull())
+                                                                            .map(RecordedExercise::getNameFull)
                                                                             .collect(
                                                                                     Collectors.toList());
             ArrayAdapter<String> calendarAdapter = new ArrayAdapter<>(getContext(),
