@@ -73,8 +73,11 @@ public class RoutinesFragment extends Fragment {
                          .show();
                     return;
                 }
+                ArrayList<String> initialList = new ArrayList<>();
+                initialList.add("Lever Neck Extension");
+                initialList.add("Lever Seated Row");
                 SharedViewModel.addSavedRoutine(
-                        new SavedRoutine(input.getText().toString(), new ArrayList<>()),
+                        new SavedRoutine(input.getText().toString(), initialList),
                         activity.getApplication());
             });
             builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
@@ -87,7 +90,7 @@ public class RoutinesFragment extends Fragment {
     private Observer<List<SavedRoutine>> getRoutineObserver() {
         return routineList -> {
             adapter = new RoutinesFragmentAdapter(getContext(),
-                    routineList, activity.getApplication());
+                    routineList, activity.getApplication(), getView());
             expandableListViewRoutines.setAdapter(adapter);
         };
     }

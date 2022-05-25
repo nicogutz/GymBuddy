@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,17 +34,17 @@ import be.kuleuven.gymbuddy.ui.SharedViewModel;
 
 //depending on implementation we might just need to override the getCount() and getView()
 
-@SuppressWarnings("SuspiciousMethodCalls")
 public class RoutinesFragmentAdapter extends BaseExpandableListAdapter {
 
     Context context;
     List<SavedRoutine> routineList;
     Application app;
-
+    View view;
     public RoutinesFragmentAdapter(Context context,
-                                   List<SavedRoutine> routineList, Application app) {
+                                   List<SavedRoutine> routineList, Application app, View view) {
         this.context = context;
         this.routineList = routineList;
+        this.view = view;
     }
 
     @Override
@@ -110,7 +112,7 @@ public class RoutinesFragmentAdapter extends BaseExpandableListAdapter {
                     Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.routine_subgroup, null);
 
-            TableLayout tableLayout = (TableLayout) convertView.findViewById(
+            TableLayout tableLayout =  convertView.findViewById(
                     R.id.routineExerciseListTable);
 
             ArrayList<String> savedExercises = routineList.get(groupPosition).savedExercises;
@@ -137,7 +139,7 @@ public class RoutinesFragmentAdapter extends BaseExpandableListAdapter {
                                 TableLayout.LayoutParams.WRAP_CONTENT));
             }
 
-            Button recordButton = (Button) convertView.findViewById(R.id.record_button);
+            Button recordButton = convertView.findViewById(R.id.record_button);
 
             Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
             ArrayList<RecordedExercise> newRecording = new ArrayList<>();
@@ -158,14 +160,14 @@ public class RoutinesFragmentAdapter extends BaseExpandableListAdapter {
             recordButton.setOnClickListener(v -> {
                 for (int i = 1; i < tableLayout.getChildCount(); i++) {
                     TableRow row = (TableRow) tableLayout.getChildAt(i);
-                    String name = (String) ((TextView) row.getChildAt(0)).getText().toString();
+                    String name =  ((TextView) row.getChildAt(0)).getText().toString();
                     // Who says Java is verbose
                     int sets = Integer.parseInt(
-                            (String) ((TextView) row.getChildAt(1)).getText().toString());
+                             ((TextView) row.getChildAt(1)).getText().toString());
                     int reps = Integer.parseInt(
-                            (String) ((TextView) row.getChildAt(2)).getText().toString());
+                             ((TextView) row.getChildAt(2)).getText().toString());
                     int weight = Integer.parseInt(
-                            (String) ((TextView) row.getChildAt(3)).getText().toString());
+                             ((TextView) row.getChildAt(3)).getText().toString());
 
                     newRecording.add(new RecordedExercise(name, sets, weight, reps));
                 }
@@ -173,8 +175,12 @@ public class RoutinesFragmentAdapter extends BaseExpandableListAdapter {
 
             });
 
-            Button editRoutineButton = (Button) convertView.findViewById(R.id.edit_routine_button);
+            Button editRoutineButton =  convertView.findViewById(R.id.edit_routine_button);
             editRoutineButton.setOnClickListener(v -> {
+                Bundle args = new Bundle();
+                args.putInt("savedRoutineID", routineList.get(groupPosition).savedRoutineID);
+                Navigation.findNavController(view)
+                          .navigate(R.id.action_routines_to_exercises, args);
 
             });
         }

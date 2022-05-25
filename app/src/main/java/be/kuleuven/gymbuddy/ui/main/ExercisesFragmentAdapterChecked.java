@@ -6,11 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -23,14 +20,16 @@ import be.kuleuven.gymbuddy.data.model.ExerciseValue;
 //depending on implementation we might just need to override the getCount() and getView()
 
 @SuppressWarnings("SuspiciousMethodCalls")
-public class ExercisesFragmentAdapter extends BaseExpandableListAdapter {
+public class ExercisesFragmentAdapterChecked extends BaseExpandableListAdapter {
 
     private Context context;
     private Map<String, List<ExerciseValue>> exercisesGroupedByMuscle,
             originalExercisesGroupedByMuscle;
     private Object[] keyArray;
-    public ExercisesFragmentAdapter(Context context,
-                                    Map<String, List<ExerciseValue>> exercisesGroupedByMuscle) {
+
+    public ExercisesFragmentAdapterChecked(Context context,
+                                           Map<String, List<ExerciseValue>> exercisesGroupedByMuscle,
+                                           Integer savedRoutineID) {
         this.context = context;
         this.exercisesGroupedByMuscle = clone(exercisesGroupedByMuscle);
         this.originalExercisesGroupedByMuscle = clone(exercisesGroupedByMuscle);
@@ -135,7 +134,8 @@ public class ExercisesFragmentAdapter extends BaseExpandableListAdapter {
             return;
         }
 
-        exercisesGroupedByMuscle.forEach((k, v) -> v.removeIf(i -> !i.getNameLower().contains(query.toLowerCase())));
+        exercisesGroupedByMuscle.forEach(
+                (k, v) -> v.removeIf(i -> !i.getNameLower().contains(query.toLowerCase())));
 
         notifyDataSetChanged();
     }

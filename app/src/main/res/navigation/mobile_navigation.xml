@@ -9,7 +9,7 @@
         android:id="@+id/navigation_home"
         android:name="be.kuleuven.gymbuddy.ui.main.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home"/>
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_calendar"
@@ -21,10 +21,15 @@
         android:id="@+id/navigation_routines"
         android:name="be.kuleuven.gymbuddy.ui.main.RoutinesFragment"
         android:label="@string/title_routines"
-        tools:layout="@layout/fragment_routine" >
+        tools:layout="@layout/fragment_routine">
         <action
             android:id="@+id/action_routines_to_exercises"
-            app:destination="@id/navigation_exercises" />
+            app:destination="@id/navigation_exercises">
+            <argument
+                android:name="savedRoutineID"
+                android:defaultValue='@null'
+                app:argType="integer" />
+        </action>
     </fragment>
 
     <fragment

@@ -1,6 +1,5 @@
 package be.kuleuven.gymbuddy.ui.main;
 
-import android.app.SearchManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,10 +27,11 @@ import be.kuleuven.gymbuddy.ui.SharedViewModel;
 @SuppressWarnings("ConstantConditions")
 public class ExercisesFragment extends Fragment {
 
+    Integer savedRoutineID;
     private ExpandableListView expandableListView;
     private ExercisesFragmentAdapter adapter;
+
     private MainActivity mainActivity;
-    Integer savedRoutineID;
 
     public ExercisesFragment() {
     }
@@ -48,7 +48,7 @@ public class ExercisesFragment extends Fragment {
         SharedViewModel viewModel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
         try {
             savedRoutineID = Integer.valueOf(getArguments().get("savedRoutineID").toString());
-        } catch (NullPointerException ignore){
+        } catch (NullPointerException ignore) {
             savedRoutineID = null;
         }
 
@@ -56,21 +56,23 @@ public class ExercisesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         expandableListView = view.findViewById(R.id.expandable_listview);
-        if (savedRoutineID == null){
-        expandableListView.setOnChildClickListener(
-                (parent, v, groupPosition, childPosition, id) -> {
+        if (savedRoutineID == null) {
+            expandableListView.setOnChildClickListener(
+                    (parent, v, groupPosition, childPosition, id) -> {
 
-                    ExercisesFragmentAdapter exercisesFragmentAdapter = (ExercisesFragmentAdapter)
-                            parent.getExpandableListAdapter();
-                    ExerciseValue exerciseValue = (ExerciseValue) exercisesFragmentAdapter.getChild(
-                            groupPosition, childPosition);
-                    Bundle args = new Bundle();
-                    args.putInt("exerciseID", exerciseValue.publicExerciseID);
-                    // TODO: Hide the search bar stuff when changing fragments.
-                    Navigation.findNavController(view)
-                              .navigate(R.id.action_exercises_to_exercise_page, args);
-                    return false;
-                });}
+                        ExercisesFragmentAdapter exercisesFragmentAdapter =
+                                (ExercisesFragmentAdapter)
+                                        parent.getExpandableListAdapter();
+                        ExerciseValue exerciseValue =
+                                (ExerciseValue) exercisesFragmentAdapter.getChild(
+                                        groupPosition, childPosition);
+                        Bundle args = new Bundle();
+                        args.putInt("exerciseID", exerciseValue.publicExerciseID);
+                        Navigation.findNavController(view)
+                                  .navigate(R.id.action_exercises_to_exercise_page, args);
+                        return false;
+                    });
+        }
 
         // Observe the LiveData, passing in the main activity as
         // the LifecycleOwner and the observer.
@@ -81,8 +83,15 @@ public class ExercisesFragment extends Fragment {
     @NonNull
     private Observer<Map<String, List<ExerciseValue>>> getMapObserver() {
         return stringListMap -> {
-            adapter = new ExercisesFragmentAdapter(getContext(), stringListMap, savedRoutineID);
-            expandableListView.setAdapter(adapter);
+            if (savedRoutineID == null) {
+                adapter = new ExercisesFragmentAdapter(getContext(), stringListMap);
+                expandableListView.setAdapter(adapter);
+            } else {
+                expandableListView.setAdapter(
+                        new ExercisesFragmentAdapterChecked(getContext(), stringListMap,
+                                savedRoutineID));
+            }
+
         };
     }
 
@@ -91,6 +100,7 @@ public class ExercisesFragment extends Fragment {
             expandableListView.expandGroup(i);
         }
     }
+
     public void collapseAll() {
         for (int i = 0; i < adapter.getGroupCount(); i++) {
             expandableListView.collapseGroup(i);
