@@ -9,11 +9,10 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 import be.kuleuven.gymbuddy.R;
 import be.kuleuven.gymbuddy.data.model.ExerciseValue;
@@ -26,15 +25,13 @@ public class ExercisesFragmentAdapterChecked extends BaseExpandableListAdapter {
     private Context context;
     private Map<String, List<ExerciseValue>> exercisesGroupedByMuscle;
     private Object[] keyArray;
-    private List<String> savedExercisesList;
+    public ArrayList<String> selectedExercises;
 
     public ExercisesFragmentAdapterChecked(Context context,
-                                           Map<String, List<ExerciseValue>> exercisesGroupedByMuscle,
-                                           List<String> savedExerciseslist) {
-        this.savedExercisesList = savedExerciseslist;
+                                           Map<String, List<ExerciseValue>> exercisesGroupedByMuscle) {
         this.context = context;
         this.exercisesGroupedByMuscle = exercisesGroupedByMuscle;
-
+        selectedExercises = new ArrayList<>();
         keyArray = exercisesGroupedByMuscle.keySet().toArray();
     }
 
@@ -119,12 +116,15 @@ public class ExercisesFragmentAdapterChecked extends BaseExpandableListAdapter {
         }
         CheckBox checkBox = convertView.findViewById(R.id.checkBox);
         checkBox.setVisibility(View.VISIBLE);
-        checkBox.setChecked(savedExercisesList.stream().anyMatch(i -> i.equals(child)));
-//        checkBox.setText(child);
-//
-//        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> buttonView.getParent());
+        checkBox.setText(child);
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked){
+                selectedExercises.add(buttonView.getText().toString());
+            }
+        });
         TextView textView = convertView.findViewById(R.id.list_child);
-        textView.setText(child);
+        textView.setVisibility(View.INVISIBLE);
+
         return convertView;
     }
 

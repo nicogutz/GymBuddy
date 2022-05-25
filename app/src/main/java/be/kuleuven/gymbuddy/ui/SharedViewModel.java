@@ -49,6 +49,9 @@ public class SharedViewModel extends AndroidViewModel {
         return savedRoutineRepository.getAllSavedRoutines();
     }
 
+    public void setExerciseList(List<String> list, Integer id){
+        savedRoutineRepository.setExerciseList(list, id);
+    }
 
     public static void addSavedRoutine(SavedRoutine savedRoutine, Application app){
         SavedRoutineRepository.insertSavedRoutine(savedRoutine, app);

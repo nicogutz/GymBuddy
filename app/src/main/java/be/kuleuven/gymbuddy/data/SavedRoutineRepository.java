@@ -22,6 +22,16 @@ public class SavedRoutineRepository {
                 () -> AppDatabase.getInstance(app).savedRoutinesDAO().insert(savedRoutine));
     }
 
+    public void setExerciseList(List<String> list, Integer id) {
+        AppDatabase.databaseWriteExecutor.execute(
+                () -> {
+                    SavedRoutine savedRoutine = savedRoutinesDAO.getRoutineById(id);
+                    savedRoutine.savedExercises.clear();
+                    savedRoutine.savedExercises.addAll(list);
+                    savedRoutinesDAO.insert(savedRoutine);}
+        );
+    }
+
     public LiveData<List<SavedRoutine>> getAllSavedRoutines() {
         return savedRoutinesDAO.getAll();
     }

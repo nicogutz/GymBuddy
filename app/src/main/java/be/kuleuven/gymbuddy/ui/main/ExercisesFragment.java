@@ -1,6 +1,7 @@
 package be.kuleuven.gymbuddy.ui.main;
 
 import android.os.Bundle;
+import android.service.voice.VoiceInteractionService;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,6 +16,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +35,7 @@ public class ExercisesFragment extends Fragment {
     private ExpandableListView expandableListView;
     private ExercisesFragmentAdapter adapter;
     private MainActivity mainActivity;
-    private List<String> localSavedExercises;
+    SharedViewModel viewModel;
 
     public ExercisesFragment() {
     }
@@ -46,8 +49,8 @@ public class ExercisesFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        SharedViewModel viewModel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
-        localSavedExercises = new ArrayList<>();
+        viewModel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
+
         try {
             savedRoutineID = Integer.valueOf(getArguments().get("savedRoutineID").toString());
         } catch (NullPointerException ignore) {
@@ -73,12 +76,6 @@ public class ExercisesFragment extends Fragment {
                                   .navigate(R.id.action_exercises_to_exercise_page, args);
                         return false;
                     });
-        } else {
-            viewModel.getSavedRoutineByID(savedRoutineID).observe(getActivity(), strings -> {
-                        localSavedExercises.clear();
-                        localSavedExercises.addAll(strings);
-                    }
-            );
         }
 
         // Observe the LiveData, passing in the main activity as
@@ -95,8 +92,11 @@ public class ExercisesFragment extends Fragment {
                 expandableListView.setAdapter(adapter);
             } else {
                 expandableListView.setAdapter(
-                        new ExercisesFragmentAdapterChecked(getContext(), stringListMap,
-                                localSavedExercises));
+                        new ExercisesFragmentAdapterChecked(getContext(), stringListMap));
+                for (int i = 0; i < expandableListView.getExpandableListAdapter()
+                                                      .getGroupCount(); i++) {
+                    expandableListView.expandGroup(i);
+                }
             }
 
         };
@@ -117,10 +117,26 @@ public class ExercisesFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        menu.clear();
 
+        menu.clear();
         inflater.inflate(R.menu.top_app_bar, menu);
+
+        if (savedRoutineID != null) {
+            getActivity().findViewById(
+                    R.id.nav_view).setVisibility(View.INVISIBLE);
+            MenuItem item = menu.findItem(R.id.submitButton);
+            item.setVisible(true);
+            item.setOnMenuItemClickListener(item1 -> {
+                ArrayList<String> list = ((ExercisesFragmentAdapterChecked) expandableListView.getExpandableListAdapter()).selectedExercises;
+                viewModel.setExerciseList(list,savedRoutineID);
+                Navigation.findNavController(getView())
+                          .navigate(R.id.action_exercises_to_routines);
+                return false;
+            });
+            return;
+        }
         MenuItem item = menu.findItem(R.id.app_bar_search);
+        item.setVisible(true);
         SearchView searchView = new SearchView(
                 mainActivity.getSupportActionBar().getThemedContext());
         item.expandActionView();
@@ -164,6 +180,14 @@ public class ExercisesFragment extends Fragment {
         searchView.setOnClickListener(v -> {
 
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        getActivity().findViewById(
+                R.id.nav_host_fragment_activity_main).setVisibility(View.VISIBLE);
+
     }
 
     @Override
