@@ -1,3 +1,7 @@
+## Videos:
+All the videos are in https://a21pt313.studev.groept.be/Videos/WeightExercises/
+
+
 ## Copyright:
 https://gitlab.groept.be/nicolas.gutierrezsuarez/web_scraper
 
