@@ -129,8 +129,11 @@ public class ExercisesFragment extends Fragment {
             item.setOnMenuItemClickListener(item1 -> {
                 ArrayList<String> list = ((ExercisesFragmentAdapterChecked) expandableListView.getExpandableListAdapter()).selectedExercises;
                 viewModel.setExerciseList(list,savedRoutineID);
+                getActivity().findViewById(
+                        R.id.nav_view).setVisibility(View.VISIBLE);
                 Navigation.findNavController(getView())
                           .navigate(R.id.action_exercises_to_routines);
+
                 return false;
             });
             return;

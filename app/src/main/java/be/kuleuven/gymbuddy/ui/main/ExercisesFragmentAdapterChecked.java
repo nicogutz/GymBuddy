@@ -16,6 +16,7 @@ import java.util.Objects;
 
 import be.kuleuven.gymbuddy.R;
 import be.kuleuven.gymbuddy.data.model.ExerciseValue;
+import kotlinx.coroutines.CompletionHandlerException;
 
 //depending on implementation we might just need to override the getCount() and getView()
 
@@ -115,6 +116,7 @@ public class ExercisesFragmentAdapterChecked extends BaseExpandableListAdapter {
             convertView = layoutInflater.inflate(R.layout.exercise_item, null);
         }
         CheckBox checkBox = convertView.findViewById(R.id.checkBox);
+        checkBox.setChecked(false);
         checkBox.setVisibility(View.VISIBLE);
         checkBox.setText(child);
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
